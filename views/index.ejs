@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<div class="login-page">
+  <div class="form">
+
+    <form method = "post" action = "/criarConta" class="register-form">
+        <input type="text" name = "criar_email" placeholder="email address"/>
+        <input type="password" name = "criar_senha" placeholder="password"/>
+      <button>create</button>
+      <p class="message">Already registered? <a href="#">Sign In</a></p>
+    </form>
+
+    <form method = "post" action = "/logar" class="login-form">
+      <input type="text" name = "email_login" placeholder="username"/>
+      <input type="password" name = "senha_login" placeholder="password"/>
+      <button>login</button>
+      <p class="message">Not registered? <a href="#">Create an account</a></p>
+
+    </form>
+  </div>
+</div>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src = "/javascripts/home.js"></script>
+
+</html>
+
