@@ -5,7 +5,10 @@ var firebase = require('firebase');
 
 var database = firebase.database();
 
-function writeUserData(userId, email, validoTermos) {
+var email_usuario;
+var senha_usuario;
+
+function userAuthFirebase(userId, email, validoTermos) {
     database.ref('users/' + userId).set({
         email: email,
         termos : validoTermos
@@ -13,64 +16,78 @@ function writeUserData(userId, email, validoTermos) {
 }
 
 router.get("/", function(req,res){
-    /*se estiver logado redireciona para
-    * pagina de opcoes caso ja tenha aceitado os termos
-    * se nao tiver manda para pagina de termos*/
-    res.render('index.ejs');
+
+    var user = firebase.auth().currentUser;
+
+    if(user){
+        res.render('opcoes.ejs');
+    }
+    else {
+        res.render('index.ejs');
+    }
 });
 
 router.route('/criarConta')
     .get(function (req,res) {
 
-    /*se estiver logado redireciona para
-    * pagina de opcoes caso ja tenha aceitado os termos
-    * se nao tiver manda para pagina de termos*/
-
         var user = firebase.auth().currentUser;
 
         if(user){
-            console.log("oi");
+            res.render('opcoes.ejs');
         }
-        else res.render('index.ejs');
+        else {
+            res.render('index.ejs');
+        }
 
     })
     .post(function (req,res) {
-        /* criar usuario */
-        var email = req.body.criar_email;
-        var password = req.body.criar_senha;
-
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-            .catch(function(error) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            res.render('index.js');
-        });
-
-        /*var newPostKey = database.ref().child('posts').push().key;
-
-        writeUserData(newPostKey,email,false);*/
-
+        email_usuario = req.body.criar_email;
+        senha_usuario = req.body.criar_senha;
         res.render('termos.ejs');
 });
 
-router.route('/opcoes')
+router.route('/paginaPrincipal')
     .get(function (req,res) {
         var user = firebase.auth().currentUser;
 
         if(user){
-            res.render('/opcoes');
+            res.render('opcoes.ejs');
         }
-        else res.render('index.ejs');
+        else {
+            res.render('index.ejs');
+        }
     })
     .post(function (req,res) {
+        /* criar usuario */
+
+        var email = email_usuario;
+        var password = senha_usuario;
+
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .catch(function(error) {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                res.render('index.js');
+            });
+
+        var newPostKey = database.ref().child('posts').push().key;
+
+        userAuthFirebase(newPostKey,email,false);
+
         res.render('opcoes.ejs');
 });
 
 router.route('/logar')
     .get(function (req,res) {
-        /*se estiver logado redireciona para
-    * pagina de opcoes caso ja tenha aceitado os termos
-    * se nao tiver manda para pagina de termos*/
+
+        var user = firebase.auth().currentUser;
+
+        if(user){
+            res.render('opcoes.ejs');
+        }
+        else {
+            res.render('index.ejs');
+        }
     })
     .post(function (req,res) {
         var email = req.body.email_login;
@@ -80,17 +97,16 @@ router.route('/logar')
             var errorCode = error.code;
             var errorMessage = error.message;
             // ...
+        }).then(function (t) {
+            var user = firebase.auth().currentUser;
+
+            if(user){
+                res.render('opcoes.ejs');
+            }
+            else {
+                res.render('index.ejs');
+            }
         });
-
-        var user = firebase.auth().currentUser;
-
-        if(user){
-            /*verificar os termos*/
-            res.render('opcoes.ejs');
-        }
-        else{
-            res.render('index.ejs');
-        }
 
 });
 

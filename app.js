@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var firebase = require('firebase');
+//var mongoose = require('mongoose');
 
 var config = {
     apiKey: "AIzaSyAimq7NMwJEhpmLrOTCZSU6X48QzK2oCiQ",
@@ -17,7 +18,8 @@ var config = {
 firebase.initializeApp(config);
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+/*conectando ao banco de dados, passando o caminho e o /nome do banco*/
+//mongoose.connect('localhost:27017/lic');
 
 var app = express();
 
@@ -34,7 +36,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
