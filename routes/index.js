@@ -110,4 +110,20 @@ router.route('/logar')
 
 });
 
+router.route('/medio')
+    .get(function (req,res) {
+
+        var user = firebase.auth().currentUser;
+
+        if(user){
+            res.render('principal/precomedio.ejs');
+        }
+        else {
+            res.render('index.ejs');
+        }
+    })
+    .post(function (req,res) {
+        res.render('principal/precomedio.ejs');
+    });
+
 module.exports = router;
