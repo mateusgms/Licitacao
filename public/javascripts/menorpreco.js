@@ -12,34 +12,35 @@ function atualizaListas() {
 
 }
 
-// { "osCars": [
-//     {   "id": 1,
-//         "name": "Cadillac",
-//         "type": "Sedan",
-//         "desc": "A fine American automobile"
-//     },
-//     {   "id": 2,
-//         "name": "BWM",
-//         "type": "Sedan",
-//         "desc": "A fine German automobile"
-//     },
-//     {   "id": 3,
-//         "name": "Lexus",
-//         "type": "Sedan",
-//         "desc": "A fine Japanese automobile"
-//     }
-// ]}
+function Add(){
 
-/*Funcao para futuro Json*/
-// function getCars() {
-//     var url, carOption;
-//     url = 'js/cars.json';
-//
-//     $.getJSON(url, function(data) {
-//         //populate the cars datalist
-//         $(data.osCars).each(function() {
-//             carsOption = "<option value=\"" + this.id + "\">" + this.name + "</option>";
-//             $('#carList').append(carsOption);
-//         });
-//     });
-// }
+    var row = '<tr>';
+    // $.each(names, function(index, name) {
+    //     row += '<td>' + c + '</td>';
+    // });
+    row += '<td>' + 'andre' + '</td>';
+    row += '<td>' + 'andre' + '</td>';
+    row += "<td><img src='images/butaodeletar.png' class='btnDelete' width='20' height='20'/></td>";
+    row += '<tr>';
+
+    $("#tblData tbody").append(row);
+
+    $(".btnDelete").bind("click", Delete);
+
+};
+
+function Delete(){
+    var par = $(this).parent().parent(); //tr
+    par.remove();
+};
+
+
+
+
+
+
+
+
+
+
+

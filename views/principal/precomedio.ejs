@@ -6,12 +6,42 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src = "/javascripts/menorpreco.js"></script>
 
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
 
 <body>
 
     <datalist id="listagrupo"></datalist>
     <input type="text" list="listagrupo" placeholder="grupo">
     <script>window.onload=atualizaListas();</script>
+
+    <div id="mydata">
+        <button onclick="Add()">New</button>
+        <table id="tblData"  border="1" cellpadding="2">
+            <tr>
+                <th>Titulo</th>
+                <th>Titulo</th>
+                <th>Titulo</th>
+            </tr>
+        </table>
+        <tbody>
+        </tbody>
+    </div>
 
 </body>
 
