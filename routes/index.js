@@ -126,4 +126,5 @@ router.route('/medio')
         res.render('principal/precomedio.ejs');
     });
 
+
 module.exports = router;

@@ -26,12 +26,19 @@
 
 <body>
 
-    <datalist id="listagrupo"></datalist>
-    <input type="text" list="listagrupo" placeholder="grupo">
-    <script>window.onload=atualizaListas();</script>
+    <select id="selectGrupo">
+    </select>
+
+    <select id="selectProduto">
+    </select>
+
+    <select id="selectRegiao">
+    </select>
+
+    <button id="novoItem">New</button>
 
     <div id="mydata">
-        <button onclick="Add()">New</button>
+
         <table id="tblData"  border="1" cellpadding="2">
             <tr>
                 <th>Titulo</th>

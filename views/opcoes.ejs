@@ -2,14 +2,32 @@
 <html>
 <head>
     <title>Termos</title>
+    <link rel='stylesheet' href='/stylesheets/opcoes.css' />
 </head>
 <body>
 
-    <form action="/medio" method="post">
-        <button type = "submit" id = "aceitar"> principal </button>
-    </form>
-    <button type = "submit" id = "aceitar"> Continuar </button>
-    <button type = "submit" id = "aceitar"> Continuar </button>
+<h2> Escolha seu preço de referência</h2>
+
+<div class="hot-container">
+    <p>
+        <form >
+            <button class="btn">Calcule seu Preço</button>
+        </form>
+        <form >
+            <button class="btn">Tabela Oficial</button>
+        </form>
+    </p>
+
+    <p>
+
+        <form action="/medio" method="post">
+            <button type = "submit" id = "aceitar" class="btn">Preço Médio Transacional</button>
+        </form>
+        <form >
+            <button class="btn btn-red">Sair</button>
+        </form>
+    </p>
+</div>
 
 </body>
 
