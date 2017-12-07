@@ -71,9 +71,9 @@ function Add(){
     row += "<td> 5 </td>";
     //row += "<td><input id = \"menorPreco\" type=\"checkbox\"> 8,0 </td>";
     //row += "<td><input id = \"precoMedio\" type=\"checkbox\"> 9,0 </td>";
-    row += "<td id = 'preco' > 10.57 </td>";
-    row += "<td><input onchange=\"MudaValor()\" id = \"quantidade\" type=\"number\" min=\"0\" style='width: 80px' >  </td>";
-    row += "<td id = 'valor'> 0 </td>";
+    row += "<td class = 'preco' > 10.57 </td>";
+    row += "<td><input class = 'quantidade' type=\"number\" min=\"0\" style='width: 80px' >  </td>";
+    row += "<td class = 'valor'> 0 </td>";
     row += "<td><img src='images/butaodeletar.png' class='btnDelete' width='20' height='20'/></td>";
     row += '<tr>';
 
@@ -81,13 +81,15 @@ function Add(){
 
     $(".btnDelete").bind("click", Delete);
 
+    $(".quantidade").on("change", AtualizaValor);
+
 };
 
-function MudaValor() {
-    var valor = $("#valor");
-    var qt = parseInt($("#quantidade").val());
-    var preco = parseFloat($("#preco").html());
-    valor.html(qt*preco);
+function AtualizaValor() {
+    var valorIndex = $(this).parent().parent().find('.valor');
+    var qt = parseInt($(this).parent().parent().find('.quantidade').val());
+    var preco = parseFloat($(this).parent().parent().find('.preco').html());
+    valorIndex.html(qt*preco);
 }
 
 function Delete(){
