@@ -126,5 +126,26 @@ router.route('/medio')
         res.render('principal/precomedio.ejs');
     });
 
+router.route('/sair')
+    .get(function (req,res) {
+
+        var user = firebase.auth().currentUser;
+
+        if(user){
+            res.render('opcoes.ejs');
+        }
+        else {
+            res.render('index.ejs');
+        }
+    })
+    .post(function (req,res) {
+
+        firebase.auth().signOut().then(function() {
+            res.render('index.ejs');
+        }).catch(function(error) {
+
+        });
+
+    });
 
 module.exports = router;
