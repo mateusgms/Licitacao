@@ -16,6 +16,12 @@ $(document).ready(function() {
             atualizaOutra();
         }
     });
+
+    $('.deletar').click(function(e){
+        var par = $(e.target).parent().parent(); //tr
+        par.remove();
+    });
+
 });
 
 function atualizaAlimentos() {
@@ -79,7 +85,7 @@ function Add(){
     row += "<td><input class = 'quantidade' type=\"number\" min=\"0\" style='width: 80px' >  </td>";
     row += "<td class = 'valor'> 0 </td>";
     row += "<td><img src='images/butaodeletar.png' class='btnDelete' width='20' height='20'/></td>";
-    row += '<tr>';
+    row += '</tr>';
 
     $("#tblData tbody").after(row);
 
@@ -88,8 +94,6 @@ function Add(){
     $(".btnDelete").bind("click", Delete);
 
     $(".quantidade").on("change", AtualizaValor);
-
-
 }
 
 function setaCodigo(path) {
@@ -111,7 +115,6 @@ function Delete(){
     var par = $(this).parent().parent(); //tr
     par.remove();
 }
-
 
 
 

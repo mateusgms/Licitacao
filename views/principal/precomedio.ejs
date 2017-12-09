@@ -36,27 +36,46 @@
     <button id="novoItem">New</button>
     <form method="post" action="/precomedio/orcamento">
         <button id="orcamento">Gerar orçamento</button>
-    <div id="mydata">
 
-        <table id="tblData"  border="1" cellpadding="2">
-            <tr>
-                <th>Código</th>
-                <th>Nome Item</th>
-                <th>Data</th>
-                <th>Unidade</th>
-                <th>Região</th>
-                <th>Qtd. de preços</th>
-                <!--<th>Menor Preço</th>
-                <th>Preço Médio</th>-->
-                <th>Preço</th>
-                <th>Qtd. Compra</th>
-                <th>Valor Total</th>
-                <th>Deletar</th>
-            </tr>
-        </table>
-        <tbody>
-        </tbody>
-    </div>
+        <div id="mydata">
+
+            <table id="tblData" border="1" cellpadding="2">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome Item</th>
+                        <th>Data</th>
+                        <th>Unidade</th>
+                        <th>Região</th>
+                        <th>Qtd. de preços</th>
+                        <!--<th>Menor Preço</th>
+                        <th>Preço Médio</th>-->
+                        <th>Preço</th>
+                        <th>Qtd. Compra</th>
+                        <th>Valor Total</th>
+                        <th>Deletar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="display: none"><input class="codInput" name="codigo" value = '<%- 15 %>'> </td>
+                        <td style="display: none"><input class="qtInput" name="quantidade" value = '<%- 10 %>'>  </td>
+                        <td class="codigo"> 165 </td>
+                        <td>Arroz</td>
+                        <td> 3 </td>
+                        <td>Kg</td>
+                        <td>SE</td>
+                        <td> 5 </td>
+                        <td class="preco"> 10.57 </td>
+                        <td><input class="quantidade" type="number" min="0" style="width: 80px">  </td>
+                        <td class="valor"> 0 </td><td><img src="images/butaodeletar.png" class = 'deletar' width="20" height="20"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+        </div>
 
     </form>
 

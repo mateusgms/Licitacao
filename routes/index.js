@@ -112,18 +112,23 @@ router.route('/logar')
 
 router.route('/medio')
     .get(function (req,res) {
-
+        console.log("oi");
         var user = firebase.auth().currentUser;
 
         if(user){
-            res.render('principal/precomedio.ejs');
+
+            res.render('principal/precomedio.ejs', {
+                recipes: 15
+            });
         }
         else {
             res.render('index.ejs');
         }
     })
     .post(function (req,res) {
-        res.render('principal/precomedio.ejs');
+        res.render('principal/precomedio.ejs', {
+            recipes: 15
+        });
     });
 
 router.route('/sair')
