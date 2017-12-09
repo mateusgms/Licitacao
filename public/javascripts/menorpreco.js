@@ -22,6 +22,16 @@ $(document).ready(function() {
         par.remove();
     });
 
+    $(".quantidade").on("change", function (e) {
+        var qt = parseInt($(e.target).parent().parent().find('.quantidade').val());
+
+        $(e.target).parent().parent().find('.qtInput').val(qt);
+
+        var valorIndex = $(e.target).parent().parent().find('.valor');
+        var preco = parseFloat($(e.target).parent().parent().find('.preco').html());
+        valorIndex.html(qt*preco);
+    });
+
 });
 
 function atualizaAlimentos() {
