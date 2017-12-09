@@ -62,8 +62,12 @@ function Add(){
 
     /*busca no json com esses valores de cima e atualiza embaixo a tabela*/
 
+    /*verifica se o codigo ja nao esta no vetor*/
+
     var row = '<tr>';
-    row += "<td> 165 </td>";
+    row += "<td style=\"display: none\"><input class = 'codInput' name = 'codigo'>  </td>";
+    row += "<td style=\"display: none\"><input class = 'qtInput' name = 'quantidade'>  </td>";
+    row += "<td class = 'codigo'> 165 </td>";
     row += '<td>' + 'Arroz' + '</td>';
     row += "<td> 3 </td>";
     row += '<td>' + 'Kg' + '</td>';
@@ -79,15 +83,26 @@ function Add(){
 
     $("#tblData tbody").after(row);
 
+    setaCodigo($(".quantidade"));
+
     $(".btnDelete").bind("click", Delete);
 
     $(".quantidade").on("change", AtualizaValor);
 
-};
+
+}
+
+function setaCodigo(path) {
+    var cod = path.parent().parent().find('.codigo').html();
+    path.parent().parent().find('.codInput').val(cod);
+}
 
 function AtualizaValor() {
-    var valorIndex = $(this).parent().parent().find('.valor');
     var qt = parseInt($(this).parent().parent().find('.quantidade').val());
+
+    $(this).parent().parent().find('.qtInput').val(qt);
+
+    var valorIndex = $(this).parent().parent().find('.valor');
     var preco = parseFloat($(this).parent().parent().find('.preco').html());
     valorIndex.html(qt*preco);
 }
@@ -95,7 +110,7 @@ function AtualizaValor() {
 function Delete(){
     var par = $(this).parent().parent(); //tr
     par.remove();
-};
+}
 
 
 

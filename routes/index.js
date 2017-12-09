@@ -148,4 +148,23 @@ router.route('/sair')
 
     });
 
+router.route('/precomedio/orcamento')
+    .get(function (req,res) {
+
+        var user = firebase.auth().currentUser;
+
+        if(user){
+            res.render('opcoes.ejs');
+        }
+        else {
+            res.render('index.ejs');
+        }
+    })
+    .post(function (req,res) {
+        var resp = req.body;
+
+        console.log(resp);
+
+    });
+
 module.exports = router;
