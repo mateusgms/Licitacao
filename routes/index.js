@@ -126,7 +126,18 @@ router.route('/medio')
                     qtdp : 5,
                     preco : 22.10,
                     quantidade : 5
-                }];
+                },
+                {
+                    codigo : 79,
+                    nome : 'Alface',
+                    vencimento : 8,
+                    unidade : 'grama',
+                    regiao : 'GO',
+                    qtdp : 2,
+                    preco : 1.0,
+                    quantidade : 20
+                }
+            ];
 
             res.render('principal/precomedio.ejs',{carrinho : carrinho});
         }
@@ -146,7 +157,18 @@ router.route('/medio')
                 qtdp : 5,
                 preco : 22.10,
                 quantidade : 5
-            }];
+            },
+            {
+                codigo : 79,
+                nome : 'Alface',
+                vencimento : 8,
+                unidade : 'grama',
+                regiao : 'GO',
+                qtdp : 2,
+                preco : 1.0,
+                quantidade : 20
+            }
+        ];
 
         res.render('principal/precomedio.ejs',{carrinho : carrinho});
     });

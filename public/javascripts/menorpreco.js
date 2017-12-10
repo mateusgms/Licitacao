@@ -2,20 +2,16 @@ var carrinho = {};
 
 $(document).ready(function() {
 
-    // $.getJSON('HTTP AQUI', function(data) {
-    //     //data is the JSON string
-    // });
-
-    /*ESSA FUNCAO VAI PEGAR O CODIGO E QUANTIDADE DOS ELEMENTOS QUE JA EXISTEM
-    * E ADICIONAR NO CARRINHO*/
+    /*pega itens ja existentes e adicona no carrinho*/
     $('#tblData tr').each(function(){
-        $(this).find('td').each(function(){
-            //do your stuff, you can use $(this) to get current cell
-        })
+        var quantidade = $(this).find('td#quantidade');
+        quantidade = quantidade.find('input').val();
+        var codigo = $(this).find('td#codigo').html();
+        if(!(quantidade === undefined || codigo === undefined))
+            carrinho[codigo] = quantidade;
     });
 
-    /*ESSA FUNCAO GERA OS DOIS VETORES COM OS ELEMENTOS DO CARRINHO
-    * PARA PASSAR PARA O POST*/
+    /*gera dois vetores (codigo, qt) para o metodo post*/
     $("#orcamento").click(function () {
         var codigos = [];
         var quantidades = [];
@@ -25,14 +21,15 @@ $(document).ready(function() {
             quantidades.push(carrinho[codigo]);
         }
 
-        $("#cod").val(codigos);
-        $("#qt").val(quantidades);
+        $("#codInput").val(codigos);
+        $("#qtInput").val(quantidades);
     });
 
     atualizaListas();
 
     $("#novoItem").click(function(){
         Add();
+        imprimeCarrinho();
     });
 
     $("#selectGrupo").change(function() {
@@ -47,21 +44,34 @@ $(document).ready(function() {
     });
 
     $('.deletar').click(function(e){
-        var par = $(e.target).parent().parent(); //tr
-        par.remove();
+        var raiz = $(e.target).parent().parent(); //tr
+        var codigo = raiz.find('td#codigo').html();
+        delete carrinho[codigo];
+        raiz.remove();
     });
 
-    $(".quantidade").on("change", function (e) {
+    $(".modificaqt").on("change", function (e) {
 
-        /*pegar o codigo e atualizar a quantidade*/
+        var raiz = $(e.target).parent().parent(); // tr
+        var codigo = raiz.find('td#codigo').html();
 
-        var qt = parseInt($(e.target).parent().parent().find('.quantidade').val());
-        var valorIndex = $(e.target).parent().parent().find('.valor');
-        var preco = parseFloat($(e.target).parent().parent().find('.preco').html());
-        valorIndex.html(qt*preco);
+        var quantidade = raiz.find('td#quantidade');
+        quantidade = parseInt(quantidade.find('input').val());
+
+        var valorIndex = raiz.find('td#valor');
+        var preco = parseFloat(raiz.find('td#preco').html());
+
+        carrinho[codigo] = quantidade;
+        valorIndex.html(quantidade*preco);
     });
 
 });
+
+function imprimeCarrinho() {
+    for(var codigo in carrinho){
+        console.log(codigo + '-> ' + carrinho[codigo]);
+    }
+}
 
 function atualizaAlimentos() {
 
@@ -99,6 +109,20 @@ function atualizaListas() {
     atualizaAlimentos();
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function Add(){
 
     var grupo = $('#selectGrupo').val();
@@ -117,41 +141,90 @@ function Add(){
 
     carrinho[codigoItem] = 0;
 
-    var row = '<tr>';
-    row += "<td class = 'codigo'>  "+ (codigoItem) +" </td>";
-    row += '<td> Arroz </td>';
-    row += "<td> 3 </td>";
-    row += '<td>' + 'Kg' + '</td>';
-    row += '<td>' + 'SE' + '</td>';
-    row += "<td> 5 </td>";
-    //row += "<td><input id = \"menorPreco\" type=\"checkbox\"> 8,0 </td>";
-    //row += "<td><input id = \"precoMedio\" type=\"checkbox\"> 9,0 </td>";
-    row += "<td class = 'preco' > 10.57 </td>";
-    row += "<td><input class = 'quantidade' type=\"number\" min=\"0\" style='width: 80px' >  </td>";
-    row += "<td class = 'valor'> 0 </td>";
-    row += "<td><img src='images/butaodeletar.png' class='btnDelete' width='20' height='20'/></td>";
-    row += '</tr>';
+    var tabela = $('#tblData');
 
-    $("#tblData tbody").after(row);
+    var corpo = tabela.find('tbody');
 
-    $(".btnDelete").bind("click", Delete);
+    var linha = document.createElement("tr");
 
-    $(".quantidade").on("change", AtualizaValor);
+    var colCodigo = document.createElement("td");
+    colCodigo.setAttribute('id','codigo');
+    colCodigo.innerHTML = codigoItem;
+    linha.appendChild(colCodigo);
+
+    var colNome = document.createElement("td");
+    colNome.innerHTML = 'Arroz';
+    linha.appendChild(colNome);
+
+    var colVencimento = document.createElement("td");
+    colVencimento.innerHTML = '3';
+    linha.appendChild(colVencimento);
+
+    var colUnidade = document.createElement("td");
+    colUnidade.innerHTML = 'Kg';
+    linha.appendChild(colUnidade);
+
+    var colRegiao = document.createElement("td");
+    colRegiao.innerHTML = 'SE';
+    linha.appendChild(colRegiao);
+
+    var colQtdp = document.createElement("td");
+    colQtdp.innerHTML = '5';
+    linha.appendChild(colQtdp);
+
+    var colPreco = document.createElement("td");
+    colPreco.setAttribute('id','preco');
+    colPreco.innerHTML = '10.50'
+    linha.appendChild(colPreco);
+
+    var colQuantidade = document.createElement("td");
+    colQuantidade.setAttribute('id', 'quantidade');
+    colQuantidade.setAttribute('class', 'modificaqt');
+    var inputQuantidade = document.createElement('input');
+    inputQuantidade.type = 'number';
+    inputQuantidade.class = 'quantidade';
+    inputQuantidade.value = 0;
+    inputQuantidade.style = 'width: 80px';
+    inputQuantidade.onchange = AtualizaValor;
+    colQuantidade.append(inputQuantidade);
+    linha.appendChild(colQuantidade);
+
+    var colValor = document.createElement("td");
+    colValor.setAttribute('id', 'valor');
+    colValor.innerHTML = 0;
+    linha.appendChild(colValor);
+
+    var colDeletar = document.createElement("td");
+    var imgDeletar = document.createElement('img');
+    imgDeletar.class = 'btnDelete';
+    imgDeletar.style = 'width: 20px';
+    imgDeletar.src = 'images/butaodeletar.png';
+    imgDeletar.onclick = Delete;
+    colDeletar.append(imgDeletar);
+    linha.appendChild(colDeletar);
+
+    corpo.prepend(linha);
 }
 
 function AtualizaValor() {
-    var qt = parseInt($(this).parent().parent().find('.quantidade').val());
+    var raiz = $(this).parent().parent(); // tr
+    var codigo = raiz.find('td#codigo').html();
 
-    $(this).parent().parent().find('.qtInput').val(qt);
+    var quantidade = raiz.find('td#quantidade');
+    quantidade = parseInt(quantidade.find('input').val());
 
-    var valorIndex = $(this).parent().parent().find('.valor');
-    var preco = parseFloat($(this).parent().parent().find('.preco').html());
-    valorIndex.html(qt*preco);
+    var valorIndex = raiz.find('td#valor');
+    var preco = parseFloat(raiz.find('td#preco').html());
+
+    carrinho[codigo] = quantidade;
+    valorIndex.html(quantidade*preco);
 }
 
 function Delete(){
-    var par = $(this).parent().parent(); //tr
-    par.remove();
+    var raiz = $(this).parent().parent(); //tr
+    var codigo = raiz.find('td#codigo').html();
+    delete carrinho[codigo];
+    raiz.remove();
 }
 
 
