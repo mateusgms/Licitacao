@@ -112,23 +112,43 @@ router.route('/logar')
 
 router.route('/medio')
     .get(function (req,res) {
-        console.log("oi");
         var user = firebase.auth().currentUser;
 
         if(user){
 
-            res.render('principal/precomedio.ejs', {
-                recipes: 15
-            });
+            var carrinho = [
+                {
+                    codigo : 170,
+                    nome : 'Feijão',
+                    vencimento : 3,
+                    unidade : 'Kg',
+                    regiao : 'DF',
+                    qtdp : 5,
+                    preco : 22.10,
+                    quantidade : 5
+                }];
+
+            res.render('principal/precomedio.ejs',{carrinho : carrinho});
         }
         else {
             res.render('index.ejs');
         }
     })
     .post(function (req,res) {
-        res.render('principal/precomedio.ejs', {
-            recipes: 15
-        });
+
+        var carrinho = [
+            {
+                codigo : 170,
+                nome : 'Feijão',
+                vencimento : 3,
+                unidade : 'Kg',
+                regiao : 'DF',
+                qtdp : 5,
+                preco : 22.10,
+                quantidade : 5
+            }];
+
+        res.render('principal/precomedio.ejs',{carrinho : carrinho});
     });
 
 router.route('/sair')
@@ -168,7 +188,16 @@ router.route('/precomedio/orcamento')
     .post(function (req,res) {
         var resp = req.body;
 
+        /*vai criar o json aqui com os elementos do array*/
+
+        var lista = [];
+
         console.log(resp);
+
+        for(var i in req.body.codigo){
+            var atual = req.body.codigo;
+            console.log(atual[i]);
+        }
 
     });
 

@@ -1,4 +1,33 @@
+var carrinho = {};
+
 $(document).ready(function() {
+
+    // $.getJSON('HTTP AQUI', function(data) {
+    //     //data is the JSON string
+    // });
+
+    /*ESSA FUNCAO VAI PEGAR O CODIGO E QUANTIDADE DOS ELEMENTOS QUE JA EXISTEM
+    * E ADICIONAR NO CARRINHO*/
+    $('#tblData tr').each(function(){
+        $(this).find('td').each(function(){
+            //do your stuff, you can use $(this) to get current cell
+        })
+    });
+
+    /*ESSA FUNCAO GERA OS DOIS VETORES COM OS ELEMENTOS DO CARRINHO
+    * PARA PASSAR PARA O POST*/
+    $("#orcamento").click(function () {
+        var codigos = [];
+        var quantidades = [];
+
+        for (var codigo in carrinho) {
+            codigos.push(codigo);
+            quantidades.push(carrinho[codigo]);
+        }
+
+        $("#cod").val(codigos);
+        $("#qt").val(quantidades);
+    });
 
     atualizaListas();
 
@@ -23,10 +52,10 @@ $(document).ready(function() {
     });
 
     $(".quantidade").on("change", function (e) {
+
+        /*pegar o codigo e atualizar a quantidade*/
+
         var qt = parseInt($(e.target).parent().parent().find('.quantidade').val());
-
-        $(e.target).parent().parent().find('.qtInput').val(qt);
-
         var valorIndex = $(e.target).parent().parent().find('.valor');
         var preco = parseFloat($(e.target).parent().parent().find('.preco').html());
         valorIndex.html(qt*preco);
@@ -78,13 +107,19 @@ function Add(){
 
     /*busca no json com esses valores de cima e atualiza embaixo a tabela*/
 
-    /*verifica se o codigo ja nao esta no vetor*/
+    var codigoItem = Math.random();
+
+    // item ja foi colocado no carrinho
+    if(carrinho.hasOwnProperty(codigoItem)){
+        alert('O item ja foi adicionado.');
+        return;
+    }
+
+    carrinho[codigoItem] = 0;
 
     var row = '<tr>';
-    row += "<td style=\"display: none\"><input class = 'codInput' name = 'codigo'>  </td>";
-    row += "<td style=\"display: none\"><input class = 'qtInput' name = 'quantidade'>  </td>";
-    row += "<td class = 'codigo'> 165 </td>";
-    row += '<td>' + 'Arroz' + '</td>';
+    row += "<td class = 'codigo'>  "+ (codigoItem) +" </td>";
+    row += '<td> Arroz </td>';
     row += "<td> 3 </td>";
     row += '<td>' + 'Kg' + '</td>';
     row += '<td>' + 'SE' + '</td>';
@@ -99,16 +134,9 @@ function Add(){
 
     $("#tblData tbody").after(row);
 
-    setaCodigo($(".quantidade"));
-
     $(".btnDelete").bind("click", Delete);
 
     $(".quantidade").on("change", AtualizaValor);
-}
-
-function setaCodigo(path) {
-    var cod = path.parent().parent().find('.codigo').html();
-    path.parent().parent().find('.codInput').val(cod);
 }
 
 function AtualizaValor() {

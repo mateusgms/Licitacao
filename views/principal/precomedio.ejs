@@ -36,6 +36,9 @@
     <button id="novoItem">New</button>
     <form method="post" action="/precomedio/orcamento">
         <button id="orcamento">Gerar orçamento</button>
+        <input style="display: none" name="codigo" id = "cod">
+        <input style="display: none" name="quantidade" id = "qt">
+    </form>
 
         <div id="mydata">
 
@@ -57,27 +60,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td style="display: none"><input class="codInput" name="codigo" value = '<%- 15 %>'> </td>
-                        <td style="display: none"><input class="qtInput" name="quantidade" value = '<%- 10 %>'>  </td>
-                        <td class="codigo"> 165 </td>
-                        <td>Arroz</td>
-                        <td> 3 </td>
-                        <td>Kg</td>
-                        <td>SE</td>
-                        <td> 5 </td>
-                        <td class="preco"> <%- recipes %> </td>
-                        <td><input class="quantidade" type="number" min="0" style="width: 80px">  </td>
-                        <td class="valor"> 0 </td><td><img src="images/butaodeletar.png" class = 'deletar' width="20" height="20"></td>
-                    </tr>
+                    <% for(var i = 0; i < carrinho.length; i++){%>
+                            <tr>
+                                <td id="codigo"> <%- carrinho[i].codigo %> </td>
+                                <td><%- carrinho[i].nome %></td>
+                                <td> <%- carrinho[i].vencimento %> </td>
+                                <td><%- carrinho[i].unidade %></td>
+                                <td><%- carrinho[i].regiao %></td>
+                                <td> <%- carrinho[i].qtdp %> </td>
+                                <td class = "preco"> <%- carrinho[i].preco %> </td>
+                                <td><input class="quantidade" type="number" min="0" style="width: 80px" value = '<%- carrinho[i].quantidade %>'> </td>
+                                <td class="valor"> <%- carrinho[i].preco * carrinho[i].quantidade %> </td>
+                                <td><img src="images/butaodeletar.png" class = 'deletar' width="20" height="20"> </td>
+                            </tr>
+                    <%}%>
+
                 </tbody>
             </table>
-
-
-
         </div>
-
-    </form>
 
 </body>
 
