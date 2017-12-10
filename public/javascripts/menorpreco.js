@@ -131,7 +131,7 @@ function Add(){
 
     /*busca no json com esses valores de cima e atualiza embaixo a tabela*/
 
-    var codigoItem = Math.random();
+    var codigoItem = 1030;
 
     // item ja foi colocado no carrinho
     if(carrinho.hasOwnProperty(codigoItem)){
@@ -153,7 +153,7 @@ function Add(){
     linha.appendChild(colCodigo);
 
     var colNome = document.createElement("td");
-    colNome.innerHTML = 'Arroz';
+    colNome.innerHTML = 'Feijão';
     linha.appendChild(colNome);
 
     var colVencimento = document.createElement("td");

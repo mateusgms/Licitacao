@@ -1,3 +1,4 @@
+var fs = require("fs");
 var express = require('express');
 var router = express.Router();
 
@@ -110,69 +111,6 @@ router.route('/logar')
 
 });
 
-router.route('/medio')
-    .get(function (req,res) {
-        var user = firebase.auth().currentUser;
-
-        if(user){
-
-            var carrinho = [
-                {
-                    codigo : 170,
-                    nome : 'Feijão',
-                    vencimento : 3,
-                    unidade : 'Kg',
-                    regiao : 'DF',
-                    qtdp : 5,
-                    preco : 22.10,
-                    quantidade : 5
-                },
-                {
-                    codigo : 79,
-                    nome : 'Alface',
-                    vencimento : 8,
-                    unidade : 'grama',
-                    regiao : 'GO',
-                    qtdp : 2,
-                    preco : 1.0,
-                    quantidade : 20
-                }
-            ];
-
-            res.render('principal/precomedio.ejs',{carrinho : carrinho});
-        }
-        else {
-            res.render('index.ejs');
-        }
-    })
-    .post(function (req,res) {
-
-        var carrinho = [
-            {
-                codigo : 170,
-                nome : 'Feijão',
-                vencimento : 3,
-                unidade : 'Kg',
-                regiao : 'DF',
-                qtdp : 5,
-                preco : 22.10,
-                quantidade : 5
-            },
-            {
-                codigo : 79,
-                nome : 'Alface',
-                vencimento : 8,
-                unidade : 'grama',
-                regiao : 'GO',
-                qtdp : 2,
-                preco : 1.0,
-                quantidade : 20
-            }
-        ];
-
-        res.render('principal/precomedio.ejs',{carrinho : carrinho});
-    });
-
 router.route('/sair')
     .get(function (req,res) {
 
@@ -195,6 +133,64 @@ router.route('/sair')
 
     });
 
+router.route('/medio')
+    .get(function (req,res) {
+        var user = firebase.auth().currentUser;
+
+        if(user){
+            res.render('opcoes.ejs');
+        }
+        else {
+            res.render('index.ejs');
+        }
+    })
+    .post(function (req,res) {
+
+        var produtos = JSON.parse(fs.readFileSync("../prod.txt"));
+
+        var email = firebase.auth().currentUser.email.toString();
+
+        /*acessa o banco de dados e carregar o dados em carrinho */
+        var busca = firebase.database().ref('/');
+
+        busca.once('value')
+            .then(function (snap) {
+                var codigos = [];
+                var quantidades = [];
+                for (var key in snap.val()) {
+                    var elemento = snap.val()[key];
+                    if(elemento.email.toString() === email){
+                        codigos = elemento.codigo;
+                        quantidades = elemento.quantidade;
+                        break;
+                    }
+                }
+
+                var carrinho = [];
+
+                for(var i = 0; i < codigos.length; i++){
+                    for(var j = 0; j < produtos['codigo'].length; j++){
+                        if(produtos['codigo'][j] == codigos[i]){
+                            var novo = {
+                                codigo : produtos['codigo'][j],
+                                nome : produtos['nome'][j],
+                                vencimento : produtos['tempo'][j],
+                                unidade : produtos['unidade'][j],
+                                regiao : produtos['regiao'][j],
+                                qtdp : produtos['qtd itens'][j],
+                                preco : produtos['medio'][j],
+                                quantidade : quantidades[i]
+                            };
+                            carrinho.push(novo);
+                        }
+                    }
+                }
+
+                res.render('principal/precomedio.ejs',{carrinho : carrinho});
+            });
+
+    });
+
 router.route('/precomedio/orcamento')
     .get(function (req,res) {
 
@@ -208,18 +204,57 @@ router.route('/precomedio/orcamento')
         }
     })
     .post(function (req,res) {
-        var resp = req.body;
 
-        /*vai criar o json aqui com os elementos do array*/
+        var produtos = JSON.parse(fs.readFileSync("../prod.txt"));
 
-        var lista = [];
+        var email = firebase.auth().currentUser.email.toString();
 
-        console.log(resp);
+        var codigos = JSON.parse("[" + req.body.codigo + "]");
+        var quantidades = JSON.parse("[" + req.body.quantidade + "]");
 
-        for(var i in req.body.codigo){
-            var atual = req.body.codigo;
-            console.log(atual[i]);
+        var carrinho = [];
+
+        /*cria carrinho*/
+        for(var i = 0; i < codigos.length; i++){
+            for(var j = 0; j < produtos['codigo'].length; j++){
+                if(produtos['codigo'][j] == codigos[i]){
+                    var novo = {
+                        codigo : produtos['codigo'][j],
+                        nome : produtos['nome'][j],
+                        vencimento : produtos['tempo'][j],
+                        unidade : produtos['unidade'][j],
+                        regiao : produtos['regiao'][j],
+                        qtdp : produtos['qtd itens'][j],
+                        preco : produtos['medio'][j],
+                        quantidade : quantidades[i]
+                    };
+                    carrinho.push(novo);
+                }
+            }
         }
+
+        var busca = firebase.database().ref('/');
+
+        /*apaga o carrinho antigo e insere o novo*/
+        busca.once('value')
+            .then(function (snap) {
+                for (var key in snap.val()) {
+                    var elemento = snap.val()[key];
+                    if(elemento.email.toString() === email){
+                        var caminho = '/' + key;
+                        firebase.database().ref(caminho).remove();
+                        break;
+                    }
+                }
+                var inserir = busca.push();
+                inserir.set({
+                    email : email,
+                    codigo : codigos,
+                    quantidade : quantidades
+                });
+            });
+
+        res.render('principal/orcamento.ejs',{carrinho : carrinho});
 
     });
 
