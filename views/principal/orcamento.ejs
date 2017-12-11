@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Preco</title>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src = "/javascripts/menorpreco.js"></script>
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        background-color: #eeeeee;
+    }
+
+</style>
+
+<body>
+
+<div>
+
+    <h2>Valor Total : R$ <%- valorTotal %></h2>
+
+    <table id="tblData" border="1" cellpadding="2">
+        <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome Item</th>
+            <th>Data</th>
+            <th>Unidade</th>
+            <th>Região</th>
+            <th>Qtd. de preços</th>
+            <!--<th>Menor Preço</th>
+            <th>Preço Médio</th>-->
+            <th>Preço</th>
+            <th>Qtd. Compra</th>
+            <th>Valor Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for(var i = 0; i < carrinho.length; i++){%>
+        <tr>
+            <td> <%- carrinho[i].codigo %> </td>
+            <td><%- carrinho[i].nome %></td>
+            <td> <%- carrinho[i].vencimento %> </td>
+            <td><%- carrinho[i].unidade %></td>
+            <td><%- carrinho[i].regiao %></td>
+            <td> <%- carrinho[i].qtdp %> </td>
+            <td> <%- carrinho[i].preco %> </td>
+            <td><%- carrinho[i].quantidade %> </td>
+            <td> <%- carrinho[i].preco * carrinho[i].quantidade %> </td>
+        </tr>
+        <%}%>
+        </tbody>
+    </table>
+</div>
+
+</body>
+
+</html>
+

@@ -7,8 +7,11 @@ $(document).ready(function() {
         var quantidade = $(this).find('td#quantidade');
         quantidade = quantidade.find('input').val();
         var codigo = $(this).find('td#codigo').html();
-        if(!(quantidade === undefined || codigo === undefined))
+        if(!(quantidade === undefined || codigo === undefined)) {
+            codigo = codigo.trim();
+            quantidade = quantidade.trim();
             carrinho[codigo] = quantidade;
+        }
     });
 
     /*gera dois vetores (codigo, qt) para o metodo post*/
@@ -45,7 +48,7 @@ $(document).ready(function() {
 
     $('.deletar').click(function(e){
         var raiz = $(e.target).parent().parent(); //tr
-        var codigo = raiz.find('td#codigo').html();
+        var codigo = raiz.find('td#codigo').html().trim();
         delete carrinho[codigo];
         raiz.remove();
     });
@@ -53,7 +56,7 @@ $(document).ready(function() {
     $(".modificaqt").on("change", function (e) {
 
         var raiz = $(e.target).parent().parent(); // tr
-        var codigo = raiz.find('td#codigo').html();
+        var codigo = raiz.find('td#codigo').html().trim();
 
         var quantidade = raiz.find('td#quantidade');
         quantidade = parseInt(quantidade.find('input').val());
@@ -131,7 +134,7 @@ function Add(){
 
     /*busca no json com esses valores de cima e atualiza embaixo a tabela*/
 
-    var codigoItem = 1030;
+    var codigoItem = 1050;
 
     // item ja foi colocado no carrinho
     if(carrinho.hasOwnProperty(codigoItem)){
@@ -153,7 +156,7 @@ function Add(){
     linha.appendChild(colCodigo);
 
     var colNome = document.createElement("td");
-    colNome.innerHTML = 'Feijão';
+    colNome.innerHTML = 'Arroz';
     linha.appendChild(colNome);
 
     var colVencimento = document.createElement("td");
@@ -222,7 +225,7 @@ function AtualizaValor() {
 
 function Delete(){
     var raiz = $(this).parent().parent(); //tr
-    var codigo = raiz.find('td#codigo').html();
+    var codigo = raiz.find('td#codigo').html().trim();
     delete carrinho[codigo];
     raiz.remove();
 }

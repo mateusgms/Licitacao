@@ -71,8 +71,6 @@ router.route('/paginaPrincipal')
                 res.render('index.js');
             });
 
-        var newPostKey = database.ref().child('posts').push().key;
-
         userAuthFirebase(newPostKey,email,false);
 
         res.render('opcoes.ejs');
@@ -98,7 +96,7 @@ router.route('/logar')
             var errorCode = error.code;
             var errorMessage = error.message;
             // ...
-        }).then(function (t) {
+        }).then(function () {
             var user = firebase.auth().currentUser;
 
             if(user){
@@ -150,7 +148,7 @@ router.route('/medio')
 
         var email = firebase.auth().currentUser.email.toString();
 
-        /*acessa o banco de dados e carregar o dados em carrinho */
+        /*acessa o banco de dados e carrega o dados em carrinho */
         var busca = firebase.database().ref('/');
 
         busca.once('value')
@@ -212,7 +210,11 @@ router.route('/precomedio/orcamento')
         var codigos = JSON.parse("[" + req.body.codigo + "]");
         var quantidades = JSON.parse("[" + req.body.quantidade + "]");
 
+        console.log(codigos);
+
         var carrinho = [];
+
+        var valorTotal = 0;
 
         /*cria carrinho*/
         for(var i = 0; i < codigos.length; i++){
@@ -228,6 +230,7 @@ router.route('/precomedio/orcamento')
                         preco : produtos['medio'][j],
                         quantidade : quantidades[i]
                     };
+                    valorTotal += parseFloat(produtos['medio'][j])*parseInt(quantidades[i]);
                     carrinho.push(novo);
                 }
             }
@@ -254,7 +257,7 @@ router.route('/precomedio/orcamento')
                 });
             });
 
-        res.render('principal/orcamento.ejs',{carrinho : carrinho});
+        res.render('principal/orcamento.ejs',{carrinho : carrinho, valorTotal : valorTotal});
 
     });
 
