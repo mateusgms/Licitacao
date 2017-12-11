@@ -155,11 +155,13 @@ router.route('/medio')
             .then(function (snap) {
                 var codigos = [];
                 var quantidades = [];
+                var precos = [];
                 for (var key in snap.val()) {
                     var elemento = snap.val()[key];
                     if(elemento.email.toString() === email){
                         codigos = elemento.codigo;
                         quantidades = elemento.quantidade;
+                        precos = elemento.preco;
                         break;
                     }
                 }
@@ -175,8 +177,12 @@ router.route('/medio')
                                 vencimento : produtos['tempo'][j],
                                 unidade : produtos['unidade'][j],
                                 regiao : produtos['regiao'][j],
+                                especificacao : produtos['especificacao'][j],
                                 qtdp : produtos['qtd itens'][j],
-                                preco : produtos['medio'][j],
+                                precoMinimo : produtos['minimo'][j],
+                                precoMedio : produtos['medio'][j],
+                                precoMaximo : produtos['maximo'][j],
+                                precoFinal : precos[i],
                                 quantidade : quantidades[i]
                             };
                             carrinho.push(novo);
@@ -209,55 +215,58 @@ router.route('/precomedio/orcamento')
 
         var codigos = JSON.parse("[" + req.body.codigo + "]");
         var quantidades = JSON.parse("[" + req.body.quantidade + "]");
-
-        console.log(codigos);
+        var precos = JSON.parse("[" + req.body.preco + "]");
 
         var carrinho = [];
 
         var valorTotal = 0;
 
         /*cria carrinho*/
-        for(var i = 0; i < codigos.length; i++){
-            for(var j = 0; j < produtos['codigo'].length; j++){
-                if(produtos['codigo'][j] == codigos[i]){
-                    var novo = {
-                        codigo : produtos['codigo'][j],
-                        nome : produtos['nome'][j],
-                        vencimento : produtos['tempo'][j],
-                        unidade : produtos['unidade'][j],
-                        regiao : produtos['regiao'][j],
-                        qtdp : produtos['qtd itens'][j],
-                        preco : produtos['medio'][j],
-                        quantidade : quantidades[i]
-                    };
-                    valorTotal += parseFloat(produtos['medio'][j])*parseInt(quantidades[i]);
-                    carrinho.push(novo);
-                }
-            }
-        }
+         for(var i = 0; i < codigos.length; i++){
+             for(var j = 0; j < produtos['codigo'].length; j++){
+                 if(produtos['codigo'][j] == codigos[i]){
+                     var novo = {
+                         codigo : produtos['codigo'][j],
+                         nome : produtos['nome'][j],
+                         especificacao : produtos['especificacao'][j],
+                         vencimento : produtos['tempo'][j],
+                         unidade : produtos['unidade'][j],
+                         regiao : produtos['regiao'][j],
+                         qtdp : produtos['qtd itens'][j],
+                         preco : precos[i],
+                         quantidade : quantidades[i]
+                     };
+                     valorTotal += parseFloat(precos[i])*parseInt(quantidades[i]);
+                     carrinho.push(novo);
+                 }
+             }
+         }
 
-        var busca = firebase.database().ref('/');
+         var busca = firebase.database().ref('/');
 
-        /*apaga o carrinho antigo e insere o novo*/
-        busca.once('value')
-            .then(function (snap) {
-                for (var key in snap.val()) {
-                    var elemento = snap.val()[key];
-                    if(elemento.email.toString() === email){
-                        var caminho = '/' + key;
-                        firebase.database().ref(caminho).remove();
-                        break;
-                    }
-                }
-                var inserir = busca.push();
-                inserir.set({
-                    email : email,
-                    codigo : codigos,
-                    quantidade : quantidades
-                });
-            });
+         /*apaga o carrinho antigo e insere o novo*/
+         busca.once('value')
+             .then(function (snap) {
+                 for (var key in snap.val()) {
+                     var elemento = snap.val()[key];
+                     if(elemento.email.toString() === email){
+                         var caminho = '/' + key;
+                         firebase.database().ref(caminho).remove();
+                         break;
+                     }
+                 }
+                 if(carrinho.length > 0) {
+                     var inserir = busca.push();
+                     inserir.set({
+                         email: email,
+                         codigo: codigos,
+                         quantidade: quantidades,
+                         preco: precos
+                     });
+                 }
+             });
 
-        res.render('principal/orcamento.ejs',{carrinho : carrinho, valorTotal : valorTotal});
+         res.render('principal/orcamento.ejs',{carrinho : carrinho, valorTotal : valorTotal});
 
     });
 

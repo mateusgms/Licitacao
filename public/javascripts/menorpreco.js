@@ -7,10 +7,15 @@ $(document).ready(function() {
         var quantidade = $(this).find('td#quantidade');
         quantidade = quantidade.find('input').val();
         var codigo = $(this).find('td#codigo').html();
+        var preco = parseFloat($(this).find('td#preco').find('select').val());
         if(!(quantidade === undefined || codigo === undefined)) {
-            codigo = codigo.trim();
-            quantidade = quantidade.trim();
-            carrinho[codigo] = quantidade;
+            codigo = parseInt(codigo);
+            quantidade = parseInt(quantidade);
+            var novo = {
+                quantidade : quantidade,
+                preco : preco
+            };
+            carrinho[codigo] = novo;
         }
     });
 
@@ -18,21 +23,23 @@ $(document).ready(function() {
     $("#orcamento").click(function () {
         var codigos = [];
         var quantidades = [];
+        var precos = [];
 
         for (var codigo in carrinho) {
             codigos.push(codigo);
-            quantidades.push(carrinho[codigo]);
+            quantidades.push(carrinho[codigo]['quantidade']);
+            precos.push(carrinho[codigo]['preco']);
         }
 
         $("#codInput").val(codigos);
         $("#qtInput").val(quantidades);
+        $("#precoInput").val(precos);
     });
 
     atualizaListas();
 
     $("#novoItem").click(function(){
         Add();
-        imprimeCarrinho();
     });
 
     $("#selectGrupo").change(function() {
@@ -56,25 +63,40 @@ $(document).ready(function() {
     $(".modificaqt").on("change", function (e) {
 
         var raiz = $(e.target).parent().parent(); // tr
+
         var codigo = raiz.find('td#codigo').html().trim();
 
         var quantidade = raiz.find('td#quantidade');
         quantidade = parseInt(quantidade.find('input').val());
 
-        var valorIndex = raiz.find('td#valor');
-        var preco = parseFloat(raiz.find('td#preco').html());
+        var preco = parseFloat(raiz.find('td#preco').find('select').val());
 
-        carrinho[codigo] = quantidade;
+        var valorIndex = raiz.find('td#valor');
+
+        carrinho[codigo]['quantidade'] = quantidade;
         valorIndex.html(quantidade*preco);
+
+        console.log(carrinho);
     });
 
-});
+    $(".preco").on('change', function (e) {
 
-function imprimeCarrinho() {
-    for(var codigo in carrinho){
-        console.log(codigo + '-> ' + carrinho[codigo]);
-    }
-}
+        var raiz = $(e.target).parent().parent(); // tr
+
+        var codigo = raiz.find('td#codigo').html().trim();
+
+        var quantidade = raiz.find('td#quantidade');
+        quantidade = parseInt(quantidade.find('input').val());
+
+        var preco = parseFloat(raiz.find('td#preco').find('select').val());
+
+        var valorIndex = raiz.find('td#valor');
+
+        carrinho[codigo]['preco'] = preco;
+        valorIndex.html(quantidade*preco);
+    })
+
+});
 
 function atualizaAlimentos() {
 
@@ -142,7 +164,12 @@ function Add(){
         return;
     }
 
-    carrinho[codigoItem] = 0;
+    var novo = {
+        quantidade : 0,
+        preco : 9/*preco medio*/
+    };
+
+    carrinho[codigoItem] = novo;
 
     var tabela = $('#tblData');
 
@@ -158,6 +185,10 @@ function Add(){
     var colNome = document.createElement("td");
     colNome.innerHTML = 'Arroz';
     linha.appendChild(colNome);
+
+    var colEspecificacao = document.createElement("td");
+    colEspecificacao.innerHTML = 'Arroz tipo 1, estilo tio joao. Pre processado';
+    linha.appendChild(colEspecificacao);
 
     var colVencimento = document.createElement("td");
     colVencimento.innerHTML = '3';
@@ -177,7 +208,23 @@ function Add(){
 
     var colPreco = document.createElement("td");
     colPreco.setAttribute('id','preco');
-    colPreco.innerHTML = '10.50'
+    colPreco.setAttribute('class','preco');
+    var selectPreco = document.createElement('select');
+    selectPreco.onchange = AtualizaPreco;
+    var opcao1 = document.createElement('option');
+    opcao1.value = 8.5;
+    opcao1.innerHTML = 'R$ ' + 8.5 + ' (minimo)';
+    selectPreco.append(opcao1);
+    var opcao2 = document.createElement('option');
+    opcao2.value = 9;
+    opcao2.selected = 'selected';
+    opcao2.innerHTML = 'R$ ' + 9 + ' (medio)';
+    selectPreco.append(opcao2);
+    var opcao3 = document.createElement('option');
+    opcao3.value = 10;
+    opcao3.innerHTML = 'R$ ' + 10 + ' (maximo)';
+    selectPreco.append(opcao3);
+    colPreco.append(selectPreco);
     linha.appendChild(colPreco);
 
     var colQuantidade = document.createElement("td");
@@ -211,25 +258,38 @@ function Add(){
 
 function AtualizaValor() {
     var raiz = $(this).parent().parent(); // tr
-    var codigo = raiz.find('td#codigo').html();
+    var codigo = parseInt(raiz.find('td#codigo').html());
 
     var quantidade = raiz.find('td#quantidade');
     quantidade = parseInt(quantidade.find('input').val());
 
     var valorIndex = raiz.find('td#valor');
-    var preco = parseFloat(raiz.find('td#preco').html());
+    var preco = parseFloat(raiz.find('td#preco').find('select').val());
 
-    carrinho[codigo] = quantidade;
+    carrinho[codigo]['quantidade'] = quantidade;
     valorIndex.html(quantidade*preco);
 }
 
 function Delete(){
     var raiz = $(this).parent().parent(); //tr
-    var codigo = raiz.find('td#codigo').html().trim();
+    var codigo = parseInt(raiz.find('td#codigo').html());
     delete carrinho[codigo];
     raiz.remove();
 }
 
+function AtualizaPreco() {
+    var raiz = $(this).parent().parent(); // tr
+    var codigo = parseInt(raiz.find('td#codigo').html());
+
+    var quantidade = raiz.find('td#quantidade');
+    quantidade = parseInt(quantidade.find('input').val());
+
+    var valorIndex = raiz.find('td#valor');
+    var preco = parseFloat(raiz.find('td#preco').find('select').val());
+
+    carrinho[codigo]['preco'] = preco;
+    valorIndex.html(quantidade*preco);
+}
 
 
 

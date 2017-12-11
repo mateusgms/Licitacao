@@ -38,6 +38,7 @@
         <button id="orcamento">Gerar orçamento</button>
         <input style="display: none" name="codigo" id = "codInput">
         <input style="display: none" name="quantidade" id = "qtInput">
+        <input style="display: none" name="preco" id = "precoInput">
     </form>
 
         <div id="mydata">
@@ -47,12 +48,11 @@
                     <tr>
                         <th>Código</th>
                         <th>Nome Item</th>
+                        <th>Especificação</th>
                         <th>Data</th>
                         <th>Unidade</th>
                         <th>Região</th>
                         <th>Qtd. de preços</th>
-                        <!--<th>Menor Preço</th>
-                        <th>Preço Médio</th>-->
                         <th>Preço</th>
                         <th>Qtd. Compra</th>
                         <th>Valor Total</th>
@@ -64,13 +64,21 @@
                             <tr>
                                 <td id="codigo"> <%- carrinho[i].codigo %> </td>
                                 <td><%- carrinho[i].nome %></td>
+                                <td><%- carrinho[i].especificacao %></td>
                                 <td> <%- carrinho[i].vencimento %> </td>
                                 <td><%- carrinho[i].unidade %></td>
                                 <td><%- carrinho[i].regiao %></td>
                                 <td> <%- carrinho[i].qtdp %> </td>
-                                <td id = "preco"> <%- carrinho[i].preco %> </td>
+                                <td id = "preco" class = 'preco'>
+                                    <select>
+
+                                        <option <% if(parseFloat(carrinho[i].precoFinal) === parseFloat(carrinho[i].precoMinimo)){%> selected="selected" <%}%> value="<%- carrinho[i].precoMinimo %>">R$ <%-carrinho[i].precoMinimo%> (minimo)  </option>
+                                        <option <% if(parseFloat(carrinho[i].precoFinal) === parseFloat(carrinho[i].precoMedio)){%> selected="selected" <%}%> value="<%- carrinho[i].precoMedio %>">R$ <%-carrinho[i].precoMedio%> (medio)  </option>
+                                        <option <% if(parseFloat(carrinho[i].precoFinal) === parseFloat(carrinho[i].precoMaximo)){%> selected="selected" <%}%> value="<%- carrinho[i].precoMaximo %>">R$ <%-carrinho[i].precoMaximo%> (maximo)  </option>
+                                    </select>
+                                </td>
                                 <td id = 'quantidade' class ="modificaqt"><input type="number" min="0" style="width: 80px" value = '<%- carrinho[i].quantidade %>'> </td>
-                                <td id ="valor"> <%- carrinho[i].preco * carrinho[i].quantidade %> </td>
+                                <td id ="valor"> <%- carrinho[i].precoFinal * carrinho[i].quantidade %> </td>
                                 <td><img src="images/butaodeletar.png" class = 'deletar' width="20" height="20"> </td>
                             </tr>
                     <%}%>
