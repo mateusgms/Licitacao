@@ -9,13 +9,6 @@ var database = firebase.database();
 var email_usuario;
 var senha_usuario;
 
-function userAuthFirebase(userId, email, validoTermos) {
-    database.ref('users/' + userId).set({
-        email: email,
-        termos : validoTermos
-    });
-}
-
 router.get("/", function(req,res){
 
     var user = firebase.auth().currentUser;
@@ -68,12 +61,11 @@ router.route('/paginaPrincipal')
             .catch(function(error) {
                 var errorCode = error.code;
                 var errorMessage = error.message;
-                res.render('index.js');
+                res.render('index.ejs',{erro : 'erro'});
+            })
+            .then(function (t) {
+                res.render('opcoes.ejs');
             });
-
-        userAuthFirebase(newPostKey,email,false);
-
-        res.render('opcoes.ejs');
 });
 
 router.route('/logar')
@@ -144,7 +136,7 @@ router.route('/medio')
     })
     .post(function (req,res) {
 
-        var produtos = JSON.parse(fs.readFileSync("../prod.txt"));
+        var produtos = JSON.parse(fs.readFileSync("../prod.json"));
 
         var email = firebase.auth().currentUser.email.toString();
 
@@ -156,12 +148,14 @@ router.route('/medio')
                 var codigos = [];
                 var quantidades = [];
                 var precos = [];
+                var regioes = [];
                 for (var key in snap.val()) {
                     var elemento = snap.val()[key];
                     if(elemento.email.toString() === email){
                         codigos = elemento.codigo;
                         quantidades = elemento.quantidade;
                         precos = elemento.preco;
+                        regioes = elemento.regiao;
                         break;
                     }
                 }
@@ -169,19 +163,20 @@ router.route('/medio')
                 var carrinho = [];
 
                 for(var i = 0; i < codigos.length; i++){
-                    for(var j = 0; j < produtos['codigo'].length; j++){
-                        if(produtos['codigo'][j] == codigos[i]){
+                    for(var j = 0; j < produtos.length; j++){
+                        if(produtos[j]["CODIGO"].toString().trim() === codigos[i].toString().trim()
+                        && produtos[j]["REGIAO"].toString().trim() === regioes[i].toString().trim()){
                             var novo = {
-                                codigo : produtos['codigo'][j],
-                                nome : produtos['nome'][j],
-                                vencimento : produtos['tempo'][j],
-                                unidade : produtos['unidade'][j],
-                                regiao : produtos['regiao'][j],
-                                especificacao : produtos['especificacao'][j],
-                                qtdp : produtos['qtd itens'][j],
-                                precoMinimo : produtos['minimo'][j],
-                                precoMedio : produtos['medio'][j],
-                                precoMaximo : produtos['maximo'][j],
+                                codigo : produtos[j]['CODIGO'],
+                                nome : produtos[j]['NOME'],
+                                vencimento : produtos[j]['DATA'],
+                                unidade : produtos[j]['UNIDADE'],
+                                regiao : regioes[i],
+                                especificacao : produtos[j]['DESCRICAO'],
+                                qtdp : produtos[j]['QUANTIDADE'],
+                                precoMinimo : produtos[j]['MINIMO'],
+                                precoMedio : produtos[j]['MEDIA'],
+                                precoMaximo : produtos[j]['MAXIMO'],
                                 precoFinal : precos[i],
                                 quantidade : quantidades[i]
                             };
@@ -209,13 +204,14 @@ router.route('/precomedio/orcamento')
     })
     .post(function (req,res) {
 
-        var produtos = JSON.parse(fs.readFileSync("../prod.txt"));
+        var produtos = JSON.parse(fs.readFileSync("../prod.json"));
 
         var email = firebase.auth().currentUser.email.toString();
 
         var codigos = JSON.parse("[" + req.body.codigo + "]");
         var quantidades = JSON.parse("[" + req.body.quantidade + "]");
         var precos = JSON.parse("[" + req.body.preco + "]");
+        var regioes = req.body.regiao.split(',');
 
         var carrinho = [];
 
@@ -223,17 +219,18 @@ router.route('/precomedio/orcamento')
 
         /*cria carrinho*/
          for(var i = 0; i < codigos.length; i++){
-             for(var j = 0; j < produtos['codigo'].length; j++){
-                 if(produtos['codigo'][j] == codigos[i]){
+             for(var j = 0; j < produtos.length; j++){
+                 if(produtos[j]["CODIGO"].toString().trim() === codigos[i].toString().trim()
+                     && produtos[j]["REGIAO"].toString().trim() === regioes[i].toString().trim()){
                      var novo = {
-                         codigo : produtos['codigo'][j],
-                         nome : produtos['nome'][j],
-                         especificacao : produtos['especificacao'][j],
-                         vencimento : produtos['tempo'][j],
-                         unidade : produtos['unidade'][j],
-                         regiao : produtos['regiao'][j],
-                         qtdp : produtos['qtd itens'][j],
-                         preco : precos[i],
+                         codigo : produtos[j]['CODIGO'],
+                         nome : produtos[j]['NOME'],
+                         vencimento : produtos[j]['DATA'],
+                         unidade : produtos[j]['UNIDADE'],
+                         regiao : regioes[i],
+                         especificacao : produtos[j]['DESCRICAO'],
+                         qtdp : produtos[j]['QUANTIDADE'],
+                         precoFinal : precos[i],
                          quantidade : quantidades[i]
                      };
                      valorTotal += parseFloat(precos[i])*parseInt(quantidades[i]);
@@ -261,7 +258,8 @@ router.route('/precomedio/orcamento')
                          email: email,
                          codigo: codigos,
                          quantidade: quantidades,
-                         preco: precos
+                         preco: precos,
+                         regiao : regioes
                      });
                  }
              });

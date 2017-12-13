@@ -39,6 +39,7 @@
         <input style="display: none" name="codigo" id = "codInput">
         <input style="display: none" name="quantidade" id = "qtInput">
         <input style="display: none" name="preco" id = "precoInput">
+        <input style="display: none" name="regiao" id = "regiaoInput">
     </form>
 
         <div id="mydata">
@@ -63,15 +64,14 @@
                     <% for(var i = 0; i < carrinho.length; i++){%>
                             <tr>
                                 <td id="codigo"> <%- carrinho[i].codigo %> </td>
-                                <td><%- carrinho[i].nome %></td>
-                                <td><%- carrinho[i].especificacao %></td>
+                                <td><%- carrinho[i].nome.toLowerCase() %></td>
+                                <td><%- carrinho[i].especificacao.toLowerCase() %></td>
                                 <td> <%- carrinho[i].vencimento %> </td>
                                 <td><%- carrinho[i].unidade %></td>
-                                <td><%- carrinho[i].regiao %></td>
+                                <td id = "regiao" ><%- carrinho[i].regiao %></td>
                                 <td> <%- carrinho[i].qtdp %> </td>
                                 <td id = "preco" class = 'preco'>
                                     <select>
-
                                         <option <% if(parseFloat(carrinho[i].precoFinal) === parseFloat(carrinho[i].precoMinimo)){%> selected="selected" <%}%> value="<%- carrinho[i].precoMinimo %>">R$ <%-carrinho[i].precoMinimo%> (minimo)  </option>
                                         <option <% if(parseFloat(carrinho[i].precoFinal) === parseFloat(carrinho[i].precoMedio)){%> selected="selected" <%}%> value="<%- carrinho[i].precoMedio %>">R$ <%-carrinho[i].precoMedio%> (medio)  </option>
                                         <option <% if(parseFloat(carrinho[i].precoFinal) === parseFloat(carrinho[i].precoMaximo)){%> selected="selected" <%}%> value="<%- carrinho[i].precoMaximo %>">R$ <%-carrinho[i].precoMaximo%> (maximo)  </option>
