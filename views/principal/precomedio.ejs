@@ -2,15 +2,23 @@
 <html>
 <head>
     <title>Preco</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="/stylesheets/menorPreco.css">
+
 </head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src = "/javascripts/menorpreco.js"></script>
 
 <style>
+
     table {
         font-family: arial, sans-serif;
         border-collapse: collapse;
         width: 100%;
+        margin-top: 25px;
+    }
+
+    table thead {
+        background-color: rgba(19, 35, 47, 0.9);
     }
 
     td, th {
@@ -24,17 +32,24 @@
 
 <body>
 
-    <select id="selectGrupo">
-    </select>
+    <div id = "selectGrupoPai" class="sel">
+        <span class="sel__placeholder" data-placeholder="Grupo">Grupo</span>
 
-    <select id="selectProduto">
-    </select>
+    </div>
 
-    <select id="selectRegiao">
-    </select>
+    <div id = "selectProdutoPai" class="sel">
+        <span class="sel__placeholder" data-placeholder="Produto">Produto</span>
+
+    </div>
+
+    <div id = "selectRegiaoPai" class="sel">
+        <span class="sel__placeholder" data-placeholder="Região">Região</span>
+
+    </div>
 
     <button id="novoItem">New</button>
-    <form method="post" action="/precomedio/orcamento">
+
+    <form style="display: inline; float: right;" method="post" action="/precomedio/orcamento">
         <button id="orcamento">Gerar orçamento</button>
         <input style="display: none" name="codigo" id = "codInput">
         <input style="display: none" name="quantidade" id = "qtInput">
@@ -45,7 +60,7 @@
         <div id="mydata">
 
             <table id="tblData" border="1" cellpadding="2">
-                <thead>
+                <thead >
                     <tr>
                         <th>Código</th>
                         <th>Nome Item</th>
@@ -87,6 +102,10 @@
         </div>
 
 </body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+<script src = "/javascripts/menorpreco.js"></script>
 
 </html>
 

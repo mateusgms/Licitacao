@@ -116,15 +116,27 @@ $(document).ready(function() {
         $("#regiaoInput").val(regioes);
     });
 
-    atualizaListas();
+    criarListas();
 
     $("#novoItem").click(function(){
         Add();
     });
 
-    $("#selectGrupo").change(function() {
-        var val = $(this).val();
-        atualizaSelectProduto(val);
+    $('.sel__box__options').click(function() {
+
+        var txt = $(this).text();
+
+        $(this).siblings('.sel__box__options').removeClass('selected');
+        $(this).addClass('selected');
+
+        var $currentSel = $(this).closest('.sel');
+        $currentSel.children('.sel__placeholder').text(txt);
+
+        if($(this).parent().attr('id').toString().trim() === "selectGrupo"){
+            atualizaSelectProduto(txt);
+            atualizaSelectRegiao(-1);
+        }
+
     });
 
     $('.deletar').click(function(e){
@@ -183,67 +195,110 @@ $(document).ready(function() {
 
 });
 
+$('.sel').click(function() {
+    $(this).toggleClass('active');
+});
+
 function atualizaSelectRegiao(produto) {
 
-    produto = parseInt(produto);
-
-    var prim = true;
+    var codigo = parseInt(produto);
 
     var $el = $("#selectRegiao");
-    $el.empty(); // remove old options
+    if($el) $el.remove(); // remove opcoes antigas
 
     var conjunto = new Set();
 
+    var $pai = $('#selectRegiaoPai').closest('.sel');
+    $pai.children('.sel__placeholder').text('Região');
+
+    if(produto === -1) return;
+
+    var div = document.createElement("div");
+    div.setAttribute('id','selectRegiao');
+    div.setAttribute('class','sel__box');
+
     for(var i = 0; i < json.length; i++){
-        if(produto === parseInt(json[i]["CODIGO"])){
+        if(codigo === parseInt(json[i]["CODIGO"])){
             if(conjunto.has(json[i]["REGIAO"])) continue;
             conjunto.add(json[i]["REGIAO"]);
-            if(prim){
-                prim = false;
-                $el.append($("<option selected='selected'></option>")
-                    .attr("value", json[i]["REGIAO"]).text(json[i]["REGIAO"]));
-            }
-            else{
-                $el.append($("<option></option>")
-                    .attr("value", json[i]["REGIAO"]).text(json[i]["REGIAO"]));
-            }
+            var span = document.createElement("span");
+            span.setAttribute('class',"sel__box__options");
+            span.setAttribute('onclick',"atualizaRegiaoSelecionada(event)");
+            span.innerHTML = json[i]["REGIAO"];
+            div.append(span);
         }
     }
+
+    $('#selectRegiaoPai').append(div);
+
 }
 
 function atualizaSelectProduto(tipo) {
 
-    tipo = tipo.toUpperCase();
-
-    var prim = true;
+    if(tipo !== -1) tipo = tipo.toUpperCase();
 
     var $el = $("#selectProduto");
-    $el.empty(); // remove old options
+    if($el) $el.remove(); // remove opcoes antigas
+
+    var $pai = $('#selectProdutoPai').closest('.sel');
+    $pai.children('.sel__placeholder').text('Produto');
 
     var conjunto = new Set();
 
+    var div = document.createElement("div");
+    div.setAttribute('id','selectProduto');
+    div.setAttribute('class','sel__box');
+
     for(var i = 0; i < json.length; i++){
-        if(tipo === json[i]["TIPO"]){
+        if(tipo === -1 || tipo === json[i]["TIPO"]){
             if(conjunto.has(json[i]["CODIGO"])) continue;
             conjunto.add(json[i]["CODIGO"]);
-            if(prim){
-                prim = false;
-                $el.append($("<option selected='selected'></option>")
-                    .attr("value", json[i]["CODIGO"]).text(json[i]["NOME"].toLowerCase()));
-                atualizaSelectRegiao(json[i]["CODIGO"]);
-            }
-            else{
-                $el.append($("<option></option>")
-                    .attr("value", json[i]["CODIGO"]).text(json[i]["NOME"].toLowerCase()));
-            }
+            var span = document.createElement("span");
+            span.setAttribute('class',"sel__box__options");
+            span.setAttribute('onclick',"atualizaProdutoSelecionado(event)");
+            span.innerHTML = json[i]["NOME"].toLowerCase();
+            span.setAttribute('codigo',json[i]["CODIGO"]);
+            div.append(span);
         }
     }
 
+    $('#selectProdutoPai').append(div);
+
 }
 
-function atualizaListas() {
+function atualizaRegiaoSelecionada(e) {
+    var raiz = $(e.target);
 
-    /* atualiza todas as listas com o primeiro elemento ja selecionado*/
+    var txt = raiz.text().toString().trim();
+
+    raiz.siblings('.sel__box__options').removeClass('selected').removeAttr('id');
+    raiz.addClass('selected');
+    raiz.attr('id', 'selecionadoRegiao');
+
+    var $currentSel = raiz.closest('.sel');
+    $currentSel.children('.sel__placeholder').text(txt);
+}
+
+function atualizaProdutoSelecionado(e) {
+
+    var raiz = $(e.target);
+
+    var txt = raiz.text().toString().trim();
+
+    var codigo = raiz.attr('codigo');
+
+    raiz.siblings('.sel__box__options').removeClass('selected').removeAttr('id');
+    raiz.addClass('selected');
+    raiz.attr('id', 'selecionadoProduto');
+
+    var $currentSel = raiz.closest('.sel');
+    $currentSel.children('.sel__placeholder').text(txt);
+
+    atualizaSelectRegiao(codigo);
+
+}
+
+function criarListas() {
 
     var todos = new Set();
 
@@ -251,32 +306,48 @@ function atualizaListas() {
         todos.add(json[i]["TIPO"]);
     }
 
-    var opcoes = Array.from(todos);
+    var tipos = Array.from(todos);
 
     var $el = $("#selectGrupo");
-    $el.empty(); // remove old options
-    for(var i = 0; i < opcoes.length; i++){
-        if(i === 0){
-            $el.append($("<option selected='selected'></option>")
-                .attr("value", opcoes[i].toLowerCase()).text(opcoes[i].toLowerCase()));
-            atualizaSelectProduto(opcoes[i]);
-        }
-        else{
-            $el.append($("<option></option>")
-                .attr("value", opcoes[i].toLowerCase()).text(opcoes[i].toLowerCase()));
-        }
+    if($el) $el.remove(); // remove opcoes antigas
+
+    var div = document.createElement("div");
+    div.setAttribute('id','selectGrupo');
+    div.setAttribute('class','sel__box');
+
+    for(var i = 0; i < tipos.length; i++){
+        var span = document.createElement("span");
+        span.setAttribute('class',"sel__box__options");
+        span.innerHTML = tipos[i].toLowerCase();
+        div.append(span);
     }
+
+    $('#selectGrupoPai').append(div);
+
+    atualizaSelectProduto(-1);
 
 }
 
 function Add(){
 
-    var produto = parseInt($('#selectProduto').val());
-    var regiao = $('#selectRegiao').val().toString().trim();
+    var produto = $('#selecionadoProduto');
+    var regiao = $('#selecionadoRegiao');
+
+    if(!produto.length){
+        alert("Selecione o Produto");
+        return;
+    }
+    if(!regiao.length){
+        alert("Selecione a Região");
+        return;
+    }
+
+
+    regiao = regiao.html().toString().trim();
 
     /*busca no json com esses valores de cima e atualiza embaixo a tabela*/
 
-    var codigoItem = produto;
+    var codigoItem = parseInt(produto.attr('codigo'));
 
     var id = [codigoItem,regiao];
 
@@ -289,7 +360,7 @@ function Add(){
     var item;
 
     for(var i = 0; i < json.length; i++){
-        if(parseInt(json[i]["CODIGO"]) === produto && json[i]["REGIAO"].toString().trim() === regiao){
+        if(parseInt(json[i]["CODIGO"]) === codigoItem && json[i]["REGIAO"].toString().trim() === regiao){
             item = json[i];
         }
     }
