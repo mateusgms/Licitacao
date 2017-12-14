@@ -6,16 +6,81 @@
 
 body {
     background: #eeebe7;
-    padding: 80px 20px;
+    padding: 40px 20px;
     text-align: center;
+}
+
+form {
+    display: inline-block;
+    text-align: center;
+}
+
+
+/*=============== TABLE =================*/
+
+#tblData {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#tblData th {
+    text-align: center;
+    background-color: #eeeeee;
+}
+
+#tblData td {
+    height: 20px;
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+    background-color: #eeeeee;
+}
+
+#tblData tr {
+    height: 20px;
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    background-color: #eeeeee;
+}
+
+/*!*  Define the background color for all the ODD background rows  *!*/
+/*#tblData tr:nth-child(odd){*/
+    /*background: #f2f2f2;*/
+/*}*/
+/*!*  Define the background color for all the EVEN background rows  *!*/
+/*#tblData tr:nth-child(even){*/
+    /*background: #ddd;*/
+/*}*/
+
+.butao {
+    font-family: 'Quicksand';
+    width: 150px;
+    height: 50px;
+    margin-top: 20px;
+    font-size: 1.0rem;
+    margin-left: 20px;
+    background-color: Transparent;
+    text-align: center;
+    border: groove;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+
+.butao:hover{
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px 8px #888888;
 }
 
 /* ===== Select Box ===== */
 .sel {
     font-size: 0.8rem;
     display: inline-block;
-    margin: 1em 0em 3em 2em;
-    width: 220px;
+    margin: 3em 0em 1em 2em;
+    width: 300px;
     background-color: transparent;
     position: relative;
     cursor: pointer;

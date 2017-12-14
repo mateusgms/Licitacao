@@ -118,7 +118,7 @@ $(document).ready(function() {
 
     criarListas();
 
-    $("#novoItem").click(function(){
+    $("#adicionarItem").click(function(){
         Add();
     });
 
@@ -169,7 +169,7 @@ $(document).ready(function() {
 
         carrinho[id]['quantidade'] = quantidade;
 
-        valorIndex.html(quantidade*preco);
+        valorIndex.html("R$ " + quantidade*preco);
     });
 
     $(".preco").on('change', function (e) {
@@ -190,7 +190,7 @@ $(document).ready(function() {
         var id = [codigo,regiao];
 
         carrinho[id]['preco'] = preco;
-        valorIndex.html(quantidade*preco);
+        valorIndex.html("R$ " + quantidade*preco);
     })
 
 });
@@ -449,7 +449,7 @@ function Add(){
 
     var colValor = document.createElement("td");
     colValor.setAttribute('id', 'valor');
-    colValor.innerHTML = 0;
+    colValor.innerHTML = "R$ 0";
     linha.appendChild(colValor);
 
     var colDeletar = document.createElement("td");
@@ -479,7 +479,7 @@ function AtualizaValor() {
     var id = [codigo,regiao];
 
     carrinho[id]['quantidade'] = quantidade;
-    valorIndex.html(quantidade*preco);
+    valorIndex.html("R$ " + quantidade*preco);
 }
 
 function Delete(){
@@ -509,7 +509,7 @@ function AtualizaPreco() {
     var id = [codigo,regiao];
 
     carrinho[id]['preco'] = preco;
-    valorIndex.html(quantidade*preco);
+    valorIndex.html("R$ " + quantidade*preco);
 }
 
 
