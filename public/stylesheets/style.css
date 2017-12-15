@@ -14,23 +14,29 @@ body {
 
 a {
   text-decoration: none;
-  color: #1ab188;
+  color: rgba(19, 35, 47, 0.9);
   -webkit-transition: .5s ease;
   transition: .5s ease;
 }
 
 a:hover {
-  color: #179b77;
+  color: rgba(19, 35, 47, 0.9);
+}
+
+#logo{
+    height:150px;
+    width: 280px;
+    margin-bottom: 20px;
 }
 
 .form {
-  background: rgba(19, 35, 47, 0.9);
+  background: #eeebe7;
   padding: 40px;
   max-width: 600px;
   margin: 40px auto;
   border-radius: 4px;
-  -webkit-box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
-  box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+  -webkit-box-shadow: 0 4px 10px 4px #eeebe7;
+  box-shadow: 0 4px 10px 4px #eeebe7;
 }
 
 .tab-group {
@@ -50,7 +56,7 @@ a:hover {
   text-decoration: none;
   padding: 15px;
   background: rgba(160, 179, 176, 0.25);
-  color: #a0b3b0;
+  color: rgba(19, 35, 47, 0.9);
   font-size: 20px;
   float: left;
   width: 50%;
@@ -61,12 +67,12 @@ a:hover {
 }
 
 .tab-group li a:hover {
-  background: #179b77;
+  background: rgba(19, 35, 47, 0.9);
   color: #ffffff;
 }
 
 .tab-group .active a {
-  background: #1ab188;
+  background: rgba(19, 35, 47, 0.9);
   color: #ffffff;
 }
 
@@ -76,7 +82,7 @@ a:hover {
 
 h1 {
   text-align: center;
-  color: #ffffff;
+  color: rgba(19, 35, 47, 0.9);
   font-weight: 300;
   margin: 0 0 40px;
 }
@@ -86,7 +92,7 @@ label {
   -webkit-transform: translateY(6px);
   transform: translateY(6px);
   left: 13px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(19, 35, 47, 0.9);
   -webkit-transition: all 0.25s ease;
   transition: all 0.25s ease;
   -webkit-backface-visibility: hidden;
@@ -96,7 +102,7 @@ label {
 
 label .req {
   margin: 2px;
-  color: #1ab188;
+  color: rgba(19, 35, 47, 0.9);
 }
 
 label.active {
@@ -111,7 +117,7 @@ label.active .req {
 }
 
 label.highlight {
-  color: #ffffff;
+  color: rgba(19, 35, 47, 0.9);
 }
 
 input, textarea {
@@ -122,8 +128,8 @@ input, textarea {
   padding: 5px 10px;
   background: none;
   background-image: none;
-  border: 1px solid #a0b3b0;
-  color: #ffffff;
+  border: 1px solid rgba(19, 35, 47, 0.9);
+  color: rgba(19, 35, 47, 0.9);
   border-radius: 0;
   -webkit-transition: border-color .25s ease, -webkit-box-shadow .25s ease;
   transition: border-color .25s ease, -webkit-box-shadow .25s ease;
@@ -133,11 +139,11 @@ input, textarea {
 
 input:focus, textarea:focus {
   outline: 0;
-  border-color: #1ab188;
+  border-color: rgba(19, 35, 47, 0.9);
 }
 
 textarea {
-  border: 2px solid #a0b3b0;
+  border: 2px solid rgba(19, 35, 47, 0.9);
   resize: vertical;
 }
 
@@ -163,15 +169,16 @@ textarea {
 }
 
 .button {
+  cursor: pointer;
   border: 0;
   outline: none;
   border-radius: 0;
   padding: 15px 0;
-  font-size: 2rem;
+  font-size: 1.3rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: .1em;
-  background: #1ab188;
+  background: rgba(19, 35, 47, 0.9);
   color: #ffffff;
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
@@ -179,15 +186,16 @@ textarea {
 }
 
 .button:hover, .button:focus {
-  background: #179b77;
+  background: rgba(19, 35, 47, 0.9);
 }
 
 .button-block {
   display: block;
-  width: 100%;
+  width: 30%;
+  margin-left: 70%;
 }
 
 .forgot {
   margin-top: -20px;
-  text-align: right;
+  text-align: left;
 }

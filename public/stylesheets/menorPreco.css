@@ -6,7 +6,7 @@
 
 body {
     background: #eeebe7;
-    padding: 40px 20px;
+    padding: 15px 20px;
     text-align: center;
 }
 
@@ -15,8 +15,39 @@ form {
     text-align: center;
 }
 
+.escondido{
+    display: none;
+}
+
+#logo{
+    height:100px;
+    width: 220px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.material-icons, .icon-text {
+    vertical-align: middle;
+}
+
+.tblHeader{
+    margin: auto;
+    margin-bottom: 35px;"
+}
 
 /*=============== TABLE =================*/
+
+/*  Define the background color for all the ODD background rows  */
+#tblbody tr:nth-child(odd){
+    background: #dddddd;
+}
+/*  Define the background color for all the EVEN background rows  */
+#tblbody tr:nth-child(even){
+    background: transparent;
+}
 
 #tblData {
     font-family: arial, sans-serif;
@@ -26,33 +57,28 @@ form {
 
 #tblData th {
     text-align: center;
-    background-color: #eeeeee;
+    background-color: transparent;
 }
 
 #tblData td {
     height: 20px;
-    border: 1px solid #dddddd;
+    border: 1px solid rgba(19, 35, 47, 0.9);
     text-align: center;
     padding: 8px;
-    background-color: #eeeeee;
+    background-color: transparent;
 }
 
 #tblData tr {
     height: 20px;
-    border: 1px solid #dddddd;
+    border: 1px solid rgba(19, 35, 47, 0.9);
     text-align: left;
     padding: 8px;
-    background-color: #eeeeee;
+    background-color: transparent;
 }
 
-/*!*  Define the background color for all the ODD background rows  *!*/
-/*#tblData tr:nth-child(odd){*/
-    /*background: #f2f2f2;*/
-/*}*/
-/*!*  Define the background color for all the EVEN background rows  *!*/
-/*#tblData tr:nth-child(even){*/
-    /*background: #ddd;*/
-/*}*/
+.deletar{
+    cursor: pointer;
+}
 
 .butao {
     font-family: 'Quicksand';

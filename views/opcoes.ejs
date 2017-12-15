@@ -5,30 +5,45 @@
     <link rel='stylesheet' href='/stylesheets/opcoes.css' />
 </head>
 <body>
+    <div id = "areaPrincipal">
 
-<h2> Escolha seu preço de referência</h2>
+        <table style="margin: auto;">
+            <th>
+                <img id = "logo" src="/images/logo.png"/>
+            </th>
+        </table>
 
-<div class="hot-container">
-    <p>
-        <form >
-            <button class="btn">Calcule seu Preço</button>
-        </form>
-        <form >
-            <button class="btn">Tabela Oficial</button>
-        </form>
-    </p>
+        <h2> Escolha seu preço de referência</h2>
 
-    <p>
+        <table id = "tbl">
+            <tr>
+                <td>
+                    <form action="/medio" method="post">
+                        <button type = "submit">Preço Médio Transacional</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="" method="">
+                        <button type = "submit">Tabela Oficial</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form action="" method="">
+                        <button type = "submit">Calcule seu Preço</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/sair" method="post">
+                        <button type = "submit" >Sair</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
 
-        <form action="/medio" method="post">
-            <button type = "submit" id = "aceitar" class="btn">Preço Médio Transacional</button>
-        </form>
-        <form action="/sair" method="post">
-            <button class="btn btn-red">Sair</button>
-        </form>
-    </p>
-</div>
 
+    </div>
 </body>
 
 </html>

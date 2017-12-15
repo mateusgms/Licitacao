@@ -13,9 +13,15 @@
 <body>
 <div class="form">
 
+  <table style="margin: auto;">
+      <th>
+          <img id = "logo" src="/images/logo.png"/>
+      </th>
+  </table>
+
   <ul class="tab-group">
-    <li class="tab active"><a href="#signup">Criar Conta</a></li>
-    <li class="tab"><a href="#login">Entrar</a></li>
+    <li class="tab active"><a href="#signup">Novo Usuário</a></li>
+    <li class="tab"><a href="#login">Já Possuo Conta</a></li>
   </ul>
 
   <div class="tab-content">
@@ -26,19 +32,19 @@
 
         <div class="field-wrap">
           <label>
-            Endereço de Email<span class="req">*</span>
+            <span class="req"></span>
           </label>
-          <input type="email" name = "criar_email" required autocomplete="off"/>
+          <input placeholder="Endereço de Email*" type="email" name = "criar_email" required/>
         </div>
 
         <div class="field-wrap">
           <label>
-            Senha<span class="req">*</span>
+            <span class="req"></span>
           </label>
-          <input type="password" name = "criar_senha" required autocomplete="off"/>
+          <input placeholder="Senha*" type="password" name = "criar_senha" required autocomplete="off"/>
         </div>
 
-        <button type="submit" class="button button-block"/>Criar Conta</button>
+        <button type="submit" class="button button-block"/>Criar</button>
 
       </form>
 
@@ -51,16 +57,16 @@
 
         <div class="field-wrap">
           <label>
-              Endereço de Email<span class="req">*</span>
+              <span class="req"></span>
           </label>
-          <input type="email" name = "email_login" required autocomplete="off"/>
+          <input placeholder="Endereço de Email*" type="email" name = "email_login" required/>
         </div>
 
         <div class="field-wrap">
           <label>
-            Senha<span class="req">*</span>
+            <span class="req"></span>
           </label>
-          <input type="password" name = "senha_login" required autocomplete="off"/>
+          <input placeholder="Senha*" type="password" name = "senha_login" required autocomplete="off"/>
         </div>
 
         <p class="forgot"><a href="#">Esqueceu sua senha?</a></p>

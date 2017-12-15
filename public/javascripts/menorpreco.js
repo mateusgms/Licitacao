@@ -122,6 +122,40 @@ $(document).ready(function() {
         Add();
     });
 
+    $("#limparLista").click(function () {
+        var raiz =  $('#tblData');
+        var deletar = raiz.find('tbody');
+
+        deletar.remove();
+
+        var tbody = document.createElement("tbody");
+        tbody.setAttribute('id','tblbody');
+        raiz.append(tbody);
+
+        carrinho = {};
+
+    });
+
+    $("#salvarLista").click(function () {
+        var codigos = [];
+        var quantidades = [];
+        var precos = [];
+        var regioes = [];
+
+        for (var key in carrinho) {
+            var chave = key.split(',');
+            codigos.push(chave[0]);
+            regioes.push(chave[1]);
+            quantidades.push(carrinho[key]['quantidade']);
+            precos.push(carrinho[key]['preco']);
+        }
+
+        $("#codInputS").val(codigos);
+        $("#qtInputS").val(quantidades);
+        $("#precoInputS").val(precos);
+        $("#regiaoInputS").val(regioes);
+    });
+
     $('.sel__box__options').click(function() {
 
         var txt = $(this).text();
@@ -453,11 +487,10 @@ function Add(){
     linha.appendChild(colValor);
 
     var colDeletar = document.createElement("td");
-    var imgDeletar = document.createElement('img');
-    imgDeletar.class = 'btnDelete';
-    imgDeletar.style = 'width: 20px';
-    imgDeletar.src = 'images/butaodeletar.png';
+    var imgDeletar = document.createElement('i');
+    imgDeletar.setAttribute('class', 'material-icons deletar');
     imgDeletar.onclick = Delete;
+    imgDeletar.innerHTML = "&#xE92B;";
     colDeletar.append(imgDeletar);
     linha.appendChild(colDeletar);
 

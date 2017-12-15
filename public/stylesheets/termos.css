@@ -12,17 +12,13 @@ body {
     font-family: 'Titillium Web', sans-serif;
 }
 
-h2{
-    text-align: center;
-}
-
 button {
     font-family: 'Quicksand';
-    width: 200px;
-    height: 100px;
-    margin-top: 20px;
-    font-size: 1.3rem;
-    margin-left: 20px;
+    width: 150px;
+    height: 50px;
+    font-size: 1.0rem;
+    margin-top: 15px;
+    margin-left: 65%;
     background-color: Transparent;
     text-align: center;
     border: groove;
@@ -31,14 +27,8 @@ button {
     outline:none;
 }
 
-button:hover{
-    border: 1px solid;
-    padding: 10px;
-    box-shadow: 5px 10px 8px #888888;
-}
-
-#tbl{
-    margin: auto;
+h1{
+    text-align: center;
 }
 
 #areaPrincipal {
@@ -51,12 +41,13 @@ button:hover{
     box-shadow: 0 4px 10px 4px #eeebe7;
 }
 
-#logo{
-    height:150px;
-    width: 280px;
-    margin-bottom: 20px;
+#termos{
+    height:300px;
+    width:100%;
+    border:1px solid #ccc;
+    overflow:auto;"
 }
 
-.material-icons, .icon-text {
-    vertical-align: middle;
+#check{
+    margin-top: 15px;
 }
