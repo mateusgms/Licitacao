@@ -376,7 +376,6 @@ function Add(){
         return;
     }
 
-
     regiao = regiao.html().toString().trim();
 
     /*busca no json com esses valores de cima e atualiza embaixo a tabela*/

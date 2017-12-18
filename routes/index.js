@@ -257,7 +257,7 @@ router.route('/precomedio/orcamento')
                  }
              });
 
-         res.render('principal/orcamento.ejs',{carrinho : carrinho, valorTotal : valorTotal});
+         res.render('principal/orcamentomedio.ejs',{carrinho : carrinho, valorTotal : valorTotal});
 
     });
 
@@ -361,6 +361,39 @@ router.route('/precomedio/salvar')
 
         res.render('principal/precomedio.ejs',{carrinho : carrinho});
 
+    });
+
+router.route('/tabelaOficial')
+    .get(function (req,res) {
+        var user = firebase.auth().currentUser;
+
+        if(user){
+            res.render('opcoes.ejs');
+        }
+        else {
+            res.render('index.ejs');
+        }
+    })
+    .post(function (req,res) {
+
+        carrinho = [];
+
+        res.render('principal/tabelaOficial.ejs',{carrinho : carrinho});
+    });
+
+router.route('/calculePreco')
+    .get(function (req,res) {
+        var user = firebase.auth().currentUser;
+
+        if(user){
+            res.render('opcoes.ejs');
+        }
+        else {
+            res.render('index.ejs');
+        }
+    })
+    .post(function (req,res) {
+       res.render('principal/calcule')
     });
 
 module.exports = router;

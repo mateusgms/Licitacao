@@ -5,8 +5,8 @@ $(document).on("click", "#pdf", function () {
     doc.setFontType('bold');
     doc.text(30, 50, 'Titulo da Pagina');
 
-    doc.setFont('courier')
-    doc.setFontType('normal')
+    doc.setFont('courier');
+    doc.setFontType('normal');
     doc.text("Texto da pagina", 30, 70);
 
     var columns = ["Código", "Nome", "Descrição",
