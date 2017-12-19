@@ -9,6 +9,13 @@
 </head>
 <body>
 
+    <div class="header">
+        <img id = "logo" src="/images/logo.png"/>
+        <form method="get" action="/paginaPrincipal" >
+            <button style="font-size: 20px" class = "butao" > <i class="material-icons">&#xE317;</i> Voltar</button>
+        </form>
+    </div>
+
     <table style="margin: auto">
         <tr>
             <th>
@@ -45,6 +52,16 @@
             </th>
             <th>
                 <button id = "adicionarItem" class="butao">Adicionar item</button>
+            </th>
+            <th>
+                <form method="post" action="/calcule/orcamento">
+                    <input class = "escondido" name="item" id = "itemInput">
+                    <input class = "escondido" name="razao" id = "razaoInput">
+                    <input class = "escondido" name="CNPJ" id = "CNPJInput">
+                    <input class = "escondido" name="utilizado" id = "utilizadoInput">
+                    <input class = "escondido" name="preco" id = "precoInput">
+                    <button id = "orcamento" class="butao">Gerar Orçamento</button>
+                </form>
             </th>
         </tr>
     </table>

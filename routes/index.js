@@ -363,7 +363,25 @@ router.route('/precomedio/salvar')
 
     });
 
-router.route('/tabelaOficial')
+router.all('/tabelaOficial',function (req,res) {
+    carrinho = [];
+
+    res.render('principal/tabelaOficial.ejs',{carrinho : carrinho});
+});
+
+router.all('/calculePreco',function (req,res) {
+    var user = firebase.auth().currentUser;
+
+    if(user){
+        res.render('principal/calcule')
+    }
+    else {
+        res.render('index.ejs');
+    }
+
+});
+
+router.route('/tabelaOficial/orcamento')
     .get(function (req,res) {
         var user = firebase.auth().currentUser;
 
@@ -376,12 +394,70 @@ router.route('/tabelaOficial')
     })
     .post(function (req,res) {
 
-        carrinho = [];
+        //var produtos = JSON.parse(fs.readFileSync("../tabelaOficial.json"));
 
-        res.render('principal/tabelaOficial.ejs',{carrinho : carrinho});
+        var email = firebase.auth().currentUser.email.toString();
+
+        var codigos = JSON.parse("[" + req.body.codigo + "]");
+        var quantidades = JSON.parse("[" + req.body.quantidade + "]");
+        var gov = JSON.parse("[" + req.body.gov + "]");
+
+        var carrinho = [];
+
+        var valorTotal = 0;
+
+        /*cria carrinho*/
+        for(var i = 0; i < codigos.length; i++){
+            for(var j = 0; j < produtos.length; j++){
+                if(produtos[j]["CODIGO"].toString().trim() === codigos[i].toString().trim()
+                    && produtos[j]["gov"].toString().trim() === gov[i].toString().trim()){
+                    var novo = {
+                        codigo : produtos[j]['CODIGO'],
+                        nome : produtos[j]['NOME'],
+                        especificacao : produtos[j]['DESCRICAO'],
+                        vencimento : produtos[j]['DATA'],
+                        unidade : produtos[j]['UNIDADE'],
+                        gov : gov[i],
+                        preco: produtos[j]['preco'],
+                        quantidade : quantidades[i],
+                        link : produtos[j]['link']
+                    };
+                    valorTotal += parseFloat(precos[i])*parseInt(quantidades[i]);
+                    carrinho.push(novo);
+                }
+            }
+        }
+
+        // var busca = firebase.database().ref('/');
+        //
+        // /*apaga o carrinho antigo e insere o novo*/
+        // busca.once('value')
+        //     .then(function (snap) {
+        //         for (var key in snap.val()) {
+        //             var elemento = snap.val()[key];
+        //             if(elemento.email.toString() === email){
+        //                 var caminho = '/' + key;
+        //                 firebase.database().ref(caminho).remove();
+        //                 break;
+        //             }
+        //         }
+        //         if(carrinho.length > 0) {
+        //             var inserir = busca.push();
+        //             inserir.set({
+        //                 email: email,
+        //                 codigo: codigos,
+        //                 quantidade: quantidades,
+        //                 preco: precos,
+        //                 regiao : regioes
+        //             });
+        //         }
+        //     });
+
+        res.render('principal/orcamentoTabelaOficial.ejs',{carrinho : carrinho, valorTotal : valorTotal});
+
     });
 
-router.route('/calculePreco')
+router.route('/calcule/orcamento')
     .get(function (req,res) {
         var user = firebase.auth().currentUser;
 
@@ -393,7 +469,31 @@ router.route('/calculePreco')
         }
     })
     .post(function (req,res) {
-       res.render('principal/calcule')
+
+        //var produtos = JSON.parse(fs.readFileSync("../tabelaOficial.json"));
+
+        console.log(req.body);
+
+        var item = req.body.item;
+        var razoes = JSON.parse("[" + req.body.razao + "]");
+        var CNPJs = JSON.parse("[" + req.body.CNPJ + "]");
+        var utilizados = JSON.parse("[" + req.body.utilizado + "]");
+        var precos = JSON.parse("[" + req.body.preco + "]");
+
+        var carrinho = [];
+
+        for(var i = 0; i < razoes.length; i++){
+            var novo = {
+                razao : razoes[i],
+                CNPJ : CNPJs[i],
+                utilizado : utilizados[i],
+                preco : precos[i]
+            };
+            carrinho.push(novo);
+        }
+
+        res.render('principal/orcamentoCalcula.ejs',{carrinho : carrinho, item : item});
+
     });
 
 module.exports = router;

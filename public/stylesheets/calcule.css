@@ -52,6 +52,21 @@ input:focus ~ label, input:valid ~ label {
     cursor: pointer;
 }
 
+
+.material-icons, .icon-text {
+    vertical-align: middle;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+#logo{
+    height:100px;
+    width: 220px;
+}
+
 .minibutao{
     font-family: 'Quicksand';
     width: 100px;
@@ -68,6 +83,18 @@ input:focus ~ label, input:valid ~ label {
 .minibutao:hover{
     border: 1px solid;
     box-shadow: 5px 10px 8px #888888;
+}
+
+.escondido{
+    display: none;
+}
+
+.verde{
+    color : green;
+}
+
+.red{
+    color: red;
 }
 
 .butao {

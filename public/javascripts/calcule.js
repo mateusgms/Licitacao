@@ -1,5 +1,12 @@
 var menor = 75;
 var maior = 300;
+var maiorvalor = 500;
+
+var menorOficial = 75;
+var maiorOficial = 300;
+
+var item;
+
 $(document).ready(function() {
 
     $("#adicionarItem").click(function(){
@@ -9,6 +16,42 @@ $(document).ready(function() {
     $("#calcular").click(function () {
        AtualizaLista();
        AtualizaSegundaTabela();
+    });
+
+    $("#orcamento").click(function () {
+
+        var CNPJs = [];
+        var razoes = [];
+        var precos = [];
+        var utilizados = [];
+
+        $("#tabelaPrincipal tbody tr").each(function () {
+
+            var CNPJ = $(this).find("td#cnpj").html();
+
+            var razao = $(this).find("td#razao").html();
+
+            var preco = parseFloat($(this).find("td#preco").html());
+
+            var ultiliza = $(this).find("td#utiliza").find('i').html();
+
+            if(ultiliza === 'done') ultiliza = 1;
+            else ultiliza = 0;
+
+            CNPJs.push(CNPJ);
+            razoes.push(razao);
+            precos.push(preco);
+            utilizados.push(ultiliza);
+        });
+
+        console.log(CNPJs);
+
+        $("#razaoInput").val(razoes);
+        $("#CNPJInput").val(CNPJs);
+        $("#utilizadoInput").val(utilizados);
+        $("#precoInput").val(precos);
+        $("#itemInput").val(item);
+
     });
 
 });
@@ -25,6 +68,12 @@ function Add() {
         alert("Insira todos os itens");
     }
 
+    item = nomeItem;
+
+    maiorvalor = Math.max(maiorvalor,precoItem);
+
+    $('#slider-range').slider( "option", "max", maiorvalor);
+
     $("#nomeItem").attr("readonly", true);
 
     var tabela = $("#tabelaPrincipal");
@@ -34,10 +83,12 @@ function Add() {
     var linha = document.createElement("tr");
 
     var colCNPJ = document.createElement("td");
+    colCNPJ.setAttribute('id','cnpj');
     colCNPJ.innerHTML = CNPJ;
     linha.appendChild(colCNPJ);
 
     var colRazaoSocial = document.createElement("td");
+    colRazaoSocial.setAttribute('id','razao');
     colRazaoSocial.innerHTML = razaoSocial;
     linha.appendChild(colRazaoSocial);
 
@@ -49,8 +100,15 @@ function Add() {
     var colUtilizando = document.createElement("td");
     colUtilizando.setAttribute('id','utiliza');
     var imgDeletar = document.createElement('i');
-    imgDeletar.setAttribute('class', 'material-icons');
-    imgDeletar.innerHTML = "done";
+
+    if(menorOficial <= precoItem && precoItem <= maiorOficial){
+        imgDeletar.setAttribute('class', 'material-icons verde');
+        imgDeletar.innerHTML = "done";
+    }
+    else{
+        imgDeletar.setAttribute('class', 'material-icons red');
+        imgDeletar.innerHTML = "clear";
+    }
     colUtilizando.append(imgDeletar);
     linha.appendChild(colUtilizando);
 
@@ -84,9 +142,11 @@ function AtualizaLista() {
 
         if(preco >= menor && preco <= maior){
             icone.html("done");
+            icone.attr("class",'material-icons verde');
         }
         else{
             icone.html("clear");
+            icone.attr("class",'material-icons red');
         }
 
     });
@@ -100,6 +160,9 @@ function AtualizaSegundaTabela() {
     var todos = 0;
     var maiorValor = 0;
     var valorTotal = 0;
+
+    menorOficial = menor;
+    maiorOficial = maior;
 
     $("#tabelaPrincipal tbody tr").each(function () {
 
@@ -123,19 +186,19 @@ function AtualizaSegundaTabela() {
     if(quantidadeValida === 0){
         menorValor = 0;
         maiorValor = 0;
-        valorTotal = 0;
-        quantidadeValida = 1;
+        quantidadeValida = 0;
     }
 
     tabela.find("#menorPreco").html("R$ " + menorValor);
-    tabela.find("#precoMedio").html("R$ " + valorTotal/quantidadeValida);
+    if(quantidadeValida === 0) tabela.find("#precoMedio").html("R$ " + valorTotal);
+    else tabela.find("#precoMedio").html("R$ " + valorTotal/quantidadeValida);
     tabela.find("#maiorPreco").html("R$ " + maiorValor);
     tabela.find("#qtdPrecos").html(todos);
     tabela.find("#qtdUtilizada").html(quantidadeValida);
 
 }
 
-$( function() {
+$( function () {
     $( "#slider-range" ).slider({
         range: true,
         min: 0,

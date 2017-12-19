@@ -235,7 +235,7 @@ function criarListas() {
     var todos = new Set();
 
     for(var i = 0; i < /*json.length*/ 1; i++){
-        todos.add('RJ'); // json aqui
+        //todos.add(json[i]["gov"]); // json aqui
     }
 
     var tipos = Array.from(todos);
