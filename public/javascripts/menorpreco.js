@@ -203,7 +203,7 @@ $(document).ready(function() {
 
         carrinho[id]['quantidade'] = quantidade;
 
-        valorIndex.html("R$ " + quantidade*preco);
+        valorIndex.html("R$ " + parseFloat(quantidade*preco).toFixed(2));
     });
 
     $(".preco").on('change', function (e) {
@@ -224,7 +224,7 @@ $(document).ready(function() {
         var id = [codigo,regiao];
 
         carrinho[id]['preco'] = preco;
-        valorIndex.html("R$ " + quantidade*preco);
+        valorIndex.html("R$ " + parseFloat(quantidade*preco).toFixed(2));
     })
 
 });
@@ -405,7 +405,7 @@ function Add(){
 
     var novo = {
         quantidade : 0,
-        preco : item["MEDIA"]/*preco medio*/
+        preco : parseFloat(item["MEDIA"]).toFixed(2)/*preco medio*/
     };
 
     carrinho[id] = novo;
@@ -452,17 +452,17 @@ function Add(){
     var selectPreco = document.createElement('select');
     selectPreco.onchange = AtualizaPreco;
     var opcao1 = document.createElement('option');
-    opcao1.value = item["MINIMO"];
-    opcao1.innerHTML = 'R$ ' + item["MINIMO"] + ' (minimo)';
+    opcao1.value = parseFloat(item["MINIMO"]).toFixed(2);
+    opcao1.innerHTML = 'R$ ' + parseFloat(item["MINIMO"]).toFixed(2) + ' (minimo)';
     selectPreco.append(opcao1);
     var opcao2 = document.createElement('option');
-    opcao2.value = item["MEDIA"];
+    opcao2.value = parseFloat(item["MEDIA"]).toFixed(2);
     opcao2.selected = 'selected';
-    opcao2.innerHTML = 'R$ ' + item["MEDIA"] + ' (medio)';
+    opcao2.innerHTML = 'R$ ' + parseFloat(item["MEDIA"]).toFixed(2) + ' (medio)';
     selectPreco.append(opcao2);
     var opcao3 = document.createElement('option');
-    opcao3.value = item["MAXIMO"];
-    opcao3.innerHTML = 'R$ ' + item["MAXIMO"] + ' (maximo)';
+    opcao3.value = parseFloat(item["MAXIMO"]).toFixed(2);
+    opcao3.innerHTML = 'R$ ' + parseFloat(item["MAXIMO"]).toFixed(2) + ' (maximo)';
     selectPreco.append(opcao3);
     colPreco.append(selectPreco);
     linha.appendChild(colPreco);
@@ -511,7 +511,7 @@ function AtualizaValor() {
     var id = [codigo,regiao];
 
     carrinho[id]['quantidade'] = quantidade;
-    valorIndex.html("R$ " + quantidade*preco);
+    valorIndex.html("R$ " + parseFloat(quantidade*preco).toFixed(2));
 }
 
 function Delete(){
@@ -541,7 +541,7 @@ function AtualizaPreco() {
     var id = [codigo,regiao];
 
     carrinho[id]['preco'] = preco;
-    valorIndex.html("R$ " + quantidade*preco);
+    valorIndex.html("R$ " + parseFloat(quantidade*preco).toFixed(2));
 }
 
 

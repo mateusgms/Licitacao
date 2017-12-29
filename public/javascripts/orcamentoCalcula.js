@@ -25,8 +25,17 @@ $(document).on("click", "#pdf", function () {
         rows.push(novo);
     });
 
+    const totalPagesExp = '{total_pages_count_string}';
+    const footer = function(data) {
+        var str = 'Page ' + data.pageCount;
+        // Total page number plugin only available in jspdf v1.0+
+
+        doc.text("Nao nos responsabilizamos por nada", data.settings.margin.left, doc.internal.pageSize.height - 30);
+    };
+
     doc.autoTable(columns, rows, {
         theme: "striped",
+        afterPageContent: footer,
         startY: 120,
         headerStyles: {
             fontSize: 10,

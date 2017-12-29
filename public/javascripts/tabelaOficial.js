@@ -113,7 +113,7 @@ $(document).ready(function() {
 
         carrinho[id] = quantidade;
 
-        valorIndex.html("R$ " + quantidade*preco);
+        valorIndex.html("R$ " + parseFloat(quantidade*preco).toFixed(2));
     });
 
     $('.deletar').click(function(e){
@@ -336,7 +336,7 @@ function Add(){
     var colPreco = document.createElement("td");
     colPreco.setAttribute('id','preco');
     colPreco.setAttribute('class','preco');
-    colPreco.innerHTML = item["PRECO"];
+    colPreco.innerHTML = parseFloat(item["PRECO"]).toFixed(2);
     linha.appendChild(colPreco);
 
     var colQuantidade = document.createElement("td");
@@ -388,7 +388,7 @@ function AtualizaValor() {
     var id = [codigo,gov];
 
     carrinho[id] = quantidade;
-    valorIndex.html("R$ " + quantidade*preco);
+    valorIndex.html("R$ " + parseFloat(quantidade*preco).toFixed(2));
 }
 
 function Delete(){

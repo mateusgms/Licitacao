@@ -168,10 +168,10 @@ router.all('/medio',function (req,res) {
                             regiao: regioes[i],
                             especificacao: produtos[j]['DESCRICAO'],
                             qtdp: produtos[j]['QUANTIDADE'],
-                            precoMinimo: produtos[j]['MINIMO'],
-                            precoMedio: produtos[j]['MEDIA'],
-                            precoMaximo: produtos[j]['MAXIMO'],
-                            precoFinal: precos[i],
+                            precoMinimo: parseFloat(produtos[j]['MINIMO']).toFixed(2),
+                            precoMedio: parseFloat(produtos[j]['MEDIA']).toFixed(2),
+                            precoMaximo: parseFloat(produtos[j]['MAXIMO']).toFixed(2),
+                            precoFinal: parseFloat(precos[i]).toFixed(2),
                             quantidade: quantidades[i]
                         };
                         carrinho.push(novo);
@@ -256,6 +256,8 @@ router.route('/precomedio/orcamento')
                      });
                  }
              });
+
+         valorTotal = valorTotal.toFixed(2);
 
          res.render('principal/orcamentomedio.ejs',{carrinho : carrinho, valorTotal : valorTotal});
 
@@ -469,10 +471,6 @@ router.route('/calcule/orcamento')
         }
     })
     .post(function (req,res) {
-
-        //var produtos = JSON.parse(fs.readFileSync("../tabelaOficial.json"));
-
-        console.log(req.body);
 
         var item = req.body.item;
         var razoes = JSON.parse("[" + req.body.razao + "]");

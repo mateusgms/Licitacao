@@ -70,6 +70,8 @@ function Add() {
 
     item = nomeItem;
 
+    precoItem = parseFloat(precoItem).toFixed(2);
+
     maiorvalor = Math.max(maiorvalor,precoItem);
 
     $('#slider-range').slider( "option", "max", maiorvalor);
@@ -191,7 +193,7 @@ function AtualizaSegundaTabela() {
 
     tabela.find("#menorPreco").html("R$ " + menorValor);
     if(quantidadeValida === 0) tabela.find("#precoMedio").html("R$ " + valorTotal);
-    else tabela.find("#precoMedio").html("R$ " + valorTotal/quantidadeValida);
+    else tabela.find("#precoMedio").html("R$ " + parseFloat(valorTotal/quantidadeValida).toFixed(2));
     tabela.find("#maiorPreco").html("R$ " + maiorValor);
     tabela.find("#qtdPrecos").html(todos);
     tabela.find("#qtdUtilizada").html(quantidadeValida);
