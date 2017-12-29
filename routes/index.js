@@ -130,7 +130,7 @@ router.all('/medio',function (req,res) {
         res.render('index.ejs');
     }
 
-    var produtos = JSON.parse(fs.readFileSync("../prod.json"));
+    var produtos = JSON.parse(fs.readFileSync("../Licitacao/prod.json"));
 
     var email = firebase.auth().currentUser.email.toString();
 
@@ -197,7 +197,7 @@ router.route('/precomedio/orcamento')
     })
     .post(function (req,res) {
 
-        var produtos = JSON.parse(fs.readFileSync("../prod.json"));
+        var produtos = JSON.parse(fs.readFileSync("../Licitacao/prod.json"));
 
         var email = firebase.auth().currentUser.email.toString();
 
