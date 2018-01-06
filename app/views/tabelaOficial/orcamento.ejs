@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Preco</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <link rel="stylesheet" href="/css/tabelaOficial/orcamento.css">
+</head>
+
+<body>
+
+<div>
+
+    <div class="header">
+        <img id = "logo" src="/images/logo.png"/>
+        <form method="get" action="/tabelaOficial" >
+            <button style="font-size: 20px" class = "butao" > <i class="material-icons">&#xE317;</i> Voltar</button>
+        </form>
+    </div>
+
+    <table class="tblHeader">
+        <th>
+            <h2 style="padding-top: 15px">Valor Total : R$ <%- valorTotal %></h2>
+        </th>
+        <th>
+            <button id = "pdf" class="butao"> Gerar PDF </button>
+        </th>
+    </table>
+
+
+    <table id="tblData" border="1" cellpadding="2">
+        <thead>
+        <tr id = "headers">
+            <th>Código</th>
+            <th>Nome do Item</th>
+            <th style="width: 250px">Descrição</th>
+            <th>Data</th>
+            <th>Unidade</th>
+            <th>Fonte</th>
+            <th style="width: 100px">Preço</th>
+            <th>Qtd. Compra</th>
+            <th>Valor Total</th>
+            <th>Links</th>
+        </tr>
+        </thead>
+        <tbody id="tblbody">
+        <% for(var i = 0; i < carrinho.length; i++){%>
+        <tr>
+            <td id = "0"> <%- carrinho[i].codigo %> </td>
+            <td id = "1"> <%- carrinho[i].nome.toLowerCase() %></td>
+            <td id = "2"><%- carrinho[i].especificacao.toLowerCase() %></td>
+            <td id = "3"> <%- carrinho[i].vencimento %> </td>
+            <td id = "4"><%- carrinho[i].unidade %></td>
+            <td id = "5"><%- carrinho[i].gov %></td>
+            <td id = "6"> <%- carrinho[i].preco %> </td>
+            <td id = "7"><%- carrinho[i].quantidade %> </td>
+            <td id = "8"> R$ <%- carrinho[i].precoFinal * carrinho[i].quantidade %> </td>
+            <td id = "9"> <%- carrinho[i].link %> </td>
+        </tr>
+        <%}%>
+        </tbody>
+    </table>
+</div>
+
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.2/jspdf.plugin.autotable.js"></script>
+<script src = "/javascripts/tabelaOficial/orcamento.js"></script>
+
+</html>
+

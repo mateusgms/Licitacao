@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tabela Oficial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <link rel="stylesheet" href="/css/tabelaOficial/home.css">
+
+</head>
+
+<body>
+
+<div class="header">
+    <img id = "logo" src="/images/logo.png"/>
+    <form method="get" action="/" >
+        <button style="font-size: 20px" class = "butao" > <i class="material-icons">&#xE317;</i> Voltar</button>
+    </form>
+</div>
+
+<table style="margin: auto">
+
+    <tr>
+        <th><div id = "selectGovPai" class="sel">
+                <span class="sel__placeholder" data-placeholder="Gov. UF">Gov. UF</span>
+            </div></th>
+        <th><div id = "selectGrupoPai" class="sel">
+                <span class="sel__placeholder" data-placeholder="Grupo">Grupo</span>
+            </div></th>
+        <th><div id = "selectProdutoPai" class="sel">
+                <span class="sel__placeholder" data-placeholder="Produto">Produto</span>
+            </div></th>
+    </tr>
+
+</table>
+
+<table class="tblHeader">
+    <tr>
+        <th> <button id = "adicionarItem" class="butao">Adicionar item</button> </th>
+        <th>
+            <form method="post" action="/salvarTabelaOficial">
+                <button id = "salvarLista" class="butao">Salvar lista</button>
+                <input class = "escondido" name="codigo" id = "codInputS">
+                <input class = "escondido" name="quantidade" id = "qtInputS">
+                <input class = "escondido" name="gov" id = "govInputS">
+            </form>
+        </th>
+        <th> <button id = "limparLista" class="butao">Apagar lista</button> </th>
+        <th>
+            <form method="post" action="/gerarOrcamentoTabelaOficial">
+                <button id = "orcamento" class="butao">Gerar Orçamento</button>
+                <input class = "escondido" name="codigo" id = "codInput">
+                <input class = "escondido" name="quantidade" id = "qtInput">
+                <input class = "escondido" name="gov" id = "govInput">
+            </form>
+        </th>
+    </tr>
+</table>
+
+<table id="tblData" border="1" cellpadding="2">
+    <thead>
+    <tr>
+        <th>Código</th>
+        <th>Nome Item</th>
+        <th style="width: 250px">Descrição</th>
+        <th>Data</th>
+        <th>Unidade</th>
+        <th>Fonte</th>
+        <th style="width: 100px">Preço</th>
+        <th>Qtd. Compra</th>
+        <th>Valor Total</th>
+        <th>Links</th>
+        <th>Deletar</th>
+    </tr>
+    </thead>
+    <tbody id="tblbody">
+    <% for(var i = 0; i < carrinho.length; i++){%>
+    <tr>
+        <td id="codigo"> <%- carrinho[i].codigo %> </td>
+        <td><%- carrinho[i].nome.toLowerCase() %></td>
+        <td><%- carrinho[i].especificacao.toLowerCase() %></td>
+        <td> <%- carrinho[i].vencimento %> </td>
+        <td><%- carrinho[i].unidade %></td>
+        <td id = "gov" ><%- carrinho[i].regiao %></td>
+        <td id = "preco" class = 'preco'><%- carrinho.preco %></td>
+        <td id = 'quantidade' class ="modificaqt"><input type="number" min="0" style="width: 80px" value = '<%- carrinho[i].quantidade %>'> </td>
+        <td id ="valor"> R$ <%- carrinho[i].precoFinal * carrinho[i].quantidade %> </td>
+        <td> link </td>
+        <td><i class="material-icons deletar">&#xE92B;</i> </td>
+    </tr>
+    <%}%>
+    </tbody>
+</table>
+
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+<script src = "/javascripts/tabelaOficial/home.js"></script>
+
+</html>
+

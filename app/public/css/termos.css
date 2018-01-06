@@ -1,0 +1,53 @@
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html {
+    overflow-y: scroll;
+}
+
+body {
+    background: #c1bdba;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+button {
+    font-family: 'Quicksand';
+    width: 150px;
+    height: 50px;
+    font-size: 1.0rem;
+    margin-top: 15px;
+    margin-left: 65%;
+    background-color: Transparent;
+    text-align: center;
+    border: groove;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+
+h1{
+    text-align: center;
+}
+
+#areaPrincipal {
+    background: #eeebe7;
+    padding: 40px;
+    max-width: 600px;
+    margin: 40px auto;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 4px 10px 4px #eeebe7;
+    box-shadow: 0 4px 10px 4px #eeebe7;
+}
+
+#termos{
+    height:300px;
+    width:100%;
+    border:1px solid #ccc;
+    overflow:auto;"
+}
+
+#check{
+    margin-top: 15px;
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Termos</title>
+    <link rel='stylesheet' href='/css/home.css' />
+</head>
+<body>
+    <div id = "areaPrincipal">
+
+        <table style="margin: auto;">
+            <th>
+                <img id = "logo" src="/images/logo.png"/>
+            </th>
+        </table>
+
+        <h2> Escolha seu preço de referência</h2>
+
+        <table id = "tbl">
+            <tr>
+                <td>
+                    <form action="/precoMedioTransacional" method="post">
+                        <button type = "submit">Preço Médio Transacional</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/tabelaOficial" method="post">
+                        <button type = "submit">Tabela Oficial</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form action="/calculeSeuPreco" method="post">
+                        <button type = "submit">Calcule seu Preço</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/sair" method="post">
+                        <button type = "submit" >Sair</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+
+
+    </div>
+</body>
+
+</html>
+

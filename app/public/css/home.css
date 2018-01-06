@@ -1,0 +1,62 @@
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html {
+    overflow-y: scroll;
+}
+
+body {
+    background: #c1bdba;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+h2{
+    text-align: center;
+}
+
+button {
+    font-family: 'Quicksand';
+    width: 200px;
+    height: 100px;
+    margin-top: 20px;
+    font-size: 1.3rem;
+    margin-left: 20px;
+    background-color: Transparent;
+    text-align: center;
+    border: groove;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+
+button:hover{
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px 8px #888888;
+}
+
+#tbl{
+    margin: auto;
+}
+
+#areaPrincipal {
+    background: #eeebe7;
+    padding: 40px;
+    max-width: 600px;
+    margin: 40px auto;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 4px 10px 4px #eeebe7;
+    box-shadow: 0 4px 10px 4px #eeebe7;
+}
+
+#logo{
+    height:150px;
+    width: 280px;
+    margin-bottom: 20px;
+}
+
+.material-icons, .icon-text {
+    vertical-align: middle;
+}
