@@ -2,9 +2,7 @@ var firebase = require('firebase');
 
 module.exports.sair_get = function(app,req,res){
 
-	var user = firebase.auth().currentUser;
-
-    if(user){
+    if(req.session.logado){
         res.render('home');
     }
     else {
@@ -15,7 +13,9 @@ module.exports.sair_get = function(app,req,res){
 module.exports.sair_post = function(app,req,res){
 
 	firebase.auth().signOut().then(function() {
-        res.render('login');
+        req.session.destroy(function(){
+            res.render('login');
+        });
     }).catch(function(error) {
     	// erro
     });

@@ -1,10 +1,8 @@
 var firebase = require('firebase');
 
 module.exports.index = function(app,req,res){
-	
-    var user = firebase.auth().currentUser;
 
-    if(user){
+    if(req.session.logado){
         res.render('home');
     }
     else {
@@ -19,18 +17,16 @@ module.exports.logar = function(app,req,res){
     
     firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
         // Handle Errors here.
+
+        console.log('errou email/senha');
         var errorCode = error.code;
         var errorMessage = error.message;
         // ...
     }).then(function () {
-        
-        var user = firebase.auth().currentUser;
 
-        if(user){
-            res.render('home');
-        }
-        else {
-            res.render('login');
-        }
+        req.session.logado = true;
+        
+        res.render('home');
+
     });
 }

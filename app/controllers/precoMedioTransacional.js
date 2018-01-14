@@ -3,9 +3,7 @@ var fs = require("fs");
 
 module.exports.index = function(app,req,res){
 
-	var user = firebase.auth().currentUser;
-
-    if(!user){
+    if(!req.session.logado){
         res.render('login');
     }
 
