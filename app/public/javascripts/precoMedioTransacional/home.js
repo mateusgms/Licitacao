@@ -197,7 +197,6 @@ function atualizaSelectRegiao(produto) {
     }
 
     $('#selectRegiaoPai').append(div);
-
 }
 
 function atualizaSelectProduto(tipo) {
@@ -230,7 +229,6 @@ function atualizaSelectProduto(tipo) {
     }
 
     $('#selectProdutoPai').append(div);
-
 }
 
 function atualizaRegiaoSelecionada(e) {
