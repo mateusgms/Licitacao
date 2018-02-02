@@ -1,73 +1,6 @@
 var carrinho = {};
 
-var json = jQuery.parseJSON('[{"CODIGO":"278852",' +
-    '"TIPO" : "OBJETO",' +
-    '"UNIDADE":"G",' +
-    '"NOME" : "PRANCHETA PORTATIL",' +
-    '"DESCRICAO":"MATERIAL EUCATEX, COMPRIMENTO 340 MM, LARGURA 230 MM, COR MARROM, CARACTERÍSTICAS ADICIONAIS COM PEGADOR METALICO",' +
-    '"DATA" : "3",' +
-    '"REGIAO":"SU",' +
-    '"QUANTIDADE":"2",' +
-    '"MEDIA":"1.93",' +
-    '"MINIMO":"1.87",' +
-    '"MAXIMO":"1.99"  },' +
-    ' {"CODIGO":"278852",' +
-    '"TIPO" : "OBJETO",' +
-    '"UNIDADE":"G",' +
-    '"NOME" : "PRANCHETA PORTATIL",' +
-    '"DESCRICAO":"MATERIAL EUCATEX, COMPRIMENTO 340 MM, LARGURA 230 MM, COR MARROM,CARACTERÍSTICAS ADICIONAIS COM PEGADOR METALICO",' +
-    '"DATA" : "3",' +
-    '"REGIAO":"SE",' +
-    '"QUANTIDADE":"6",' +
-    '"MEDIA":"2.18666666666667",' +
-    '"MINIMO":"1.91",' +
-    '"MAXIMO":"2.52"}, ' +
-    '{"CODIGO":"278852",' +
-    '"TIPO" : "OBJETO",' +
-    '"UNIDADE":"G",' +
-    '"NOME" : "PRANCHETA PORTATIL",' +
-    '"DESCRICAO":"MATERIAL EUCATEX, COMPRIMENTO 340 MM, LARGURA 230 MM, COR MARROM, CARACTERÍSTICAS ADICIONAIS COM PEGADOR METALICO",' +
-    '"DATA" : "3",' +
-    '"REGIAO":"CO",' +
-    '"QUANTIDADE":"9",' +
-    '"MEDIA":"15.9144444444444",' +
-    '"MINIMO":"2",' +
-    '"MAXIMO":"41.78"},' +
-    ' { "CODIGO":"278852",' +
-    '"TIPO" : "OBJETO",' +
-    '"UNIDADE":"G",' +
-    '"NOME" : "PRANCHETA PORTATIL","DESCRICAO":"MATERIAL EUCATEX, COMPRIMENTO 340 MM, LARGURA 230 MM, COR MARROM, CARACTERÍSTICAS ADICIONAIS COM PEGADOR METALICO",' +
-    '"DATA" : "3",' +
-    '"REGIAO":"NE",' +
-    '"QUANTIDADE":"2",' +
-    '"MEDIA":"4.945",' +
-    '"MINIMO":"2.99",' +
-    '"MAXIMO":"6.9" }, ' +
-    '{ "CODIGO":"278852",' +
-    '"TIPO" : "OBJETO",' +
-    '"UNIDADE":"G",' +
-    '"NOME" : "PRANCHETA PORTATIL",' +
-    '"DESCRICAO":"MATERIAL EUCATEX, COMPRIMENTO 340 MM, LARGURA 230 MM, COR MARROM, CARACTERÍSTICAS ADICIONAIS COM PEGADOR METALICO",' +
-    '"DATA" : "3",' +
-    '"REGIAO":"NO",' +
-    '"QUANTIDADE":"2",' +
-    '"MEDIA":"6.1",' +
-    '"MINIMO":"2.81",' +
-    '"MAXIMO":"9.39"}, {"CODIGO":"216913","TIPO" : "ALIMENTO","UNIDADE":"G","NOME" : "SAL","DESCRICAO":' +
-    '"SAL, TIPO GROSSO, APLICAÇÃO ALIMENTÍCIA, TEOR MAXIMO SÓDIO 360 MG/G, ADITIVOS IODO/PRUSSIATO AMARELO SODA, ACIDEZ 7,20 PH",' +
-    '"DATA" : "3","REGIAO":"SU","QUANTIDADE":"23","MEDIA":"2.01434782608696","MINIMO":"0.63","MAXIMO":"3.27"}, ' +
-    '{"CODIGO":"216913","TIPO" : "ALIMENTO","UNIDADE":"KG","NOME" : "SAL",' +
-    '"DESCRICAO":"SAL, TIPO GROSSO, APLICAÇÃO ALIMENTÍCIA, TEOR MAXIMO SÓDIO 360 MG/G, ADITIVOS IODO/PRUSSIATO AMARELO SODA, ACIDEZ 7,20 PH",' +
-    '"DATA" : "3",' +
-    '"REGIAO":"SE","QUANTIDADE":"10","MEDIA":"2.932","MINIMO":"0.85","MAXIMO":"12.48"}, ' +
-    '{"CODIGO":"216913","TIPO" : "ALIMENTO","UNIDADE":"KG","NOME" : "SAL",' +
-    '"DESCRICAO":"SAL, TIPO GROSSO, APLICAÇÃO ALIMENTÍCIA, TEOR MAXIMO SÓDIO 360 MG/G, ADITIVOS IODO/PRUSSIATO AMARELO SODA, ACIDEZ 7,20 PH",' +
-    '"DATA" : "3","REGIAO":"CO","QUANTIDADE":"5","MEDIA":"1.424","MINIMO":"0.9","MAXIMO":"1.99"}, ' +
-    '{"CODIGO":"216913","TIPO" :"ALIMENTO","UNIDADE":"KG","NOME" : "SAL","DESCRICAO":"SAL, TIPO GROSSO, APLICAÇÃO ALIMENTÍCIA, TEOR MAXIMO SÓDIO 360 MG/G, ADITIVOS IODO/PRUSSIATO AMARELO SODA, ACIDEZ 7,20 PH","DATA" : "3",' +
-    '"REGIAO":"NE","QUANTIDADE":"6","MEDIA":"1.56333333333333","MINIMO":"0.9","MAXIMO":"3.96"},' +
-    '{"CODIGO":"216913","TIPO" : "ALIMENTO","UNIDADE":"KG","NOME" : "SAL","DESCRICAO":"TIPO GROSSO, APLICAÇÃO ALIMENTÍCIA, TEOR MAXIMO SÓDIO 360 MG/G, ADITIVOS IODO/PRUSSIATO AMARELO SODA, ACIDEZ 7,20 PH","DATA" : "3",' +
-    '"REGIAO":"NO","QUANTIDADE":"9","MEDIA":"12.4166666666667","MINIMO":"1.19","MAXIMO":"100"}]');
-
+var json = jQuery.parseJSON(data);
 
 $(document).ready(function() {
 
@@ -264,7 +197,6 @@ function atualizaSelectRegiao(produto) {
     }
 
     $('#selectRegiaoPai').append(div);
-
 }
 
 function atualizaSelectProduto(tipo) {
@@ -284,7 +216,7 @@ function atualizaSelectProduto(tipo) {
     div.setAttribute('class','sel__box');
 
     for(var i = 0; i < json.length; i++){
-        if(tipo === -1 || tipo === json[i]["TIPO"]){
+        if(tipo === -1 || tipo === json[i]["GRUPO"]){
             if(conjunto.has(json[i]["CODIGO"])) continue;
             conjunto.add(json[i]["CODIGO"]);
             var span = document.createElement("span");
@@ -297,7 +229,6 @@ function atualizaSelectProduto(tipo) {
     }
 
     $('#selectProdutoPai').append(div);
-
 }
 
 function atualizaRegiaoSelecionada(e) {
@@ -329,7 +260,6 @@ function atualizaProdutoSelecionado(e) {
     $currentSel.children('.sel__placeholder').text(txt);
 
     atualizaSelectRegiao(codigo);
-
 }
 
 function criarListas() {
@@ -337,7 +267,7 @@ function criarListas() {
     var todos = new Set();
 
     for(var i = 0; i < json.length; i++){
-        todos.add(json[i]["TIPO"]);
+        todos.add(json[i]["GRUPO"]);
     }
 
     var tipos = Array.from(todos);
@@ -359,7 +289,6 @@ function criarListas() {
     $('#selectGrupoPai').append(div);
 
     atualizaSelectProduto(-1);
-
 }
 
 function Add(){
@@ -543,13 +472,3 @@ function AtualizaPreco() {
     carrinho[id]['preco'] = preco;
     valorIndex.html("R$ " + parseFloat(quantidade*preco).toFixed(2));
 }
-
-
-
-
-
-
-
-
-
-
