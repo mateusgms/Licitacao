@@ -1,4 +1,6 @@
-carrinho = {};
+var carrinho = {};
+
+var json = jQuery.parseJSON(data);
 
 $(document).ready(function() {
 
@@ -11,12 +13,12 @@ $(document).ready(function() {
         var quantidade = $(this).find('td#quantidade');
         quantidade = quantidade.find('input').val();
         var codigo = $(this).find('td#codigo').html();
-        var gov = $(this).find('td#gov').html();
-        if(!(quantidade === undefined || codigo === undefined || gov === undefined)) {
-            codigo = parseInt(codigo);
+        var fonte = $(this).find('td#fonte').html();
+        if(!(quantidade === undefined || codigo === undefined || fonte === undefined)) {
+            codigo = toString(codigo);
             quantidade = parseInt(quantidade);
-            gov = gov.trim();
-            var id = [codigo,gov];
+            fonte = fonte.trim();
+            var id = [codigo,fonte];
             carrinho[id] = quantidade;
         }
     });
@@ -25,18 +27,18 @@ $(document).ready(function() {
     $("#orcamento").click(function () {
         var codigos = [];
         var quantidades = [];
-        var govs = [];
+        var fontes = [];
 
         for (var key in carrinho) {
             var chave = key.split(',');
             codigos.push(chave[0]);
-            govs.push(chave[1]);
+            fontes.push(chave[1]);
             quantidades.push(carrinho[key]);
         }
 
         $("#codInput").val(codigos);
         $("#qtInput").val(quantidades);
-        $("#govInput").val(govs);
+        $("#fonteInput").val(fontes);
     });
 
     criarListas();
@@ -88,7 +90,7 @@ $(document).ready(function() {
         $currentSel.children('.sel__placeholder').text(txt);
 
         if($(this).parent().attr('id').toString().trim() === "selectGov"){
-            atualizaSelectProduto(txt);
+            atualizaSelectProduto(txt, -1);
             atualizaSelectGrupo(txt);
         }
 
@@ -148,7 +150,7 @@ function atualizaSelectGrupo(cidade) {
     div.setAttribute('class','sel__box');
 
     for(var i = 0; i < json.length; i++){
-        if(cidade === parseInt(json[i]["CIDADE"])){
+        if(cidade === toString(json[i]["FONTE"])){
             if(conjunto.has(json[i]["GRUPO"])) continue;
             conjunto.add(json[i]["GRUPO"]);
 
@@ -162,12 +164,12 @@ function atualizaSelectGrupo(cidade) {
     }
 
     $('#selectGrupoPai').append(div);
-
 }
 
-function atualizaSelectProduto(cidade) {
+function atualizaSelectProduto(cidade, grupo) {
 
     cidade = cidade.toUpperCase();
+    if(grupo !== -1) grupo = grupo.toUpperCase();
 
     var $el = $("#selectProduto");
     if($el) $el.remove(); // remove opcoes antigas
@@ -182,7 +184,17 @@ function atualizaSelectProduto(cidade) {
     div.setAttribute('class','sel__box');
 
     for(var i = 0; i < json.length; i++){
-        if(tipo === -1 || cidade === json[i]["TIPO"]){
+        if(cidade === json[i]["FONTE"] && grupo === -1){
+            if(conjunto.has(json[i]["CODIGO"])) continue;
+            conjunto.add(json[i]["CODIGO"]);
+            var span = document.createElement("span");
+            span.setAttribute('class',"sel__box__options");
+            span.setAttribute('onclick',"atualizaProdutoSelecionado(event)");
+            span.innerHTML = json[i]["NOME"].toLowerCase();
+            span.setAttribute('codigo',json[i]["CODIGO"]);
+            div.append(span);
+        }
+        else if(cidade === json[i]["FONTE"] && grupo === json[i]["GRUPO"]){
             if(conjunto.has(json[i]["CODIGO"])) continue;
             conjunto.add(json[i]["CODIGO"]);
             var span = document.createElement("span");
@@ -234,8 +246,8 @@ function criarListas() {
 
     var todos = new Set();
 
-    for(var i = 0; i < /*json.length*/ 1; i++){
-        //todos.add(json[i]["gov"]); // json aqui
+    for(var i = 0; i < json.length; i++){
+        todos.add(json[i]["FONTE"]);
     }
 
     var tipos = Array.from(todos);

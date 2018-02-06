@@ -7,12 +7,14 @@ module.exports.index = function(app,req,res){
         res.render('login');
     }
 
-    var produtos = JSON.parse(fs.readFileSync("prod.json"));
+    var produtos = JSON.parse(fs.readFileSync("precoMedioTransacional.json"));
 
     var email = firebase.auth().currentUser.email.toString();
 
     /*acessa o banco de dados e carrega o dados em carrinho */
     var busca = firebase.database().ref('/');
+
+    var chave = "precoMedioTransacional";
 
     busca.once('value')
         .then(function (snap) {
@@ -22,11 +24,11 @@ module.exports.index = function(app,req,res){
             var regioes = [];
             for (var key in snap.val()) {
                 var elemento = snap.val()[key];
-                if (elemento.email.toString() === email) {
-                    codigos = elemento.codigo;
-                    quantidades = elemento.quantidade;
-                    precos = elemento.preco;
-                    regioes = elemento.regiao;
+                if (elemento.email.toString() === email && elemento[chave] !== undefined) {
+                    codigos = elemento[chave].codigo;
+                    quantidades = elemento[chave].quantidade;
+                    precos = elemento[chave].preco;
+                    regioes = elemento[chave].regiao;
                     break;
                 }
             }
@@ -62,7 +64,7 @@ module.exports.index = function(app,req,res){
 
 module.exports.gerarOrcamento = function(app,req,res){
 
-    var produtos = JSON.parse(fs.readFileSync("prod.json"));
+    var produtos = JSON.parse(fs.readFileSync("precoMedioTransacional.json"));
 
     var email = firebase.auth().currentUser.email.toString();
 
@@ -105,21 +107,20 @@ module.exports.gerarOrcamento = function(app,req,res){
             for (var key in snap.val()) {
                 var elemento = snap.val()[key];
                 if(elemento.email.toString() === email){
-                    var caminho = '/' + key;
+                    var caminho = '/' + key + '/precoMedioTransacional';
                     firebase.database().ref(caminho).remove();
+                    if(carrinho.length > 0) {
+                        firebase.database().ref(caminho).set({
+                            codigo: codigos,
+                            quantidade: quantidades,
+                            preco: precos,
+                            regiao : regioes
+                        });
+                    }
                     break;
                 }
             }
-            if(carrinho.length > 0) {
-                var inserir = busca.push();
-                inserir.set({
-                    email: email,
-                    codigo: codigos,
-                    quantidade: quantidades,
-                    preco: precos,
-                    regiao : regioes
-                });
-            }
+            
         });
 
     valorTotal = valorTotal.toFixed(2);
@@ -129,7 +130,7 @@ module.exports.gerarOrcamento = function(app,req,res){
 
 module.exports.salvar = function(app,req,res){
     
-    var produtos = JSON.parse(fs.readFileSync("prod.json"));
+    var produtos = JSON.parse(fs.readFileSync("precoMedioTransacional.json"));
 
     var email = firebase.auth().currentUser.email.toString();
 
@@ -172,21 +173,20 @@ module.exports.salvar = function(app,req,res){
             for (var key in snap.val()) {
                 var elemento = snap.val()[key];
                 if(elemento.email.toString() === email){
-                    var caminho = '/' + key;
+                    var caminho = '/' + key + '/precoMedioTransacional';
                     firebase.database().ref(caminho).remove();
+                    if(carrinho.length > 0) {
+                        firebase.database().ref(caminho).set({
+                            codigo: codigos,
+                            quantidade: quantidades,
+                            preco: precos,
+                            regiao : regioes
+                        });
+                    }
                     break;
                 }
             }
-            if(carrinho.length > 0) {
-                var inserir = busca.push();
-                inserir.set({
-                    email: email,
-                    codigo: codigos,
-                    quantidade: quantidades,
-                    preco: precos,
-                    regiao : regioes
-                });
-            }
+            
         });
 
     carrinho = [];
