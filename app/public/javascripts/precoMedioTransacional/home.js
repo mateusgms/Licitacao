@@ -28,7 +28,7 @@ $(document).ready(function() {
         }
     });
 
-    /*gera dois vetores (codigo, qt) para o metodo post*/
+    /*gera vetores (codigo, qt, preco e regiao) para o metodo post*/
     $("#orcamento").click(function () {
         var codigos = [];
         var quantidades = [];
