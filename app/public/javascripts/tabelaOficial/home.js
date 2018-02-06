@@ -4,6 +4,8 @@ var json = jQuery.parseJSON(data);
 
 $(document).ready(function() {
 
+    var fonteAtual = "";
+
     // $.getJSON("http://codeforces.com/api/contest.list?gym=true", function(result){
     //     console.log(result);
     // });
@@ -90,6 +92,7 @@ $(document).ready(function() {
         $currentSel.children('.sel__placeholder').text(txt);
 
         if($(this).parent().attr('id').toString().trim() === "selectGov"){
+            fonteAtual = txt;
             atualizaSelectProduto(txt, -1);
             atualizaSelectGrupo(txt);
         }
@@ -137,13 +140,15 @@ $('.sel').click(function() {
 
 function atualizaSelectGrupo(cidade) {
 
+    cidade = toString(cidade);
+
     var $el = $("#selectGrupo");
     if($el) $el.remove(); // remove opcoes antigas
 
     var conjunto = new Set();
 
     var $pai = $('#selectGrupoPai').closest('.sel');
-    $pai.children('.sel__placeholder').text('Região');
+    $pai.children('.sel__placeholder').text('Grupo');
 
     var div = document.createElement("div");
     div.setAttribute('id','selectGrupo');
