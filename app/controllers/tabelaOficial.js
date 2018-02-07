@@ -26,7 +26,7 @@ module.exports.index = function(app,req,res){
                 if (elemento.email.toString() === email && elemento[chave] !== undefined) {
                     codigos = elemento[chave].codigo;
                     quantidades = elemento[chave].quantidade;
-                    regioes = elemento[chave].regiao;
+                    regioes = elemento[chave].fonte;
                     break;
                 }
             }
@@ -36,13 +36,15 @@ module.exports.index = function(app,req,res){
             for (var i = 0; i < codigos.length; i++) {
                 for (var j = 0; j < produtos.length; j++) {
                     if (produtos[j]["CODIGO"].toString().trim() === codigos[i].toString().trim()
-                        && produtos[j]["REGIAO"].toString().trim() === regioes[i].toString().trim()) {
+                        && produtos[j]["FONTE"].toString().trim() === regioes[i].toString().trim()) {
                         var novo = {
                             codigo: produtos[j]['CODIGO'],
                             nome: produtos[j]['NOME'],
                             especificacao: produtos[j]['DESCRICAO'],
                             unidade: produtos[j]['UNIDADE'],
-                            regiao: regioes[i],
+                            grupo: produtos[j]['GRUPO'],
+                            referencia: produtos[j]['REFERENCIA/PORTARIA'],
+                            fonte : produtos[j]['FONTE'],
                             preco: parseFloat(produtos[j]['PRECO']).toFixed(2),
                             quantidade: quantidades[i]
                         };

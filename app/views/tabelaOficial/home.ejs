@@ -64,13 +64,13 @@
         <th>Código</th>
         <th>Nome Item</th>
         <th style="width: 250px">Descrição</th>
-        <th>Data</th>
         <th>Unidade</th>
+        <th>Grupo</th>
+        <th>Referência/Portaria</th>
         <th>Fonte</th>
         <th style="width: 100px">Preço</th>
-        <th>Qtd. Compra</th>
-        <th>Valor Total</th>
-        <th>Links</th>
+        <th>Quantidade</th>
+        <th>Total</th>
         <th>Deletar</th>
     </tr>
     </thead>
@@ -80,8 +80,8 @@
         <td id="codigo"> <%- carrinho[i].codigo %> </td>
         <td><%- carrinho[i].nome.toLowerCase() %></td>
         <td><%- carrinho[i].especificacao.toLowerCase() %></td>
-        <td> <%- carrinho[i].vencimento %> </td>
         <td><%- carrinho[i].unidade %></td>
+        <td><%- carrinho[i].grupo %></td>
         <td id = "gov" ><%- carrinho[i].regiao %></td>
         <td id = "preco" class = 'preco'><%- carrinho.preco %></td>
         <td id = 'quantidade' class ="modificaqt"><input type="number" min="0" style="width: 80px" value = '<%- carrinho[i].quantidade %>'> </td>

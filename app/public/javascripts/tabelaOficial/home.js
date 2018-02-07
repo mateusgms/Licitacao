@@ -2,9 +2,9 @@ var carrinho = {};
 
 var json = jQuery.parseJSON(data);
 
-$(document).ready(function() {
+var fonteAtual = "";
 
-    var fonteAtual = "";
+$(document).ready(function() {
 
     // $.getJSON("http://codeforces.com/api/contest.list?gym=true", function(result){
     //     console.log(result);
@@ -131,7 +131,6 @@ $(document).ready(function() {
         delete carrinho[id];
         raiz.remove();
     });
-
 });
 
 $('.sel').click(function() {
@@ -139,8 +138,6 @@ $('.sel').click(function() {
 });
 
 function atualizaSelectGrupo(cidade) {
-
-    cidade = toString(cidade);
 
     var $el = $("#selectGrupo");
     if($el) $el.remove(); // remove opcoes antigas
@@ -155,7 +152,7 @@ function atualizaSelectGrupo(cidade) {
     div.setAttribute('class','sel__box');
 
     for(var i = 0; i < json.length; i++){
-        if(cidade === toString(json[i]["FONTE"])){
+        if(cidade === json[i]["FONTE"]){
             if(conjunto.has(json[i]["GRUPO"])) continue;
             conjunto.add(json[i]["GRUPO"]);
 
@@ -212,7 +209,6 @@ function atualizaSelectProduto(cidade, grupo) {
     }
 
     $('#selectProdutoPai').append(div);
-
 }
 
 function atualizaGrupoSelecionado(e) {
@@ -226,6 +222,8 @@ function atualizaGrupoSelecionado(e) {
 
     var $currentSel = raiz.closest('.sel');
     $currentSel.children('.sel__placeholder').text(txt);
+
+    atualizaSelectProduto(fonteAtual,txt);
 }
 
 function atualizaProdutoSelecionado(e) {
@@ -242,9 +240,6 @@ function atualizaProdutoSelecionado(e) {
 
     var $currentSel = raiz.closest('.sel');
     $currentSel.children('.sel__placeholder').text(txt);
-
-    atualizaSelectRegiao(codigo);
-
 }
 
 function criarListas() {
@@ -272,7 +267,6 @@ function criarListas() {
     }
 
     $('#selectGovPai').append(div);
-
 }
 
 function Add(){
@@ -306,7 +300,7 @@ function Add(){
     var item;
 
     for(var i = 0; i < json.length; i++){
-        if(parseInt(json[i]["CODIGO"]) === codigoItem && json[i]["GOV"].toString().trim() === gov){
+        if(parseInt(json[i]["CODIGO"]) === codigoItem && json[i]["FONTE"].toString().trim() === gov){
             item = json[i];
         }
     }
@@ -337,17 +331,21 @@ function Add(){
     colEspecificacao.innerHTML = item["DESCRICAO"].toLowerCase();
     linha.appendChild(colEspecificacao);
 
-    var colVencimento = document.createElement("td");
-    colVencimento.innerHTML = item["DATA"];
-    linha.appendChild(colVencimento);
-
     var colUnidade = document.createElement("td");
     colUnidade.innerHTML = item["UNIDADE"];
     linha.appendChild(colUnidade);
 
+    var colGrupo = document.createElement("td");
+    colGrupo.innerHTML = item["GRUPO"];
+    linha.appendChild(colGrupo);
+
+    var colReferencia = document.createElement("td");
+    colReferencia.innerHTML = item["REFERENCIA/PORTARIA"];
+    linha.appendChild(colReferencia);
+
     var colGov = document.createElement("td");
     colGov.setAttribute('id','gov');
-    colGov.innerHTML = item["GOV"];
+    colGov.innerHTML = item["FONTE"];
     linha.appendChild(colGov);
 
     var colPreco = document.createElement("td");
@@ -373,11 +371,6 @@ function Add(){
     colValor.setAttribute('id', 'valor');
     colValor.innerHTML = "R$ 0";
     linha.appendChild(colValor);
-
-    var colLink = document.createElement("td");
-    colLink.setAttribute('id', 'link');
-    colLink.innerHTML = "http";
-    linha.appendChild(colLink);
 
     var colDeletar = document.createElement("td");
     var imgDeletar = document.createElement('i');
