@@ -17,7 +17,7 @@ $(document).ready(function() {
         var codigo = $(this).find('td#codigo').html();
         var fonte = $(this).find('td#fonte').html();
         if(!(quantidade === undefined || codigo === undefined || fonte === undefined)) {
-            codigo = toString(codigo);
+            codigo = codigo.toString();
             quantidade = parseInt(quantidade);
             fonte = fonte.trim();
             var id = [codigo,fonte];
@@ -40,7 +40,7 @@ $(document).ready(function() {
 
         $("#codInput").val(codigos);
         $("#qtInput").val(quantidades);
-        $("#fonteInput").val(fontes);
+        $("#govInput").val(fontes);
     });
 
     criarListas();
@@ -103,7 +103,7 @@ $(document).ready(function() {
 
         var raiz = $(e.target).parent().parent(); // tr
 
-        var codigo = parseInt(raiz.find('td#codigo').html());
+        var codigo = raiz.find('td#codigo').html().toString();
 
         var quantidade = raiz.find('td#quantidade');
         quantidade = parseInt(quantidade.find('input').val());
@@ -287,7 +287,7 @@ function Add(){
 
     /*busca no json com esses valores de cima e atualiza embaixo a tabela*/
 
-    var codigoItem = parseInt(produto.attr('codigo'));
+    var codigoItem = produto.attr('codigo').toString();
 
     var id = [codigoItem,gov];
 
@@ -300,7 +300,7 @@ function Add(){
     var item;
 
     for(var i = 0; i < json.length; i++){
-        if(parseInt(json[i]["CODIGO"]) === codigoItem && json[i]["FONTE"].toString().trim() === gov){
+        if(json[i]["CODIGO"].toString() === codigoItem && json[i]["FONTE"].toString().trim() === gov){
             item = json[i];
         }
     }
@@ -385,7 +385,7 @@ function Add(){
 
 function AtualizaValor() {
     var raiz = $(this).parent().parent(); // tr
-    var codigo = parseInt(raiz.find('td#codigo').html());
+    var codigo = raiz.find('td#codigo').html().toString();
 
     var quantidade = raiz.find('td#quantidade');
     quantidade = parseInt(quantidade.find('input').val());
@@ -403,7 +403,7 @@ function AtualizaValor() {
 
 function Delete(){
     var raiz = $(this).parent().parent(); //tr
-    var codigo = parseInt(raiz.find('td#codigo').html());
+    var codigo = raiz.find('td#codigo').html().toString();
     var gov = raiz.find("td#gov").html().trim();
 
     var id = [codigo,gov];

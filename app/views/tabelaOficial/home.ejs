@@ -82,11 +82,11 @@
         <td><%- carrinho[i].especificacao.toLowerCase() %></td>
         <td><%- carrinho[i].unidade %></td>
         <td><%- carrinho[i].grupo %></td>
-        <td id = "gov" ><%- carrinho[i].regiao %></td>
-        <td id = "preco" class = 'preco'><%- carrinho.preco %></td>
+        <td><%- carrinho[i].referencia %></td>  
+        <td id="fonte"><%- carrinho[i].fonte %></td>  
+        <td id = "preco" class = 'preco'><%- carrinho[i].preco %></td>
         <td id = 'quantidade' class ="modificaqt"><input type="number" min="0" style="width: 80px" value = '<%- carrinho[i].quantidade %>'> </td>
-        <td id ="valor"> R$ <%- carrinho[i].precoFinal * carrinho[i].quantidade %> </td>
-        <td> link </td>
+        <td id ="valor"> R$ <%- carrinho[i].preco * carrinho[i].quantidade %> </td>
         <td><i class="material-icons deletar">&#xE92B;</i> </td>
     </tr>
     <%}%>

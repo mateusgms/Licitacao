@@ -63,9 +63,9 @@ module.exports.gerarOrcamento = function(app,req,res){
 
         var email = firebase.auth().currentUser.email.toString();
 
-        var codigos = JSON.parse("[" + req.body.codigo + "]");
+        var codigos = req.body.codigo.split(',');
         var quantidades = JSON.parse("[" + req.body.quantidade + "]");
-        var gov = JSON.parse("[" + req.body.gov + "]");
+        var fontes = req.body.gov.split(',');
 
         var carrinho = [];
 
@@ -75,48 +75,48 @@ module.exports.gerarOrcamento = function(app,req,res){
         for(var i = 0; i < codigos.length; i++){
             for(var j = 0; j < produtos.length; j++){
                 if(produtos[j]["CODIGO"].toString().trim() === codigos[i].toString().trim()
-                    && produtos[j]["gov"].toString().trim() === gov[i].toString().trim()){
+                    && produtos[j]["FONTE"].toString().trim() === fontes[i].toString().trim()){
                     var novo = {
-                        codigo : produtos[j]['CODIGO'],
-                        nome : produtos[j]['NOME'],
-                        especificacao : produtos[j]['DESCRICAO'],
-                        vencimento : produtos[j]['DATA'],
-                        unidade : produtos[j]['UNIDADE'],
-                        gov : gov[i],
-                        preco: produtos[j]['preco'],
-                        quantidade : quantidades[i],
-                        link : produtos[j]['link']
+                        codigo: produtos[j]['CODIGO'],
+                        nome: produtos[j]['NOME'],
+                        especificacao: produtos[j]['DESCRICAO'],
+                        unidade: produtos[j]['UNIDADE'],
+                        grupo: produtos[j]['GRUPO'],
+                        referencia: produtos[j]['REFERENCIA/PORTARIA'],
+                        fonte : produtos[j]['FONTE'],
+                        preco: parseFloat(produtos[j]['PRECO']).toFixed(2),
+                        quantidade: quantidades[i]
                     };
-                    valorTotal += parseFloat(precos[i])*parseInt(quantidades[i]);
+                    valorTotal += parseFloat(produtos[j]['PRECO'])*parseInt(quantidades[i]);
                     carrinho.push(novo);
                 }
             }
         }
 
-        // var busca = firebase.database().ref('/');
-        //
-        // /*apaga o carrinho antigo e insere o novo*/
-        // busca.once('value')
-        //     .then(function (snap) {
-        //         for (var key in snap.val()) {
-        //             var elemento = snap.val()[key];
-        //             if(elemento.email.toString() === email){
-        //                 var caminho = '/' + key;
-        //                 firebase.database().ref(caminho).remove();
-        //                 break;
-        //             }
-        //         }
-        //         if(carrinho.length > 0) {
-        //             var inserir = busca.push();
-        //             inserir.set({
-        //                 email: email,
-        //                 codigo: codigos,
-        //                 quantidade: quantidades,
-        //                 preco: precos,
-        //                 regiao : regioes
-        //             });
-        //         }
-        //     });
+        var busca = firebase.database().ref('/');
+        
+        /*apaga o carrinho antigo e insere o novo*/
+        busca.once('value')
+            .then(function (snap) {
+                for (var key in snap.val()) {
+                    var elemento = snap.val()[key];
+                    if(elemento.email.toString() === email){
+                        var caminho = '/' + key + '/tabelaOficial';
+                        firebase.database().ref(caminho).remove();
+                        if(carrinho.length > 0) {
+                            firebase.database().ref(caminho).set({
+                                codigo: codigos,
+                                quantidade: quantidades,
+                                fonte : fontes
+                            });
+                        }
+                        break;
+                    }
+                }
+                
+            });
+
+        valorTotal = valorTotal.toFixed(2);
 
         res.render('tabelaOficial/orcamento',{carrinho : carrinho, valorTotal : valorTotal});
 }
