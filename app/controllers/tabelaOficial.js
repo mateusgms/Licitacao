@@ -122,4 +122,61 @@ module.exports.gerarOrcamento = function(app,req,res){
 }
 
 module.exports.salvar = function(app,req,res){    
+
+    var produtos = JSON.parse(fs.readFileSync("tabelaOficial.json"));
+
+    var email = firebase.auth().currentUser.email.toString();
+
+    var codigos = req.body.codigo.split(',');
+    var quantidades = JSON.parse("[" + req.body.quantidade + "]");
+    var fontes = req.body.gov.split(',');
+
+    var carrinho = [];
+
+    /*cria carrinho*/
+    for(var i = 0; i < codigos.length; i++){
+        for(var j = 0; j < produtos.length; j++){
+            if(produtos[j]["CODIGO"].toString().trim() === codigos[i].toString().trim()
+                && produtos[j]["FONTE"].toString().trim() === fontes[i].toString().trim()){
+                var novo = {
+                    codigo: produtos[j]['CODIGO'],
+                    nome: produtos[j]['NOME'],
+                    especificacao: produtos[j]['DESCRICAO'],
+                    unidade: produtos[j]['UNIDADE'],
+                    grupo: produtos[j]['GRUPO'],
+                    referencia: produtos[j]['REFERENCIA/PORTARIA'],
+                    fonte : produtos[j]['FONTE'],
+                    preco: parseFloat(produtos[j]['PRECO']).toFixed(2),
+                    quantidade: quantidades[i]
+                };
+                carrinho.push(novo);
+            }
+        }
+    }
+
+    var busca = firebase.database().ref('/');
+    
+    /*apaga o carrinho antigo e insere o novo*/
+    busca.once('value')
+        .then(function (snap) {
+            for (var key in snap.val()) {
+                var elemento = snap.val()[key];
+                if(elemento.email.toString() === email){
+                    var caminho = '/' + key + '/tabelaOficial';
+                    firebase.database().ref(caminho).remove();
+                    if(carrinho.length > 0) {
+                        firebase.database().ref(caminho).set({
+                            codigo: codigos,
+                            quantidade: quantidades,
+                            fonte : fontes
+                        });
+                    }
+                    break;
+                }
+            }
+            
+        });
+
+    res.render('tabelaOficial/home',{carrinho : carrinho});
+
 }

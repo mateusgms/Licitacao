@@ -46,16 +46,16 @@
     <tbody id="tblbody">
     <% for(var i = 0; i < carrinho.length; i++){%>
     <tr>
-        <td id="codigo"> <%- carrinho[i].codigo %> </td>
-        <td><%- carrinho[i].nome.toLowerCase() %></td>
-        <td><%- carrinho[i].especificacao.toLowerCase() %></td>
-        <td><%- carrinho[i].unidade %></td>
-        <td><%- carrinho[i].grupo %></td>
-        <td><%- carrinho[i].referencia %></td>  
-        <td><%- carrinho[i].fonte %></td>  
-        <td><%- carrinho[i].preco %></td>
-        <td><%- carrinho[i].quantidade %></td>
-        <td id ="valor"> R$ <%- carrinho[i].preco * carrinho[i].quantidade %> </td>
+        <td id="0"> <%- carrinho[i].codigo %> </td>
+        <td id="1"><%- carrinho[i].nome.toLowerCase() %></td>
+        <td id="2"><%- carrinho[i].especificacao.toLowerCase() %></td>
+        <td id="3"><%- carrinho[i].unidade %></td>
+        <td id="4"><%- carrinho[i].grupo %></td>
+        <td id="5"><%- carrinho[i].referencia %></td>  
+        <td id="6"><%- carrinho[i].fonte %></td>  
+        <td id="7"> R$  <%- carrinho[i].preco %></td>
+        <td id="8"><%- carrinho[i].quantidade %></td>
+        <td id="9"> R$ <%- carrinho[i].preco * carrinho[i].quantidade %> </td>
     </tr>
     <%}%>
     </tbody>

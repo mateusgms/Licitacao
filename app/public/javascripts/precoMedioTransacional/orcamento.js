@@ -38,9 +38,14 @@ $(document).on("click", "#pdf", function () {
     const footer = function(data) {
         var str = 'Page ' + data.pageCount;
         // Total page number plugin only available in jspdf v1.0+
-        doc.setFontSize(10);
-        
-        doc.text("Os preços foram coletados com base nos pregões de Janeiro de 2017 à Novembro de 2017\nA extrapolação dos preços para itens semelhantes aos descritos é de inteira responsabilidade do CONTRATANTE", data.settings.margin.left, doc.internal.pageSize.height - 15);
+        doc.setFontSize(7);
+    	
+    	doc.text("primeira linha\n"+
+                "segunda linha\n"+
+                "terceira linha\n"+
+                "quarta linha\n"+
+                "quinta linha",
+                data.settings.margin.left, doc.internal.pageSize.height - 38);    
     };
 
     doc.autoTable(columns, rows, {
