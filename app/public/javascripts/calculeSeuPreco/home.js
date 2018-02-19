@@ -66,6 +66,7 @@ function Add() {
 
     if((nomeItem === "") || (CNPJ === "") || (data === "") || (razaoSocial === "") || (precoItem === "")){
         alert("Insira todos os itens");
+        return;
     }
 
     item = nomeItem;
@@ -74,7 +75,7 @@ function Add() {
 
     maiorvalor = Math.max(maiorvalor,precoItem);
 
-    $('#slider-range').slider( "option", "max", maiorvalor);
+    //$('#slider-range').slider( "option", "max", maiorvalor);
 
     $("#nomeItem").attr("readonly", true);
 
