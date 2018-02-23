@@ -3,9 +3,9 @@ var fs = require("fs");
 
 module.exports.index = function(app,req,res){
     
-    if(!req.session.logado){
-        res.render('login');
-    }
+    // if(!req.session.logado){
+    //     res.render('login');
+    // }
 
     var produtos = JSON.parse(fs.readFileSync("tabelaOficial.json"));
 

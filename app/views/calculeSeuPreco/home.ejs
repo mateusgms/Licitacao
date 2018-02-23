@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../source/css/font-awesome.min.css">
     <link rel="stylesheet" href="../source/css/ionicons.min.css">
     <link rel="stylesheet" href="../source/css/skins/_all-skins.min.css">
-    <link rel="stylesheet" href="../source/plugins/datatables/jquery.dataTables.min.css">
+    <!-- <link rel="stylesheet" href="../source/plugins/datatables/jquery.dataTables.min.css"> -->
     <link rel="stylesheet" href="../source/plugins/bootstrap-slider/slider.css">
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -23,7 +23,6 @@
             <a href="#" class="logo">
                 <span class="logo-mini">
                     <b>S</b>TM
-                    <!--<img style="height:50px" id = "logo" src="/images/logo.png"/>-->
                 </span>
                 <span class="logo-lg">
                     <b>S</b>tatisticum</span>
@@ -56,7 +55,6 @@
                             <i class="fa fa-dashboard"></i>
                             <span>Home</span>
                             <span class="pull-right-container"></span>
-                            </span>
                         </a>
                     </li>
 
@@ -84,7 +82,6 @@
             </section>
         </aside>
         <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
                     Calcule seu preço
@@ -101,8 +98,6 @@
                     <li class="active">Calcule seu preço</li>
                 </ol>
             </section>
-
-            <!-- Main content -->
             <section class="content">
                 <div class="row">
                     <div class="col-lg-7">
@@ -110,8 +105,6 @@
                             <div class="box-header with-border">
                                 <h3 class="box-title">Preencha os campos</h3>
                             </div>
-                            <!-- /.box-header -->
-                            <!-- form start -->
                             <div role="form">
                                 <div class="row">
                                     <div class="box-body">
@@ -126,8 +119,8 @@
                                         </div>
                                         <div class="form-group col-lg-6">
                                             <label class="entrada">Data</label>
-                                           <!-- <input  class="form-control" type="text" required> -->
-                                            <input id="data"type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="">
+                                            <!-- <input  class="form-control" type="text" required> -->
+                                            <input id="data" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="">
 
                                         </div>
                                         <div class="form-group col-lg-6">
@@ -145,15 +138,15 @@
                                 <!-- /.box-body -->
 
                                 <div class="box-footer">
-                                    <button id="adicionarItem" class="btn btn-primary btn-lg pull-right" >Adicionar item</button>
+                                    <button id="adicionarItem" class="btn btn-primary btn-lg pull-right">Adicionar item</button>
                                 </div>
                             </div>
                         </div>
                         <div class="box ">
                             <div class="box-header">
-                                
-                                    <h3 class="box-title">Tabela</h3>
-                                
+
+                                <h3 class="box-title">Tabela</h3>
+
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body">
@@ -162,41 +155,22 @@
                                         <div class="col-sm-6"></div>
                                         <div class="col-sm-6"></div>
                                     </div>
-                                    <div class="">
-                                        <div class="">
-                                            <!-- <table id="tabelaPrincipal" class="tblData" border="1" cellpadding="2">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>CNPJ</th>
-                                                            <th>Razão Social</th>
-                                                            <th>Preço Pesquisado</th>
-                                                            <th>Utilizando</th>
-                                                            <th>Deletar</th>
-                                                        </tr>
-                                                    </thead>
-    
-                                                    <tbody>
-    
-                                                    </tbody>
-    
-                                                </table> -->
-                                            <table id="tabelaPrincipal" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
-                                                <thead>
-                                                    <tr role="row">
-                                                        <th class="sorting_asc" tabindex="0" aria-controls="tabelaPrincipal" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">CNPJ</th>
-                                                        <th class="sorting" tabindex="0" aria-controls="tabelaPrincipal" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Razão Social</th>
-                                                        <th class="sorting" tabindex="0" aria-controls="tabelaPrincipal" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Preço Pesquisado</th>
-                                                        <th class="sorting" tabindex="0" aria-controls="tabelaPrincipal" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Utilizando</th>
-                                                        <th class="sorting" tabindex="0" aria-controls="tabelaPrincipal" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Deletar</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
 
-                                                </tbody>
+                                    <table id="tabelaPrincipal" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="sorting_asc" tabindex="0" aria-controls="tabelaPrincipal" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">CNPJ</th>
+                                                <th class="sorting" tabindex="0" aria-controls="tabelaPrincipal" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Razão Social</th>
+                                                <th class="sorting" tabindex="0" aria-controls="tabelaPrincipal" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Preço Pesquisado</th>
+                                                <th class="sorting" tabindex="0" aria-controls="tabelaPrincipal" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Utilizando</th>
+                                                <th class="sorting" tabindex="0" aria-controls="tabelaPrincipal" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Deletar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                                            </table>
-                                        </div>
-                                    </div>
+                                        </tbody>
+
+                                    </table>
 
                                 </div>
                             </div>
@@ -226,13 +200,13 @@
                                             <div class="slider slider-horizontal">
                                                 <div class="slider-track">
                                                     <div id="slider-range" class="slider-handle min-slider-handle round" role="slider" aria-valuemin="-200" aria-valuemax="200"
-                                                        aria-valuenow="-5" tabindex="0"></div>
+                                                        aria-valuenow="-5" tabindex="0">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div style="width: 60%; margin: auto; margin-top: 15px" id="slider-range"></div> -->
                                         <div class="col-lg-12">
-                                            <table id="tabelaSecundaria" class="tblData table table-bordered" style="width: 50%" cellpadding="2">
+                                            <table id="tabelaSecundaria" class="table" style="width: 50%" cellpadding="2">
                                                 <thead>
                                                     <tr>
                                                         <th>Medida</th>
@@ -282,15 +256,10 @@
                         <!-- /.box -->
                     </div>
                 </div>
-
-                <!-- /.box -->
+            </section>
+            <!-- /.box -->
         </div>
     </div>
-    </section>
-    <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
             <b>Version</b> 2.4.0
@@ -356,7 +325,6 @@
             </th>
         </tr>
     </table>
-
     <div>
         <div>
             <table id="tabelaPrincipal" class="tblData" border="1" cellpadding="2">
@@ -369,11 +337,8 @@
                         <th>Deletar</th>
                     </tr>
                 </thead>
-
                 <tbody>
-
                 </tbody>
-
             </table>
         </div>
         <div class='item'>
@@ -382,8 +347,6 @@
             <button id="calcular"> calcular</button>
             <div id="slider-range" class="slider-handle max-slider-handle round" role="slider" aria-valuemin="-200" aria-valuemax="200"
                 aria-valuenow="65" tabindex="0" style="left: 66.25%;"></div>
-
-
             <table id="tabelaSecundaria" class="tblData" cellpadding="2">
                 <thead>
                     <tr>
@@ -414,7 +377,6 @@
                     </tr>
                 </tbody>
             </table>
-
         </div>
     </div>​
 -->
@@ -422,9 +384,9 @@
 <script src="../source/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="../source/bootstrap/js/bootstrap.min.js"></script>
-<!-- Data Tables -->
+<!-- Data Tables 
 <script src="../source/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="../source/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="../source/plugins/datatables/dataTables.bootstrap.min.js"></script> -->
 <!-- SlimScroll -->
 <script src="../source/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
@@ -440,7 +402,7 @@
         $('.sidebar-menu').tree()
     })
 </script>
-<script>
+<!--<script>
     $(function () {
         $('#example1').DataTable()
         $('#tabelaPrincipal').DataTable({
@@ -452,7 +414,7 @@
             'autoWidth': false
         })
     })
-</script>
+</script> -->
 <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
 <script src="/javascripts/calculeSeuPreco/home.js"></script>
