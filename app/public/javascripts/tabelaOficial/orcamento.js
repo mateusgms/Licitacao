@@ -10,7 +10,7 @@ $(document).on("click", "#pdf", function () {
 
     doc.setFont('helvetica');
     doc.setFontType('bold');
-    doc.text("Preço Médio Transacional" , 200, 70);
+    doc.text("Tabela Oficial" , 240, 70);
 
     // doc.setFont('courier');
     // doc.setFontType('normal');

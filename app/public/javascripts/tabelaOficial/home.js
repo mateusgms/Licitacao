@@ -10,7 +10,7 @@ $(document).ready(function() {
     //     console.log(result);
     // });
 
-    /*pega itens ja existentes e adicona no carrinho*/
+    /*pega itens ja existentes e adiciona no carrinho*/
     $('#tblData tr').each(function(){
         var quantidade = $(this).find('td#quantidade');
         quantidade = quantidade.find('input').val();

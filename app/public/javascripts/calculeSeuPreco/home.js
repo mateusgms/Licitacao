@@ -75,7 +75,7 @@ function Add() {
 
     maiorvalor = Math.max(maiorvalor,precoItem);
 
-    //$('#slider-range').slider( "option", "max", maiorvalor);
+    $('#slider-range').slider( "option", "max", maiorvalor);
 
     $("#nomeItem").attr("readonly", true);
 

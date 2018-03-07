@@ -5,7 +5,6 @@
 }
 
 body {
-    background: #eeebe7;
     padding: 15px 20px;
     text-align: center;
 }
@@ -20,8 +19,8 @@ form {
 }
 
 #logo{
-    height:100px;
-    width: 220px;
+    height:120px;
+    width: 270px;
 }
 
 .header {
@@ -160,6 +159,8 @@ form {
 
 /* opcoes */
 .sel__box {
+    overflow: auto;
+    height: 300px;
     position: absolute;
     top: calc(100% + 4px);
     left: -4px;
@@ -204,7 +205,7 @@ form {
 
 /* ----- Select Box Black Panther ----- */
 .sel {
-    border-bottom: 4px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 4px solid rgba(60, 141, 188, 1);
 }
 
 /* ===== Keyframes ===== */

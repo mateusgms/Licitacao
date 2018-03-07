@@ -8,7 +8,7 @@ html {
 }
 
 body {
-    background: #c1bdba;
+    background: #e2e6eC;
     font-family: 'Titillium Web', sans-serif;
 }
 
@@ -42,19 +42,11 @@ button:hover{
 }
 
 #areaPrincipal {
-    background: #eeebe7;
+    background: #FFFFFF;
     padding: 40px;
     max-width: 600px;
     margin: 40px auto;
     border-radius: 4px;
-    -webkit-box-shadow: 0 4px 10px 4px #eeebe7;
-    box-shadow: 0 4px 10px 4px #eeebe7;
-}
-
-#logo{
-    height:150px;
-    width: 280px;
-    margin-bottom: 20px;
 }
 
 .material-icons, .icon-text {
