@@ -2,7 +2,7 @@ var carrinho = {};
 
 var json = jQuery.parseJSON(data);
 
-var fonteAtual = "";
+var govAtual = "Escolha o governo";
 
 $(document).ready(function() {
 
@@ -80,22 +80,16 @@ $(document).ready(function() {
         $("#govInputS").val(govs);
     });
 
-    $('.sel__box__options').click(function() {
+    $('#selectGov').click(function() {
 
-        var txt = $(this).text();
+        var governoSelecionado = $('#selectGov').find(":selected").text();
 
-        $(this).siblings('.sel__box__options').removeClass('selected').removeAttr('id');
-        $(this).addClass('selected');
-        $(this).attr('id', 'selecionadoGov');
+        if(governoSelecionado.toString().trim() === govAtual.toString().trim()) return;
 
-        var $currentSel = $(this).closest('.sel');
-        $currentSel.children('.sel__placeholder').text(txt);
+        govAtual = governoSelecionado.toString().trim();
 
-        if($(this).parent().attr('id').toString().trim() === "selectGov"){
-            fonteAtual = txt;
-            atualizaSelectProduto(txt, -1);
-            atualizaSelectGrupo(txt);
-        }
+        atualizaSelectProduto(govAtual, -1);
+        atualizaSelectGrupo(govAtual);
 
     });
 
@@ -138,39 +132,28 @@ $(document).ready(function() {
     });
 });
 
-$('.sel').click(function() {
-    $(this).toggleClass('active');
-});
 
 function atualizaSelectGrupo(cidade) {
 
     var $el = $("#selectGrupo");
-    if($el) $el.remove(); // remove opcoes antigas
+     $('#selectGrupo').children('option').remove(); // remove opcoes antigas
 
     var conjunto = new Set();
 
-    var $pai = $('#selectGrupoPai').closest('.sel');
-    $pai.children('.sel__placeholder').text('Grupo');
-
-    var div = document.createElement("div");
-    div.setAttribute('id','selectGrupo');
-    div.setAttribute('class','sel__box');
+    var select = document.getElementById("selectGrupo");
 
     for(var i = 0; i < json.length; i++){
         if(cidade === json[i]["FONTE"]){
             if(conjunto.has(json[i]["GRUPO"])) continue;
             conjunto.add(json[i]["GRUPO"]);
 
-            var span = document.createElement("span");
-            span.setAttribute('class',"sel__box__options");
-            span.setAttribute('onclick',"atualizaGrupoSelecionado(event)");
-            span.innerHTML = json[i]["GRUPO"];
-
-            div.append(span);
+            var novaOpcao = document.createElement("OPTION");
+            novaOpcao.setAttribute("value", json[i]["GRUPO"]);
+            var novoTexto = document.createTextNode(json[i]["GRUPO"]);
+            novaOpcao.appendChild(novoTexto);
+            select.appendChild(novaOpcao);
         }
     }
-
-    $('#selectGrupoPai').append(div);
 }
 
 function atualizaSelectProduto(cidade, grupo) {
@@ -178,73 +161,33 @@ function atualizaSelectProduto(cidade, grupo) {
     cidade = cidade.toUpperCase();
     if(grupo !== -1) grupo = grupo.toUpperCase();
 
-    var $el = $("#selectProduto");
-    if($el) $el.remove(); // remove opcoes antigas
+    $('#selectProduto').children('option').remove(); // remove opcoes antigas
 
-    var $pai = $('#selectProdutoPai').closest('.sel');
-    $pai.children('.sel__placeholder').text('Produto');
+    var select = document.getElementById("selectProduto");
 
     var conjunto = new Set();
-
-    var div = document.createElement("div");
-    div.setAttribute('id','selectProduto');
-    div.setAttribute('class','sel__box');
 
     for(var i = 0; i < json.length; i++){
         if(cidade === json[i]["FONTE"] && grupo === -1){
             if(conjunto.has(json[i]["CODIGO"])) continue;
             conjunto.add(json[i]["CODIGO"]);
-            var span = document.createElement("span");
-            span.setAttribute('class',"sel__box__options");
-            span.setAttribute('onclick',"atualizaProdutoSelecionado(event)");
-            span.innerHTML = json[i]["NOME"].toLowerCase();
-            span.setAttribute('codigo',json[i]["CODIGO"]);
-            div.append(span);
+
+            var novaOpcao = document.createElement("OPTION");
+            novaOpcao.setAttribute("value", json[i]["CODIGO"]);
+            var novoTexto = document.createTextNode(json[i]["NOME"].toLowerCase());
+            novaOpcao.appendChild(novoTexto);
+            select.appendChild(novaOpcao);
         }
         else if(cidade === json[i]["FONTE"] && grupo === json[i]["GRUPO"]){
             if(conjunto.has(json[i]["CODIGO"])) continue;
             conjunto.add(json[i]["CODIGO"]);
-            var span = document.createElement("span");
-            span.setAttribute('class',"sel__box__options");
-            span.setAttribute('onclick',"atualizaProdutoSelecionado(event)");
-            span.innerHTML = json[i]["NOME"].toLowerCase();
-            span.setAttribute('codigo',json[i]["CODIGO"]);
-            div.append(span);
+            var novaOpcao = document.createElement("OPTION");
+            novaOpcao.setAttribute("value", json[i]["CODIGO"]);
+            var novoTexto = document.createTextNode(json[i]["NOME"].toLowerCase());
+            novaOpcao.appendChild(novoTexto);
+            select.appendChild(novaOpcao);
         }
     }
-
-    $('#selectProdutoPai').append(div);
-}
-
-function atualizaGrupoSelecionado(e) {
-    var raiz = $(e.target);
-
-    var txt = raiz.text().toString().trim();
-
-    raiz.siblings('.sel__box__options').removeClass('selected').removeAttr('id');
-    raiz.addClass('selected');
-    raiz.attr('id', 'selecionadoGrupo');
-
-    var $currentSel = raiz.closest('.sel');
-    $currentSel.children('.sel__placeholder').text(txt);
-
-    atualizaSelectProduto(fonteAtual,txt);
-}
-
-function atualizaProdutoSelecionado(e) {
-
-    var raiz = $(e.target);
-
-    var txt = raiz.text().toString().trim();
-
-    var codigo = raiz.attr('codigo');
-
-    raiz.siblings('.sel__box__options').removeClass('selected').removeAttr('id');
-    raiz.addClass('selected');
-    raiz.attr('id', 'selecionadoProduto');
-
-    var $currentSel = raiz.closest('.sel');
-    $currentSel.children('.sel__placeholder').text(txt);
 }
 
 function criarListas() {
@@ -257,42 +200,32 @@ function criarListas() {
 
     var tipos = Array.from(todos);
 
-    var $el = $("#selectGov");
-    if($el) $el.remove(); // remove opcoes antigas
-
-    var div = document.createElement("div");
-    div.setAttribute('id','selectGov');
-    div.setAttribute('class','sel__box');
+    var select = document.getElementById("selectGov");
 
     for(var i = 0; i < tipos.length; i++){
-        var span = document.createElement("span");
-        span.setAttribute('class',"sel__box__options");
-        span.innerHTML = tipos[i];
-        div.append(span);
+        var novaOpcao = document.createElement("OPTION");
+        novaOpcao.setAttribute("value", tipos[i]);
+        var novoTexto = document.createTextNode(tipos[i]);
+        novaOpcao.appendChild(novoTexto);
+        select.appendChild(novaOpcao);
     }
-
-    $('#selectGovPai').append(div);
 }
 
 function Add(){
 
-    var produto = $('#selecionadoProduto');
-    var gov = $('#selecionadoGov');
+    var produto = $('#selectProduto').val();
+    var gov = $('#selectGov').val();
 
-    if(!gov.length){
+    if(gov === null){
         alert("Selecione o Governo");
         return;
     }
-    if(!produto.length){
-        alert("Selecione o Produto");
-        return;
-    }
-
-    gov = gov.html().toString().trim();
 
     /*busca no json com esses valores de cima e atualiza embaixo a tabela*/
 
-    var codigoItem = produto.attr('codigo').toString().trim();
+    var codigoItem = produto.toString().trim();
+
+    gov = gov.toString().trim();
 
     var id = [codigoItem,gov];
 
