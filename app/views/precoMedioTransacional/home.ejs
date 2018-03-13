@@ -45,8 +45,8 @@
                     </ul>
                 </div>
             </nav>
-        </header>
 
+        </header>
         <aside class="main-sidebar">
             <section class="sidebar">
                 <ul class="sidebar-menu">
@@ -113,22 +113,20 @@
                                             <div class="form-group">
                                                 <div class="col-md-4">
                                                     <label for="exampleFormControlSelect1">Grupo</label>
-                                                    <select id="selectGrupoPai" data-placeholder="Grupo" class="form-control sel__placeholder" id="exampleFormControlSelect1">
-                                                        <option>DF</option>
+                                                    <select id="selectGrupo" data-placeholder="Grupo" class="form-control sel__placeholder" id="exampleFormControlSelect1">
+                                                    <option disabled selected>Escolha o Grupo</option>
                                                     </select>
                                                 </div>
 
                                                 <div class="col-md-4">
                                                     <!-- SELECT2 MINIMAL-->
                                                     <label for="exampleFormControlSelect1">Produto</label>
-                                                    <select id="selectProdutoPai" data-placeholder="Produto" class="form-control sel__placeholder" id="exampleFormControlSelect1">
-                                                        <option>Arroz</option>
+                                                    <select id="selectProduto" data-placeholder="Produto" class="form-control sel__placeholder" id="exampleFormControlSelect1">
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="exampleFormControlSelect1">Região</label>
-                                                    <select id="selectRegiaoPai" data-placeholder="Região" class="form-control sel__placeholder" id="exampleFormControlSelect1">
-                                                        <option>Centro-Oeste</option>
+                                                    <select id="selectRegiao" data-placeholder="Região" class="form-control sel__placeholder" id="exampleFormControlSelect1">
                                                     </select>
                                                 </div>
                                             </div>
@@ -156,7 +154,7 @@
 
                                         <div class="col-md-6">
                                             <form method="post" action="/salvarPrecoMedioTransacional">
-                                                <button id="salvarLista" type="hidden" class="butao">Salvar lista</button>
+                                                <button id="salvarLista" class="btn btn-lg btn-success">Salvar lista</button>
                                                 <input type="hidden" name="codigo" id="codInputS">
                                                 <input type="hidden" name="quantidade" id="qtInputS">
                                                 <input type="hidden" name="preco" id="precoInputS">
@@ -180,7 +178,7 @@
                                 <h3 class="box-title">Preencha os campos</h3>
                                 <div class="pull-right">
                                     <form method="post" action="/gerarOrcamentoPrecoMedioTransacional">
-                                        <button id="orcamento" class="butao">Gerar Orçamento</button>
+                                        <button id="orcamento" class="btn btn-lg btn-primary">Gerar Orçamento</button>
                                         <input type="hidden" name="codigo" id="codInput">
                                         <input type="hidden" name="quantidade" id="qtInput">
                                         <input type="hidden" name="preco" id="precoInput">
@@ -201,7 +199,6 @@
                                                     <th>Código</th>
                                                     <th>Nome Item</th>
                                                     <th style="width: 250px">Descrição</th>
-                                                    <th>Data</th>
                                                     <th>Unidade</th>
                                                     <th>Região</th>
                                                     <th style="width: 100px">Qtd. de preços</th>
@@ -224,9 +221,6 @@
                                                             <%= carrinho[i].especificacao.toLowerCase() %>
                                                         </td>
                                                         <td>
-                                                            <%= carrinho[i].vencimento %>
-                                                        </td>
-                                                        <td>
                                                             <%= carrinho[i].unidade %>
                                                         </td>
                                                         <td id="regiao">
@@ -237,15 +231,15 @@
                                                         </td>
                                                         <td id="preco" class='preco'>
                                                             <select>
-                                                                <option <% if(parseFloat(carrinho[i].precoFinal)=== parseFloat(carrinho[i].precoMinimo)){%> selected="selected"
+                                                                <option <% if( parseFloat(carrinho[i].precoFinal)===parseFloat(carrinho[i].precoMinimo)){%> selected="selected"
                                                                     <%}%> value="
                                                                         <%= carrinho[i].precoMinimo %>">R$
                                                                             <%=carrinho[i].precoMinimo%> (minimo) </option>
-                                                                <option <% if(parseFloat(carrinho[i].precoFinal)=== parseFloat(carrinho[i].precoMedio)){%> selected="selected"
+                                                                <option <% if( parseFloat(carrinho[i].precoFinal)===parseFloat(carrinho[i].precoMedio)){%> selected="selected"
                                                                     <%}%> value="
                                                                         <%= carrinho[i].precoMedio %>">R$
                                                                             <%=carrinho[i].precoMedio%> (medio) </option>
-                                                                <option <% if(parseFloat(carrinho[i].precoFinal)=== parseFloat(carrinho[i].precoMaximo)){%> selected="selected"
+                                                                <option <% if( parseFloat(carrinho[i].precoFinal) === parseFloat(carrinho[i].precoMaximo)){%> selected="selected"
                                                                     <%}%> value="
                                                                         <%= carrinho[i].precoMaximo %>">R$
                                                                             <%=carrinho[i].precoMaximo%> (maximo) </option>

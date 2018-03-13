@@ -174,7 +174,7 @@ function atualizaSelectProduto(cidade, grupo) {
 
             var novaOpcao = document.createElement("OPTION");
             novaOpcao.setAttribute("value", json[i]["CODIGO"]);
-            var novoTexto = document.createTextNode(json[i]["NOME"].toLowerCase());
+            var novoTexto = document.createTextNode(json[i]["NOME"]);
             novaOpcao.appendChild(novoTexto);
             select.appendChild(novaOpcao);
         }
@@ -183,7 +183,7 @@ function atualizaSelectProduto(cidade, grupo) {
             conjunto.add(json[i]["CODIGO"]);
             var novaOpcao = document.createElement("OPTION");
             novaOpcao.setAttribute("value", json[i]["CODIGO"]);
-            var novoTexto = document.createTextNode(json[i]["NOME"].toLowerCase());
+            var novoTexto = document.createTextNode(json[i]["NOME"]);
             novaOpcao.appendChild(novoTexto);
             select.appendChild(novaOpcao);
         }
@@ -262,11 +262,11 @@ function Add(){
     linha.appendChild(colCodigo);
 
     var colNome = document.createElement("td");
-    colNome.innerHTML = item["NOME"].toLowerCase();
+    colNome.innerHTML = item["NOME"];
     linha.appendChild(colNome);
 
     var colEspecificacao = document.createElement("td");
-    colEspecificacao.innerHTML = item["DESCRICAO"].toLowerCase();
+    colEspecificacao.innerHTML = item["DESCRICAO"];
     linha.appendChild(colEspecificacao);
 
     var colUnidade = document.createElement("td");

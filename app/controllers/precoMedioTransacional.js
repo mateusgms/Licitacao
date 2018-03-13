@@ -42,7 +42,6 @@ module.exports.index = function(app,req,res){
                         var novo = {
                             codigo: produtos[j]['CODIGO'],
                             nome: produtos[j]['NOME'],
-                            vencimento: produtos[j]['DATA'],
                             unidade: produtos[j]['UNIDADE'],
                             regiao: regioes[i],
                             especificacao: produtos[j]['DESCRICAO'],
@@ -85,7 +84,6 @@ module.exports.gerarOrcamento = function(app,req,res){
                 var novo = {
                     codigo : produtos[j]['CODIGO'],
                     nome : produtos[j]['NOME'],
-                    vencimento : produtos[j]['DATA'],
                     unidade : produtos[j]['UNIDADE'],
                     regiao : regioes[i],
                     especificacao : produtos[j]['DESCRICAO'],
@@ -151,7 +149,6 @@ module.exports.salvar = function(app,req,res){
                 var novo = {
                     codigo : produtos[j]['CODIGO'],
                     nome : produtos[j]['NOME'],
-                    vencimento : produtos[j]['DATA'],
                     unidade : produtos[j]['UNIDADE'],
                     regiao : regioes[i],
                     especificacao : produtos[j]['DESCRICAO'],
@@ -198,7 +195,6 @@ module.exports.salvar = function(app,req,res){
                 var novo = {
                     codigo : produtos[j]['CODIGO'],
                     nome : produtos[j]['NOME'],
-                    vencimento : produtos[j]['DATA'],
                     unidade : produtos[j]['UNIDADE'],
                     regiao : regioes[i],
                     especificacao : produtos[j]['DESCRICAO'],

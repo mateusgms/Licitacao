@@ -2,6 +2,9 @@ var carrinho = {};
 
 var json = jQuery.parseJSON(data);
 
+var grupoAtual = "Escolha o Grupo";
+var produtoAtual;
+
 $(document).ready(function() {
 
     // $.getJSON("http://codeforces.com/api/contest.list?gym=true", function(result){
@@ -89,21 +92,28 @@ $(document).ready(function() {
         $("#regiaoInputS").val(regioes);
     });
 
-    $('.sel__box__options').click(function() {
+    $('#selectGrupo').click(function() {
 
-        var txt = $(this).text();
+        var grupoSelecionado = $('#selectGrupo').find(":selected").text();
 
-        $(this).siblings('.sel__box__options').removeClass('selected');
-        $(this).addClass('selected');
+        if(grupoSelecionado.toString().trim() === grupoAtual.toString().trim()) return;
 
-        var $currentSel = $(this).closest('.sel');
-        $currentSel.children('.sel__placeholder').text(txt);
+        grupoAtual = grupoSelecionado.toString().trim();
 
-        if($(this).parent().attr('id').toString().trim() === "selectGrupo"){
-            atualizaSelectProduto(txt);
-            atualizaSelectRegiao(-1);
-        }
+        atualizaSelectProduto(grupoSelecionado);
+        atualizaSelectRegiao();
 
+    });
+
+    $('#selectProduto').click(function() {
+
+        var produtoSelecionado = $('#selectProduto').find(":selected").val();
+
+        if(produtoSelecionado.toString().trim() === produtoAtual.toString().trim()) return;
+
+        produtoAtual = produtoSelecionado.toString().trim();
+
+        atualizaSelectRegiao();
     });
 
     $('.deletar').click(function(e){
@@ -162,104 +172,53 @@ $(document).ready(function() {
 
 });
 
-$('.sel').click(function() {
-    $(this).toggleClass('active');
-});
+function atualizaSelectRegiao() {
 
-function atualizaSelectRegiao(produto) {
+    var codigo = parseInt(produtoAtual);
 
-    var codigo = parseInt(produto);
+    $('#selectRegiao').children('option').remove(); // remove opcoes antigas
 
-    var $el = $("#selectRegiao");
-    if($el) $el.remove(); // remove opcoes antigas
+    var select =  document.getElementById("selectRegiao");
 
     var conjunto = new Set();
-
-    var $pai = $('#selectRegiaoPai').closest('.sel');
-    $pai.children('.sel__placeholder').text('Região');
-
-    if(produto === -1) return;
-
-    var div = document.createElement("div");
-    div.setAttribute('id','selectRegiao');
-    div.setAttribute('class','sel__box');
 
     for(var i = 0; i < json.length; i++){
         if(codigo === parseInt(json[i]["CODIGO"])){
             if(conjunto.has(json[i]["REGIAO"])) continue;
             conjunto.add(json[i]["REGIAO"]);
-            var span = document.createElement("span");
-            span.setAttribute('class',"sel__box__options");
-            span.setAttribute('onclick',"atualizaRegiaoSelecionada(event)");
-            span.innerHTML = json[i]["REGIAO"];
-            div.append(span);
+
+            var novaOpcao = document.createElement("OPTION");
+            novaOpcao.setAttribute("value", json[i]["REGIAO"]);
+            var novoTexto = document.createTextNode(json[i]["REGIAO"]);
+            novaOpcao.appendChild(novoTexto);
+            select.appendChild(novaOpcao);
         }
     }
-
-    $('#selectRegiaoPai').append(div);
 }
 
 function atualizaSelectProduto(tipo) {
 
-    if(tipo !== -1) tipo = tipo.toUpperCase();
+    if(tipo !== -1) tipo = tipo.toUpperCase().trim();
 
-    var $el = $("#selectProduto");
-    if($el) $el.remove(); // remove opcoes antigas
+    $('#selectProduto').children('option').remove(); // remove opcoes antigas
 
-    var $pai = $('#selectProdutoPai').closest('.sel');
-    $pai.children('.sel__placeholder').text('Produto');
+    var select = document.getElementById("selectProduto");
 
     var conjunto = new Set();
 
-    var div = document.createElement("div");
-    div.setAttribute('id','selectProduto');
-    div.setAttribute('class','sel__box');
-
     for(var i = 0; i < json.length; i++){
-        if(tipo === -1 || tipo === json[i]["GRUPO"]){
+        if(tipo === -1 || tipo === json[i]["GRUPO"].toString().toUpperCase().trim()){
             if(conjunto.has(json[i]["CODIGO"])) continue;
             conjunto.add(json[i]["CODIGO"]);
-            var span = document.createElement("span");
-            span.setAttribute('class',"sel__box__options");
-            span.setAttribute('onclick',"atualizaProdutoSelecionado(event)");
-            span.innerHTML = json[i]["NOME"].toLowerCase();
-            span.setAttribute('codigo',json[i]["CODIGO"]);
-            div.append(span);
+            var novaOpcao = document.createElement("OPTION");
+            novaOpcao.setAttribute("value", json[i]["CODIGO"]);
+            var novoTexto = document.createTextNode(json[i]["NOME"]);
+            novaOpcao.appendChild(novoTexto);
+            select.appendChild(novaOpcao);
         }
     }
 
-    $('#selectProdutoPai').append(div);
-}
-
-function atualizaRegiaoSelecionada(e) {
-    var raiz = $(e.target);
-
-    var txt = raiz.text().toString().trim();
-
-    raiz.siblings('.sel__box__options').removeClass('selected').removeAttr('id');
-    raiz.addClass('selected');
-    raiz.attr('id', 'selecionadoRegiao');
-
-    var $currentSel = raiz.closest('.sel');
-    $currentSel.children('.sel__placeholder').text(txt);
-}
-
-function atualizaProdutoSelecionado(e) {
-
-    var raiz = $(e.target);
-
-    var txt = raiz.text().toString().trim();
-
-    var codigo = raiz.attr('codigo');
-
-    raiz.siblings('.sel__box__options').removeClass('selected').removeAttr('id');
-    raiz.addClass('selected');
-    raiz.attr('id', 'selecionadoProduto');
-
-    var $currentSel = raiz.closest('.sel');
-    $currentSel.children('.sel__placeholder').text(txt);
-
-    atualizaSelectRegiao(codigo);
+    produtoAtual = $('#selectProduto').find(":selected").val();
 }
 
 function criarListas() {
@@ -272,29 +231,24 @@ function criarListas() {
 
     var tipos = Array.from(todos);
 
-    var $el = $("#selectGrupo");
-    if($el) $el.remove(); // remove opcoes antigas
-
-    var div = document.createElement("div");
-    div.setAttribute('id','selectGrupo');
-    div.setAttribute('class','sel__box');
+    var select = document.getElementById("selectGrupo");
 
     for(var i = 0; i < tipos.length; i++){
-        var span = document.createElement("span");
-        span.setAttribute('class',"sel__box__options");
-        span.innerHTML = tipos[i].toLowerCase();
-        div.append(span);
+        var novaOpcao = document.createElement("OPTION");
+        novaOpcao.setAttribute("value", tipos[i]);
+        var novoTexto = document.createTextNode(tipos[i]);
+        novaOpcao.appendChild(novoTexto);
+        select.appendChild(novaOpcao);
     }
 
-    $('#selectGrupoPai').append(div);
-
     atualizaSelectProduto(-1);
+    atualizaSelectRegiao();   
 }
 
 function Add(){
 
-    var produto = $('#selecionadoProduto');
-    var regiao = $('#selecionadoRegiao');
+    var produto = produtoAtual;
+    var regiao = $('#selectRegiao').find(":selected").val();
 
     if(!produto.length){
         alert("Selecione o Produto");
@@ -305,11 +259,9 @@ function Add(){
         return;
     }
 
-    regiao = regiao.html().toString().trim();
-
     /*busca no json com esses valores de cima e atualiza embaixo a tabela*/
 
-    var codigoItem = parseInt(produto.attr('codigo'));
+    var codigoItem = parseInt(produto);
 
     var id = [codigoItem,regiao];
 
@@ -320,6 +272,8 @@ function Add(){
     }
 
     var item;
+
+    regiao = regiao.toString().trim();
 
     for(var i = 0; i < json.length; i++){
         if(parseInt(json[i]["CODIGO"]) === codigoItem && json[i]["REGIAO"].toString().trim() === regiao){
@@ -351,16 +305,12 @@ function Add(){
     linha.appendChild(colCodigo);
 
     var colNome = document.createElement("td");
-    colNome.innerHTML = item["NOME"].toLowerCase();
+    colNome.innerHTML = item["NOME"];
     linha.appendChild(colNome);
 
     var colEspecificacao = document.createElement("td");
-    colEspecificacao.innerHTML = item["DESCRICAO"].toLowerCase();
+    colEspecificacao.innerHTML = item["DESCRICAO"];
     linha.appendChild(colEspecificacao);
-
-    var colVencimento = document.createElement("td");
-    colVencimento.innerHTML = item["DATA"];
-    linha.appendChild(colVencimento);
 
     var colUnidade = document.createElement("td");
     colUnidade.innerHTML = item["UNIDADE"];
