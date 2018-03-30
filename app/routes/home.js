@@ -8,8 +8,8 @@ module.exports = function(application){
 		application.app.controllers.home.sair_post(application,req,res);
 	});
 
-	application.all('/precoMedioTransacional', function(req,res){
-		application.app.controllers.precoMedioTransacional.index(application,req,res);
+	application.all('/PMTPrecos', function(req,res){
+		application.app.controllers.PMTPrecos.index(application,req,res);
 	});
 
 	application.all('/tabelaOficial', function(req,res){

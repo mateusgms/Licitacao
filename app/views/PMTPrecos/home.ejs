@@ -61,7 +61,7 @@
 
                     <li>
                         <!-- id="tbl" -->
-                        <a href="/precoMedioTransacional">
+                        <a href="/PMTPrecos">
                             <i class="fa fa-usd"></i>
                             <span>Preço Médio Transacional</span>
                         </a>
@@ -153,12 +153,11 @@
                                     <div class="box-body">
 
                                         <div class="col-md-6">
-                                            <form method="post" action="/salvarPrecoMedioTransacional">
+                                            <form method="post" action="/salvarPMTPrecos">
                                                 <button id="salvarLista" class="btn btn-lg btn-success">Salvar lista</button>
                                                 <input type="hidden" name="codigo" id="codInputS">
                                                 <input type="hidden" name="quantidade" id="qtInputS">
                                                 <input type="hidden" name="preco" id="precoInputS">
-                                                <input type="hidden" name="regiao" id="regiaoInputS">
                                             </form>
 
                                         </div>
@@ -177,12 +176,11 @@
                             <div class="box-header with-border">
                                 <h3 class="box-title">Preencha os campos</h3>
                                 <div class="pull-right">
-                                    <form method="post" action="/gerarOrcamentoPrecoMedioTransacional">
+                                    <form method="post" action="/gerarOrcamentoPMTPrecos">
                                         <button id="orcamento" class="btn btn-lg btn-primary">Gerar Orçamento</button>
                                         <input type="hidden" name="codigo" id="codInput">
                                         <input type="hidden" name="quantidade" id="qtInput">
                                         <input type="hidden" name="preco" id="precoInput">
-                                        <input type="hidden" name="regiao" id="regiaoInput">
                                     </form>
 
                                 </div>
@@ -193,15 +191,20 @@
 
                                     <div class="box-body">
 
-                                        <table id="tblData" class="table" border="1" cellpadding="2">
+                                        <table id="tblData" class="table table-bordered" border="1" cellpadding="2">
                                             <thead>
                                                 <tr>
+                                                    <th style="display:none;"></th>
                                                     <th>Código</th>
-                                                    <th>Nome Item</th>
-                                                    <th style="width: 250px">Descrição</th>
+                                                    <th>Nome do Item</th>
                                                     <th>Unidade</th>
-                                                    <th>Região</th>
-                                                    <th style="width: 100px">Qtd. de preços</th>
+                                                    <th style="width: 250px">Descrição</th>
+                                                    <th>Região/UF</th>
+                                                    <th>Grupo</th>
+                                                    <th>Referência</th>
+                                                    <th>CNPJ/CPF</th>
+                                                    <th>Pregão</th>
+                                                    <th>Número de cotações</th>
                                                     <th style="width: 100px">Preço</th>
                                                     <th>Qtd. Compra</th>
                                                     <th>Valor Total</th>
@@ -211,23 +214,38 @@
                                             <tbody id="tblbody">
                                                 <% for(var i = 0; i < carrinho.length; i++){%>
                                                     <tr>
-                                                        <td id="codigo">
+                                                        <td style="display:none;" id="id">
+                                                            <%= carrinho[i].id %>
+                                                        </td>
+                                                        <td>
                                                             <%= carrinho[i].codigo %>
                                                         </td>
                                                         <td>
-                                                            <%= carrinho[i].nome.toLowerCase() %>
-                                                        </td>
-                                                        <td>
-                                                            <%= carrinho[i].especificacao.toLowerCase() %>
+                                                            <%= carrinho[i].nome %>
                                                         </td>
                                                         <td>
                                                             <%= carrinho[i].unidade %>
                                                         </td>
-                                                        <td id="regiao">
+                                                        <td>
+                                                            <%= carrinho[i].descricao %>
+                                                        </td>
+                                                        <td>
                                                             <%= carrinho[i].regiao %>
                                                         </td>
                                                         <td>
-                                                            <%= carrinho[i].qtdp %>
+                                                            <%= carrinho[i].grupo %>
+                                                        </td>
+                                                        <td>
+                                                            <%= carrinho[i].referencia %>
+                                                        </td>
+                                                        <td>
+                                                            <%= carrinho[i].cnpj %>
+                                                        </td>
+                                                        <td>
+                                                            <%= carrinho[i].pregao %>
+                                                        </td>
+                                                        <td>
+                                                            <%= carrinho[i].cotacoes %>
                                                         </td>
                                                         <td id="preco" class='preco'>
                                                             <select>
@@ -306,7 +324,7 @@
         $('.sidebar-menu').tree()
     })
 </script>
-<script type="text/javascript" src="/javascripts/precoMedioTransacional/data.json"></script>
-<script src = "/javascripts/precoMedioTransacional/home.js"></script>
+<script type="text/javascript" src="/javascripts/PMTPrecos/data.json"></script>
+<script src = "/javascripts/PMTPrecos/home.js"></script>
 
 </html>

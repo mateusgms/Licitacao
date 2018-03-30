@@ -17,16 +17,18 @@ $(document).on("click", "#pdf", function () {
     // doc.setFontType('normal');
     // doc.text("Texto da pagina", 30, 70);
 
-    var columns = ["Código", "Nome", "Descrição",
-                "Data", "Unidade", "Região",
-                "Qtd. de preços", "Preço", "Qtd. Compra","Valor Total"];
+    var columns = ["Código", "Nome", "Unidade",
+                   "Descrição", "Região", "Grupo",
+                   "Referência","Pregão",
+                	"Preço", "Qtd. Compra","Valor Total"];
     var rows = [];
 
     $('#tblData tbody tr').each(function(){
 
         var novo = [];
 
-        for(var i = 0; i < 10; i++){
+        for(var i = 0; i < 13; i++){
+        	if(i === 7 || i === 9) continue;
             var index = "td#" + i;
             novo.push($(this).find(index).html().toString().trim());
         }
@@ -72,8 +74,8 @@ $(document).on("click", "#pdf", function () {
         },
         columnStyles: {
             0: {columnWidth: 50},
-            1: {columnWidth: 70},
-            2: {columnWidth: 80},
+            1: {columnWidth: 50},
+            2: {columnWidth: 50},
             3: {columnWidth: 50},
             4: {columnWidth: 50},
             5: {columnWidth: 50},

@@ -18,6 +18,7 @@ $(document).ready(function() {
         var codigo = $(this).find('td#codigo').html();
         var preco = parseFloat($(this).find('td#preco').find('select').val());
         var regiao = $(this).find('td#regiao').html();
+        var identificador = $(this).find('td#id').html();
         if(!(quantidade === undefined || codigo === undefined || regiao === undefined)) {
             codigo = parseInt(codigo);
             quantidade = parseInt(quantidade);
@@ -26,7 +27,7 @@ $(document).ready(function() {
                 quantidade : quantidade,
                 preco : preco
             };
-            var id = [codigo,regiao];
+            var id = [identificador];
             carrinho[id] = novo;
         }
     });

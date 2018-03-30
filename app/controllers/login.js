@@ -21,6 +21,9 @@ module.exports.logar = function(app,req,res){
         console.log('errou email/senha');
         var errorCode = error.code;
         var errorMessage = error.message;
+
+        res.render('login');
+
         // ...
     }).then(function () {
 

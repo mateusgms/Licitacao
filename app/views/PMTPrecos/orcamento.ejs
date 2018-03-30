@@ -4,7 +4,7 @@
     <title>Preco</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
-    <link rel="stylesheet" href="/css/precoMedioTransacional/orcamento.css">
+    <link rel="stylesheet" href="/css/PMTPrecos/orcamento.css">
 </head>
 
 <body>
@@ -13,7 +13,7 @@
 
     <div class="header">
         <img id = "logo" src="/images/logo.png"/>
-        <form method="get" action="/precoMedioTransacional" >
+        <form method="get" action="/PMTPrecos" >
             <button style="font-size: 20px" class = "butao" > <i class="material-icons">&#xE317;</i> Voltar</button>
         </form>
     </div>
@@ -31,14 +31,18 @@
     <table id="tblData" border="1" cellpadding="2">
         <thead>
             <tr id = "headers">
+
                 <th>Código</th>
                 <th>Nome do Item</th>
-                <th style="width: 250px">Descrição</th>
-                <th>Data</th>
                 <th>Unidade</th>
-                <th>Região</th>
-                <th style="width: 100px">Qtd. de preços</th>
-                <th style="width: 100px">Preço</th>
+                <th style="width: 250px">Descrição</th>
+                <th>Região/UF</th>
+                <th>Grupo</th>
+                <th>Referência</th>
+                <th>CNPJ/CPF</th>
+                <th>Pregão</th>
+                <th>Número de cotações</th>
+                <th>Preço</th>
                 <th>Qtd. Compra</th>
                 <th>Valor Total</th>
             </tr>
@@ -48,14 +52,17 @@
                 <tr>
                     <td id = "0"> <%- carrinho[i].codigo %> </td>
                     <td id = "1"> <%- carrinho[i].nome.toLowerCase() %></td>
-                    <td id = "2"><%- carrinho[i].especificacao.toLowerCase() %></td>
-                    <td id = "3"> <%- carrinho[i].vencimento %> </td>
-                    <td id = "4"><%- carrinho[i].unidade %></td>
-                    <td id = "5"><%- carrinho[i].regiao %></td>
-                    <td id = "6"> <%- carrinho[i].qtdp %> </td>
-                    <td id = "7"> R$ <%- carrinho[i].precoFinal %> </td>
-                    <td id = "8"><%- carrinho[i].quantidade %> </td>
-                    <td id = "9"> R$ <%- carrinho[i].precoFinal * carrinho[i].quantidade %> </td>
+                    <td id = "2"><%- carrinho[i].unidade %></td>
+                    <td id = "3"><%- carrinho[i].descricao.toLowerCase() %></td>
+                    <td id = "4"><%- carrinho[i].regiao %></td>
+                    <td id = "5"><%- carrinho[i].grupo %></td>
+                    <td id = "6"><%- carrinho[i].referencia %></td>
+                    <td id = "7"><%- carrinho[i].cnpj %></td>
+                    <td id = "8"><%- carrinho[i].pregao %></td>
+                    <td id = "9"><%- carrinho[i].cotacoes %></td>
+                    <td id = "10"> R$ <%- carrinho[i].precoFinal %> </td>
+                    <td id = "11"><%- carrinho[i].quantidade %> </td>
+                    <td id = "12"> R$ <%- carrinho[i].precoFinal * carrinho[i].quantidade %> </td>
                 </tr>
             <%}%>
         </tbody>
@@ -67,7 +74,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.2/jspdf.plugin.autotable.js"></script>
-<script src = "/javascripts/precoMedioTransacional/orcamento.js"></script>
+<script src = "/javascripts/PMTPrecos/orcamento.js"></script>
 
 </html>
 
