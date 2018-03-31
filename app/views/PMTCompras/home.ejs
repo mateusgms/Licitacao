@@ -61,7 +61,7 @@
 
                     <li>
                         <!-- id="tbl" -->
-                        <a href="/PMTPrecos">
+                        <a href="/PMTCompras">
                             <i class="fa fa-usd"></i>
                             <span>Preço Médio Transacional</span>
                         </a>
@@ -153,12 +153,11 @@
                                     <div class="box-body">
 
                                         <div class="col-md-6">
-                                            <form method="post" action="/salvarPMTPrecos">
+                                            <form method="post" action="/salvarPMTCompras">
                                                 <button id="salvarLista" class="btn btn-lg btn-success">Salvar lista</button>
                                                 <input type="hidden" name="codigo" id="codInputS">
                                                 <input type="hidden" name="quantidade" id="qtInputS">
                                                 <input type="hidden" name="preco" id="precoInputS">
-                                                <input type="hidden" name="regiao" id="regiaoInputS">
                                             </form>
 
                                         </div>
@@ -177,12 +176,11 @@
                             <div class="box-header with-border">
                                 <h3 class="box-title">Preencha os campos</h3>
                                 <div class="pull-right">
-                                    <form method="post" action="/gerarOrcamentoPMTPrecos">
+                                    <form method="post" action="/gerarOrcamentoPMTCompras">
                                         <button id="orcamento" class="btn btn-lg btn-primary">Gerar Orçamento</button>
                                         <input type="hidden" name="codigo" id="codInput">
                                         <input type="hidden" name="quantidade" id="qtInput">
                                         <input type="hidden" name="preco" id="precoInput">
-                                        <input type="hidden" name="regiao" id="regiaoInput">
                                     </form>
 
                                 </div>
@@ -197,9 +195,6 @@
                                             <thead>
                                                 <tr>
                                                     <th type="hidden"></th>
-                                                    <th>Código</th>
-                                                    <th>Nome do Item</th>
-                                                    <th>Unidade</th>
                                                     <th style="width: 250px">Descrição</th>
                                                     <th>Região/UF</th>
                                                     <th>Grupo</th>
@@ -218,15 +213,6 @@
                                                     <tr>
                                                         <td type= "hidden" id="id">
                                                             <%= carrinho[i].id %>
-                                                        </td>
-                                                        <td>
-                                                            <%= carrinho[i].codigo %>
-                                                        </td>
-                                                        <td>
-                                                            <%= carrinho[i].nome %>
-                                                        </td>
-                                                        <td>
-                                                            <%= carrinho[i].unidade %>
                                                         </td>
                                                         <td>
                                                             <%= carrinho[i].descricao %>
@@ -326,7 +312,7 @@
         $('.sidebar-menu').tree()
     })
 </script>
-<script type="text/javascript" src="/javascripts/PMTPrecos/data.json"></script>
-<script src = "/javascripts/PMTPrecos/home.js"></script>
+<script type="text/javascript" src="/javascripts/PMTCompras/data.json"></script>
+<script src = "/javascripts/PMTCompras/home.js"></script>
 
 </html>

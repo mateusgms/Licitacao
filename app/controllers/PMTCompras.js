@@ -21,14 +21,12 @@ module.exports.index = function(app,req,res){
             var codigos = [];
             var quantidades = [];
             var precos = [];
-            var regioes = [];
             for (var key in snap.val()) {
                 var elemento = snap.val()[key];
                 if (elemento.email.toString() === email && elemento[chave] !== undefined) {
                     codigos = elemento[chave].codigo;
                     quantidades = elemento[chave].quantidade;
                     precos = elemento[chave].preco;
-                    regioes = elemento[chave].regiao;
                     break;
                 }
             }
@@ -37,15 +35,16 @@ module.exports.index = function(app,req,res){
 
             for (var i = 0; i < codigos.length; i++) {
                 for (var j = 0; j < produtos.length; j++) {
-                    if (produtos[j]["CODIGO"].toString().trim() === codigos[i].toString().trim()
-                        && produtos[j]["REGIAO"].toString().trim() === regioes[i].toString().trim()) {
+                    if (produtos[j]["ID"].toString().trim() === codigos[i].toString().trim()) {
                         var novo = {
-                            codigo: produtos[j]['CODIGO'],
-                            nome: produtos[j]['NOME'],
-                            unidade: produtos[j]['UNIDADE'],
-                            regiao: regioes[i],
-                            especificacao: produtos[j]['DESCRICAO'],
-                            qtdp: produtos[j]['QUANTIDADE'],
+                            id : codigos[i],
+                            regiao: produtos[j]["UF/REGIAO"],
+                            descricao: produtos[j]['DESCRICAO'],
+                            cotacoes : produtos[j]["NUMERO COTACOES"],
+                            grupo : produtos[j]["GRUPO"],
+                            pregrao : produtos[j]["PREGAO"],
+                            cnpj : produtos[j]["CNPJ"],
+                            referencia : produtos[j]["REFERENCIA"],
                             precoMinimo: parseFloat(produtos[j]['MINIMO']).toFixed(2),
                             precoMedio: parseFloat(produtos[j]['MEDIA']).toFixed(2),
                             precoMaximo: parseFloat(produtos[j]['MAXIMO']).toFixed(2),
@@ -70,8 +69,7 @@ module.exports.gerarOrcamento = function(app,req,res){
     var codigos = JSON.parse("[" + req.body.codigo + "]");
     var quantidades = JSON.parse("[" + req.body.quantidade + "]");
     var precos = JSON.parse("[" + req.body.preco + "]");
-    var regioes = req.body.regiao.split(',');
-
+    
     var carrinho = [];
 
     var valorTotal = 0;
@@ -79,16 +77,20 @@ module.exports.gerarOrcamento = function(app,req,res){
     /*cria carrinho*/
     for(var i = 0; i < codigos.length; i++){
         for(var j = 0; j < produtos.length; j++){
-            if(produtos[j]["CODIGO"].toString().trim() === codigos[i].toString().trim()
-                && produtos[j]["REGIAO"].toString().trim() === regioes[i].toString().trim()){
+            if(produtos[j]["ID"].toString().trim() === codigos[i].toString().trim()){
                 var novo = {
-                    codigo : produtos[j]['CODIGO'],
-                    nome : produtos[j]['NOME'],
-                    unidade : produtos[j]['UNIDADE'],
-                    regiao : regioes[i],
-                    especificacao : produtos[j]['DESCRICAO'],
-                    qtdp : produtos[j]['QUANTIDADE'],
-                    precoFinal : precos[i],
+                    id : codigos[i],
+                    regiao: produtos[j]["UF/REGIAO"],
+                    descricao: produtos[j]['DESCRICAO'],
+                    cotacoes : produtos[j]["NUMERO COTACOES"],
+                    grupo : produtos[j]["GRUPO"],
+                    pregao : produtos[j]["PREGAO"],
+                    cnpj : produtos[j]["CNPJ"],
+                    referencia : produtos[j]["REFERENCIA"],
+                    precoFinal: parseFloat(precos[i]).toFixed(2),
+                    precoMinimo: parseFloat(produtos[j]['MINIMO']).toFixed(2),
+                    precoMedio: parseFloat(produtos[j]['MEDIA']).toFixed(2),
+                    precoMaximo: parseFloat(produtos[j]['MAXIMO']).toFixed(2),
                     quantidade : quantidades[i]
                 };
                 valorTotal += parseFloat(precos[i])*parseInt(quantidades[i]);
@@ -111,8 +113,7 @@ module.exports.gerarOrcamento = function(app,req,res){
                         firebase.database().ref(caminho).set({
                             codigo: codigos,
                             quantidade: quantidades,
-                            preco: precos,
-                            regiao : regioes
+                            preco: precos
                         });
                     }
                     break;
@@ -135,7 +136,6 @@ module.exports.salvar = function(app,req,res){
     var codigos = JSON.parse("[" + req.body.codigo + "]");
     var quantidades = JSON.parse("[" + req.body.quantidade + "]");
     var precos = JSON.parse("[" + req.body.preco + "]");
-    var regioes = req.body.regiao.split(',');
 
     var carrinho = [];
 
@@ -144,16 +144,20 @@ module.exports.salvar = function(app,req,res){
     /*cria carrinho*/
     for(var i = 0; i < codigos.length; i++){
         for(var j = 0; j < produtos.length; j++){
-            if(produtos[j]["CODIGO"].toString().trim() === codigos[i].toString().trim()
-                && produtos[j]["REGIAO"].toString().trim() === regioes[i].toString().trim()){
+            if(produtos[j]["ID"].toString().trim() === codigos[i].toString().trim()){
                 var novo = {
-                    codigo : produtos[j]['CODIGO'],
-                    nome : produtos[j]['NOME'],
-                    unidade : produtos[j]['UNIDADE'],
-                    regiao : regioes[i],
-                    especificacao : produtos[j]['DESCRICAO'],
-                    qtdp : produtos[j]['QUANTIDADE'],
-                    precoFinal : precos[i],
+                    id : codigos[i],
+                    regiao: produtos[j]["UF/REGIAO"],
+                    descricao: produtos[j]['DESCRICAO'],
+                    cotacoes : produtos[j]["NUMERO COTACOES"],
+                    grupo : produtos[j]["GRUPO"],
+                    pregao : produtos[j]["PREGAO"],
+                    cnpj : produtos[j]["CNPJ"],
+                    referencia : produtos[j]["REFERENCIA"],
+                    precoFinal: parseFloat(precos[i]).toFixed(2),
+                    precoMinimo: parseFloat(produtos[j]['MINIMO']).toFixed(2),
+                    precoMedio: parseFloat(produtos[j]['MEDIA']).toFixed(2),
+                    precoMaximo: parseFloat(produtos[j]['MAXIMO']).toFixed(2),
                     quantidade : quantidades[i]
                 };
                 valorTotal += parseFloat(precos[i])*parseInt(quantidades[i]);
@@ -176,8 +180,7 @@ module.exports.salvar = function(app,req,res){
                         firebase.database().ref(caminho).set({
                             codigo: codigos,
                             quantidade: quantidades,
-                            preco: precos,
-                            regiao : regioes
+                            preco: precos
                         });
                     }
                     break;
@@ -185,30 +188,6 @@ module.exports.salvar = function(app,req,res){
             }
             
         });
-
-    carrinho = [];
-
-    for(var i = 0; i < codigos.length; i++){
-        for(var j = 0; j < produtos.length; j++){
-            if(produtos[j]["CODIGO"].toString().trim() === codigos[i].toString().trim()
-                && produtos[j]["REGIAO"].toString().trim() === regioes[i].toString().trim()){
-                var novo = {
-                    codigo : produtos[j]['CODIGO'],
-                    nome : produtos[j]['NOME'],
-                    unidade : produtos[j]['UNIDADE'],
-                    regiao : regioes[i],
-                    especificacao : produtos[j]['DESCRICAO'],
-                    qtdp : produtos[j]['QUANTIDADE'],
-                    precoMinimo : produtos[j]['MINIMO'],
-                    precoMedio : produtos[j]['MEDIA'],
-                    precoMaximo : produtos[j]['MAXIMO'],
-                    precoFinal : precos[i],
-                    quantidade : quantidades[i]
-                };
-                carrinho.push(novo);
-            }
-        }
-    }
 
     res.render('PMTCompras/home', {carrinho : carrinho});
 }

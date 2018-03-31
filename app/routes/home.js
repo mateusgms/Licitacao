@@ -12,6 +12,10 @@ module.exports = function(application){
 		application.app.controllers.PMTPrecos.index(application,req,res);
 	});
 
+	application.all('/PMTCompras', function(req,res){
+		application.app.controllers.PMTCompras.index(application,req,res);
+	});
+
 	application.all('/tabelaOficial', function(req,res){
 		application.app.controllers.tabelaOficial.index(application,req,res);
 	});	

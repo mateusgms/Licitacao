@@ -17,12 +17,10 @@ $(document).ready(function() {
         quantidade = quantidade.find('input').val();
         var codigo = $(this).find('td#codigo').html();
         var preco = parseFloat($(this).find('td#preco').find('select').val());
-        var regiao = $(this).find('td#regiao').html();
         var identificador = $(this).find('td#id').html();
-        if(!(quantidade === undefined || codigo === undefined || regiao === undefined)) {
+        if(!(quantidade === undefined || codigo === undefined)) {
             codigo = parseInt(codigo);
             quantidade = parseInt(quantidade);
-            regiao = regiao.trim();
             var novo = {
                 quantidade : quantidade,
                 preco : preco
@@ -37,20 +35,16 @@ $(document).ready(function() {
         var codigos = [];
         var quantidades = [];
         var precos = [];
-        var regioes = [];
 
         for (var key in carrinho) {
-            var chave = key.split(',');
-            codigos.push(chave[0]);
-            regioes.push(chave[1]);
             quantidades.push(carrinho[key]['quantidade']);
             precos.push(carrinho[key]['preco']);
+            codigos.push(key);
         }
 
         $("#codInput").val(codigos);
         $("#qtInput").val(quantidades);
         $("#precoInput").val(precos);
-        $("#regiaoInput").val(regioes);
     });
 
     criarListas();
@@ -77,20 +71,16 @@ $(document).ready(function() {
         var codigos = [];
         var quantidades = [];
         var precos = [];
-        var regioes = [];
 
         for (var key in carrinho) {
-            var chave = key.split(',');
-            codigos.push(chave[0]);
-            regioes.push(chave[1]);
             quantidades.push(carrinho[key]['quantidade']);
             precos.push(carrinho[key]['preco']);
+            codigos.push(key);
         }
 
         $("#codInputS").val(codigos);
         $("#qtInputS").val(quantidades);
         $("#precoInputS").val(precos);
-        $("#regiaoInputS").val(regioes);
     });
 
     $('#selectGrupo').click(function() {
@@ -119,12 +109,9 @@ $(document).ready(function() {
 
     $('.deletar').click(function(e){
         var raiz = $(e.target).parent().parent(); //tr
-        var codigo = raiz.find('td#codigo').html().trim();
-        var regiao = raiz.find("td#regiao").html().trim();
+        var identificador = raiz.find('td#id').html().trim();
 
-        var id = [codigo,regiao];
-
-        delete carrinho[id];
+        delete carrinho[identificador];
         raiz.remove();
     });
 
@@ -132,7 +119,7 @@ $(document).ready(function() {
 
         var raiz = $(e.target).parent().parent(); // tr
 
-        var codigo = parseInt(raiz.find('td#codigo').html());
+        var identificador = parseInt(raiz.find('td#id').html());
 
         var quantidade = raiz.find('td#quantidade');
         quantidade = parseInt(quantidade.find('input').val());
@@ -141,11 +128,7 @@ $(document).ready(function() {
 
         var valorIndex = raiz.find('td#valor');
 
-        var regiao = raiz.find("td#regiao").html().trim();
-
-        var id = [codigo,regiao];
-
-        carrinho[id]['quantidade'] = quantidade;
+        carrinho[identificador]['quantidade'] = quantidade;
 
         valorIndex.html("R$ " + parseFloat(quantidade*preco).toFixed(2));
     });
@@ -154,7 +137,7 @@ $(document).ready(function() {
 
         var raiz = $(e.target).parent().parent(); // tr
 
-        var codigo = raiz.find('td#codigo').html().trim();
+        var identificador = parseInt(raiz.find('td#id').html().trim());
 
         var quantidade = raiz.find('td#quantidade');
         quantidade = parseInt(quantidade.find('input').val());
@@ -163,11 +146,7 @@ $(document).ready(function() {
 
         var valorIndex = raiz.find('td#valor');
 
-        var regiao = raiz.find("td#regiao").html().trim();
-
-        var id = [codigo,regiao];
-
-        carrinho[id]['preco'] = preco;
+        carrinho[identificador]['preco'] = preco;
         valorIndex.html("R$ " + parseFloat(quantidade*preco).toFixed(2));
     })
 
@@ -179,18 +158,18 @@ function atualizaSelectRegiao() {
 
     $('#selectRegiao').children('option').remove(); // remove opcoes antigas
 
-    var select =  document.getElementById("selectRegiao");
+    var select = document.getElementById("selectRegiao");
 
     var conjunto = new Set();
 
     for(var i = 0; i < json.length; i++){
-        if(codigo === parseInt(json[i]["CODIGO"])){
-            if(conjunto.has(json[i]["REGIAO"])) continue;
-            conjunto.add(json[i]["REGIAO"]);
+        if(codigo === parseInt(json[i]["ID"])){
+            if(conjunto.has(json[i]["UF/REGIAO"])) continue;
+            conjunto.add(json[i]["UF/REGIAO"]);
 
             var novaOpcao = document.createElement("OPTION");
-            novaOpcao.setAttribute("value", json[i]["REGIAO"]);
-            var novoTexto = document.createTextNode(json[i]["REGIAO"]);
+            novaOpcao.setAttribute("value", json[i]["UF/REGIAO"]);
+            var novoTexto = document.createTextNode(json[i]["UF/REGIAO"]);
             novaOpcao.appendChild(novoTexto);
             select.appendChild(novaOpcao);
         }
@@ -209,11 +188,11 @@ function atualizaSelectProduto(tipo) {
 
     for(var i = 0; i < json.length; i++){
         if(tipo === -1 || tipo === json[i]["GRUPO"].toString().toUpperCase().trim()){
-            if(conjunto.has(json[i]["CODIGO"])) continue;
-            conjunto.add(json[i]["CODIGO"]);
+            if(conjunto.has(json[i]["ID"])) continue;
+            conjunto.add(json[i]["ID"]);
             var novaOpcao = document.createElement("OPTION");
-            novaOpcao.setAttribute("value", json[i]["CODIGO"]);
-            var novoTexto = document.createTextNode(json[i]["NOME"]);
+            novaOpcao.setAttribute("value", json[i]["ID"]);
+            var novoTexto = document.createTextNode(json[i]["DESCRICAO"]);
             novaOpcao.appendChild(novoTexto);
             select.appendChild(novaOpcao);
         }
@@ -249,35 +228,26 @@ function criarListas() {
 function Add(){
 
     var produto = produtoAtual;
-    var regiao = $('#selectRegiao').find(":selected").val();
 
     if(!produto.length){
         alert("Selecione o Produto");
         return;
     }
-    if(!regiao.length){
-        alert("Selecione a Região");
-        return;
-    }
 
     /*busca no json com esses valores de cima e atualiza embaixo a tabela*/
 
-    var codigoItem = parseInt(produto);
-
-    var id = [codigoItem,regiao];
+    var identificador = parseInt(produto);
 
     // item ja foi colocado no carrinho
-    if(carrinho.hasOwnProperty(id)){
+    if(carrinho.hasOwnProperty(identificador)){
         alert('O item ja foi adicionado.');
         return;
     }
 
     var item;
 
-    regiao = regiao.toString().trim();
-
     for(var i = 0; i < json.length; i++){
-        if(parseInt(json[i]["CODIGO"]) === codigoItem && json[i]["REGIAO"].toString().trim() === regiao){
+        if(parseInt(json[i]["ID"]) === identificador){
             item = json[i];
         }
     }
@@ -292,7 +262,7 @@ function Add(){
         preco : parseFloat(item["MEDIA"]).toFixed(2)/*preco medio*/
     };
 
-    carrinho[id] = novo;
+    carrinho[identificador] = novo;
 
     var tabela = $('#tblData');
 
@@ -301,30 +271,44 @@ function Add(){
     var linha = document.createElement("tr");
 
     var colCodigo = document.createElement("td");
+    colCodigo.setAttribute('id','id');
+    colCodigo.setAttribute('style','display:none;');
+    colCodigo.innerHTML = item["ID"];
+    linha.appendChild(colCodigo);
+
+    var colCodigo = document.createElement("td");
     colCodigo.setAttribute('id','codigo');
     colCodigo.innerHTML = item["CODIGO"];
     linha.appendChild(colCodigo);
-
-    var colNome = document.createElement("td");
-    colNome.innerHTML = item["NOME"];
-    linha.appendChild(colNome);
 
     var colEspecificacao = document.createElement("td");
     colEspecificacao.innerHTML = item["DESCRICAO"];
     linha.appendChild(colEspecificacao);
 
-    var colUnidade = document.createElement("td");
-    colUnidade.innerHTML = item["UNIDADE"];
-    linha.appendChild(colUnidade);
-
     var colRegiao = document.createElement("td");
     colRegiao.setAttribute('id','regiao');
-    colRegiao.innerHTML = item["REGIAO"];
+    colRegiao.innerHTML = item["UF/REGIAO"];
     linha.appendChild(colRegiao);
 
-    var colQtdp = document.createElement("td");
-    colQtdp.innerHTML = item["QUANTIDADE"];
-    linha.appendChild(colQtdp);
+    var colGrupo = document.createElement("td");
+    colGrupo.innerHTML = item["GRUPO"];
+    linha.appendChild(colGrupo);
+
+    var colReferencia = document.createElement("td");
+    colReferencia.innerHTML = item["REFERENCIA"];
+    linha.appendChild(colReferencia);
+
+    var colCNPJ = document.createElement("td");
+    colCNPJ.innerHTML = item["CNPJ"];
+    linha.appendChild(colCNPJ);
+
+    var colPregao = document.createElement("td");
+    colPregao.innerHTML = item["PREGAO"];
+    linha.appendChild(colPregao);
+
+    var colcotacoes = document.createElement("td");
+    colcotacoes.innerHTML = item["NUMERO COTACOES"];
+    linha.appendChild(colcotacoes);
 
     var colPreco = document.createElement("td");
     colPreco.setAttribute('id','preco');
@@ -378,7 +362,7 @@ function Add(){
 
 function AtualizaValor() {
     var raiz = $(this).parent().parent(); // tr
-    var codigo = parseInt(raiz.find('td#codigo').html());
+    var identificador = parseInt(raiz.find('td#id').html());
 
     var quantidade = raiz.find('td#quantidade');
     quantidade = parseInt(quantidade.find('input').val());
@@ -386,29 +370,22 @@ function AtualizaValor() {
     var valorIndex = raiz.find('td#valor');
     var preco = parseFloat(raiz.find('td#preco').find('select').val());
 
-    var regiao = raiz.find("td#regiao").html().trim();
-
-    var id = [codigo,regiao];
-
-    carrinho[id]['quantidade'] = quantidade;
+    carrinho[identificador]['quantidade'] = quantidade;
     valorIndex.html("R$ " + parseFloat(quantidade*preco).toFixed(2));
 }
 
 function Delete(){
     var raiz = $(this).parent().parent(); //tr
-    var codigo = parseInt(raiz.find('td#codigo').html());
-    var regiao = raiz.find("td#regiao").html().trim();
+    var identificador = parseInt(raiz.find('td#id').html());
 
-    var id = [codigo,regiao];
-
-    delete carrinho[id];
+    delete carrinho[identificador];
 
     raiz.remove();
 }
 
 function AtualizaPreco() {
     var raiz = $(this).parent().parent(); // tr
-    var codigo = parseInt(raiz.find('td#codigo').html());
+    var identificador = parseInt(raiz.find('td#id').html());
 
     var quantidade = raiz.find('td#quantidade');
     quantidade = parseInt(quantidade.find('input').val());
@@ -416,10 +393,6 @@ function AtualizaPreco() {
     var valorIndex = raiz.find('td#valor');
     var preco = parseFloat(raiz.find('td#preco').find('select').val());
 
-    var regiao = raiz.find("td#regiao").html().trim();
-
-    var id = [codigo,regiao];
-
-    carrinho[id]['preco'] = preco;
+    carrinho[identificador]['preco'] = preco;
     valorIndex.html("R$ " + parseFloat(quantidade*preco).toFixed(2));
 }
