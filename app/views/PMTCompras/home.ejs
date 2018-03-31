@@ -61,9 +61,16 @@
 
                     <li>
                         <!-- id="tbl" -->
+                        <a href="/PMTPrecos">
+                            <i class="fa fa-usd"></i>
+                            <span>Preço Médio Transacional Preços</span>
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="/PMTCompras">
                             <i class="fa fa-usd"></i>
-                            <span>Preço Médio Transacional</span>
+                            <span>Preço Médio Transacional Compras</span>
                         </a>
                     </li>
                     <li>
@@ -194,7 +201,7 @@
                                         <table id="tblData" class="table table-bordered" border="1" cellpadding="2">
                                             <thead>
                                                 <tr>
-                                                    <th type="hidden"></th>
+                                                    <th style="display:none"></th>
                                                     <th style="width: 250px">Descrição</th>
                                                     <th>Região/UF</th>
                                                     <th>Grupo</th>
@@ -211,7 +218,7 @@
                                             <tbody id="tblbody">
                                                 <% for(var i = 0; i < carrinho.length; i++){%>
                                                     <tr>
-                                                        <td type= "hidden" id="id">
+                                                        <td style="display:none" id="id">
                                                             <%= carrinho[i].id %>
                                                         </td>
                                                         <td>

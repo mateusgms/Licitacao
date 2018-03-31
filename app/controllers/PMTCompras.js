@@ -42,7 +42,7 @@ module.exports.index = function(app,req,res){
                             descricao: produtos[j]['DESCRICAO'],
                             cotacoes : produtos[j]["NUMERO COTACOES"],
                             grupo : produtos[j]["GRUPO"],
-                            pregrao : produtos[j]["PREGAO"],
+                            pregao : produtos[j]["PREGAO"],
                             cnpj : produtos[j]["CNPJ"],
                             referencia : produtos[j]["REFERENCIA"],
                             precoMinimo: parseFloat(produtos[j]['MINIMO']).toFixed(2),

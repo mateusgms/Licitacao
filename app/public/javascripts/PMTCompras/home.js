@@ -15,18 +15,16 @@ $(document).ready(function() {
     $('#tblData tr').each(function(){
         var quantidade = $(this).find('td#quantidade');
         quantidade = quantidade.find('input').val();
-        var codigo = $(this).find('td#codigo').html();
         var preco = parseFloat($(this).find('td#preco').find('select').val());
         var identificador = $(this).find('td#id').html();
-        if(!(quantidade === undefined || codigo === undefined)) {
-            codigo = parseInt(codigo);
+        if(!(quantidade === undefined || identificador === undefined)) {
             quantidade = parseInt(quantidade);
+            identificador = parseInt(identificador);
             var novo = {
                 quantidade : quantidade,
                 preco : preco
             };
-            var id = [identificador];
-            carrinho[id] = novo;
+            carrinho[identificador] = novo;
         }
     });
 
@@ -100,6 +98,8 @@ $(document).ready(function() {
 
         var produtoSelecionado = $('#selectProduto').find(":selected").val();
 
+        console.log(produtoSelecionado);
+
         if(produtoSelecionado.toString().trim() === produtoAtual.toString().trim()) return;
 
         produtoAtual = produtoSelecionado.toString().trim();
@@ -109,7 +109,9 @@ $(document).ready(function() {
 
     $('.deletar').click(function(e){
         var raiz = $(e.target).parent().parent(); //tr
-        var identificador = raiz.find('td#id').html().trim();
+        var identificador = raiz.find('td#id').html();
+
+        identificador = parseInt(identificador);
 
         delete carrinho[identificador];
         raiz.remove();
@@ -274,11 +276,6 @@ function Add(){
     colCodigo.setAttribute('id','id');
     colCodigo.setAttribute('style','display:none;');
     colCodigo.innerHTML = item["ID"];
-    linha.appendChild(colCodigo);
-
-    var colCodigo = document.createElement("td");
-    colCodigo.setAttribute('id','codigo');
-    colCodigo.innerHTML = item["CODIGO"];
     linha.appendChild(colCodigo);
 
     var colEspecificacao = document.createElement("td");
