@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <title>Tabela Oficial</title>
+    <!-- novas dependencias FRONT -->
+    <link rel="stylesheet" href="../source/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../source/plugins/iCheck/flat/blue.css">
+    <link rel="stylesheet" href="../source/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="../source/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../source/css/ionicons.min.css">
+    <link rel="stylesheet" href="../source/css/skins/_all-skins.min.css">
+    <!-- <link rel="stylesheet" href="../source/plugins/datatables/jquery.dataTables.min.css"> -->
+    <link rel="stylesheet" href="../source/plugins/bootstrap-slider/slider.css">
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <!-- <link rel='stylesheet' href='/css/home.css' /> -->
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper" id="areaPrincipal">
+        <header class="main-header">
+            <a href="#" class="logo">
+                <span class="logo-mini">
+                    <b>S</b>TM
+                </span>
+                <span class="logo-lg">
+                    <b>S</b>tatisticum</span>
+            </a>
+            <nav class="navbar navbar-static-top">
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="/sair">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+        </header>
+        <aside class="main-sidebar">
+            <section class="sidebar">
+                <ul class="sidebar-menu">
+                    <li class="header">Menu de navegação</li>
+                    <li class="treeview">
+                        <a href="/logar">
+                            <i class="fa fa-dashboard"></i>
+                            <span>Home</span>
+                            <span class="pull-right-container"></span>
+                        </a>
+                    </li>
+                    <li class="treeview menu-open">
+                        <a href="#">
+                            <i class="fa fa-pie-chart"></i>
+                            <span>Preço Médio Transacional</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu" style="display: block;">
+                            <li><a href="/PMTPrecos"><i class="fa fa-circle-o"></i>Preços</a></li>
+                            <li><a href="/PMTCompras"><i class="fa fa-circle-o"></i>Compras</a></li>
+                        </ul>
+                    </li>
+                    <!--<li>
+                         id="tbl" 
+                        <a href="/PMTPrecos">
+                            <i class="fa fa-usd"></i>
+                            <span>Médio 
+                            Transacional Preços</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/PMTCompras">
+                            <i class="fa fa-usd"></i>
+                            <span>Médio Transacional Compras</span>
+                        </a>
+                    </li>
+                    -->
+                    <li>
+                        <a href="/tabelaOficial">
+                            <i class="fa fa-database"></i>
+                            <span>Tabela Oficial</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/calculeSeuPreco">
+                            <i class="fa fa-calculator"></i>
+                            <span>Calcule seu Preço</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </section>
+        </aside>
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>
+                    Calcule seu preço
+                    <small>navegue na aplicação!</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-dashboard"></i> Home</a>
+                    </li>
+                    <li>
+                        <a href="#">Examples</a>
+                    </li>
+                    <li class="active">Calcule seu preço</li>
+                </ol>
+            </section>
+            <section class="content">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="box box-primary ">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Preencha os campos</h3>
+                            </div>
+                            <div role="form">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <div class="col-md-4">
+                                                    <label for="exampleFormControlSelect1">Grupo</label>
+                                                    <select id="selectGrupo" data-placeholder="Grupo" class="form-control sel__placeholder" id="exampleFormControlSelect1">
+                                                    <option disabled selected>Escolha o Grupo</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <!-- SELECT2 MINIMAL-->
+                                                    <label for="exampleFormControlSelect1">Produto</label>
+                                                    <select id="selectProduto" data-placeholder="Produto" class="form-control sel__placeholder" id="exampleFormControlSelect1">
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="exampleFormControlSelect1">Região</label>
+                                                    <select id="selectRegiao" data-placeholder="Região" class="form-control sel__placeholder" id="exampleFormControlSelect1">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="box-footer">
+                                            <div class="pull-right">
+                                                <button id="adicionarItem" class="btn btn-lg btn-primary">Adicionar item</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5">
+                        <div class="box box-primary ">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Preencha os campos</h3>
+                            </div>
+                            <div role="form">
+                                <div class="box-body">
+                                    
+                                </div>
+                                <div class="box-footer">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <form method="post" action="/salvarPMTCompras">
+                                                <button id="salvarLista" class="btn btn-lg btn-success">Salvar lista</button>
+                                                <input type="hidden" name="codigo" id="codInputS">
+                                                <input type="hidden" name="quantidade" id="qtInputS">
+                                                <input type="hidden" name="preco" id="precoInputS">
+                                            </form>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button id="limparLista" class="btn btn-lg btn-danger">Apagar lista</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Preencha os campos</h3>
+                                <div class="pull-right">
+                                    <form method="post" action="/gerarOrcamentoPMTCompras">
+                                        <button id="orcamento" class="btn btn-lg btn-primary">Gerar Orçamento</button>
+                                        <input type="hidden" name="codigo" id="codInput">
+                                        <input type="hidden" name="quantidade" id="qtInput">
+                                        <input type="hidden" name="preco" id="precoInput">
+                                    </form>
+
+                                </div>
+                            </div>
+
+                            <div role="form">
+                                <div class="row">
+
+                                    <div class="box-body">
+
+                                        <table id="tblData" class="table table-bordered" border="1" cellpadding="2">
+                                            <thead>
+                                                <tr>
+                                                    <th style="display:none"></th>
+                                                    <th style="width: 250px">Descrição</th>
+                                                    <th>Região/UF</th>
+                                                    <th>Grupo</th>
+                                                    <th>Referência</th>
+                                                    <th>CNPJ/CPF</th>
+                                                    <th>Pregão</th>
+                                                    <th>Número de cotações</th>
+                                                    <th style="width: 100px">Preço</th>
+                                                    <th>Qtd. Compra</th>
+                                                    <th>Valor Total</th>
+                                                    <th>Deletar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tblbody">
+                                                <% for(var i = 0; i < carrinho.length; i++){%>
+                                                    <tr>
+                                                        <td style="display:none" id="id">
+                                                            <%= carrinho[i].id %>
+                                                        </td>
+                                                        <td>
+                                                            <%= carrinho[i].descricao %>
+                                                        </td>
+                                                        <td>
+                                                            <%= carrinho[i].regiao %>
+                                                        </td>
+                                                        <td>
+                                                            <%= carrinho[i].grupo %>
+                                                        </td>
+                                                        <td>
+                                                            <%= carrinho[i].referencia %>
+                                                        </td>
+                                                        <td>
+                                                            <%= carrinho[i].cnpj %>
+                                                        </td>
+                                                        <td>
+                                                            <%= carrinho[i].pregao %>
+                                                        </td>
+                                                        <td>
+                                                            <%= carrinho[i].cotacoes %>
+                                                        </td>
+                                                        <td id="preco" class='preco'>
+                                                            <select>
+                                                                <option <% if( parseFloat(carrinho[i].precoFinal)===parseFloat(carrinho[i].precoMinimo)){%> selected="selected"
+                                                                    <%}%> value="
+                                                                        <%= carrinho[i].precoMinimo %>">R$
+                                                                            <%=carrinho[i].precoMinimo%> (minimo) </option>
+                                                                <option <% if( parseFloat(carrinho[i].precoFinal)===parseFloat(carrinho[i].precoMedio)){%> selected="selected"
+                                                                    <%}%> value="
+                                                                        <%= carrinho[i].precoMedio %>">R$
+                                                                            <%=carrinho[i].precoMedio%> (medio) </option>
+                                                                <option <% if( parseFloat(carrinho[i].precoFinal) === parseFloat(carrinho[i].precoMaximo)){%> selected="selected"
+                                                                    <%}%> value="
+                                                                        <%= carrinho[i].precoMaximo %>">R$
+                                                                            <%=carrinho[i].precoMaximo%> (maximo) </option>
+                                                            </select>
+                                                        </td>
+                                                        <td id='quantidade' class="modificaqt">
+                                                            <input type="number" min="0" style="width: 80px" value='<%= carrinho[i].quantidade %>'> </td>
+                                                        <td id="valor"> R$
+                                                            <%= carrinho[i].precoFinal * carrinho[i].quantidade %>
+                                                        </td>
+                                                        <td>
+                                                            <i class="material-icons deletar">&#xE92B;</i>
+                                                        </td>
+                                                    </tr>
+                                                    <%}%>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+            <!-- /.box -->
+        </div>
+    </div>
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 2.4.0
+        </div>
+        <strong>Copyright &copy; 2014-2016
+            <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights reserved.
+    </footer>
+
+    <div class="control-sidebar-bg"></div>
+    <h2> </h2>
+
+
+
+
+    </div>
+
+</body>
+<script src="../source/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="../source/bootstrap/js/bootstrap.min.js"></script>
+<!-- Data Tables 
+<script src="../source/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../source/plugins/datatables/dataTables.bootstrap.min.js"></script> -->
+<!-- SlimScroll -->
+<script src="../source/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../source/plugins/fastclick/fastclick.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../source/js/adminlte.min.js"></script>
+<!-- Slider -->
+<script src="../source/plugins/jQueryUI/jquery-ui.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../source/js/demo.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.sidebar-menu').tree()
+    })
+
+</script>
+<script type="text/javascript" src="/javascripts/PMTCompras/data.json"></script>
+<script src="/javascripts/PMTCompras/home.js"></script>
+
+</html>

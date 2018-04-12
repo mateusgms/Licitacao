@@ -1,0 +1,11 @@
+.painel-animado {
+  -webkit-transition: opacity 0.2s;
+     -moz-transition: opacity 0.2s;
+      -ms-transition: opacity 0.2s;
+       -o-transition: opacity 0.2s;
+          transition: opacity 0.2s;
+}
+
+.painel-animado.ng-leave-active {
+  opacity: 0;
+}

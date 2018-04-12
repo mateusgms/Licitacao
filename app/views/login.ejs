@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Statisticum | Entrar</title>
+  <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"> -->
+
+  <!--<link rel="stylesheet" href="/css/login.css"> -->
+
+  <!-- novas dependencias FRONT -->
+  <link rel="stylesheet" href="/source/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/source/plugins/iCheck/flat/blue.css">
+  <link rel="stylesheet" href="/source/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="/source/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/source/css/ionicons.min.css">
+
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+
+<body class="hold-transition login-page" style="background: #e2e6eC;">
+  <div class="login-box">
+
+    <div class="login-logo">
+      <img style="height: 100px!important" src="/images/logo.png" alt="">
+      <a href="../../index2.html"><b>S</b>tatisticum</a>
+    </div>
+
+    <div class="login-box-body">
+      <div id="login">
+        <p class="login-box-msg">Bem-vindo de volta!</p>
+
+        <form method="post" action="/logar">
+
+          <div class="field-wrap form-group has-feedback">
+            <!-- <label>
+            <span class="req"></span>
+          </label> -->
+            <input placeholder="Endereço de Email*" class="form-control" type="email" name="email_login" required/>
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+          </div>
+
+          <div class="field-wrap form-group has-feedback">
+            <!-- <label>
+            <span class="req"></span>
+          </label> -->
+            <input placeholder="Senha*" class="form-control" type="password" name="senha_login" required autocomplete="off" />
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+          <div class="row">
+            <div class=" col-xs-8">
+              <div class="checkbox icheck" style="padding-left: 20px;">
+                <label>
+                <input type="checkbox"> lembrar-me
+              </label>
+              </div>
+            </div>
+            <div class="offset-xs-4 col-xs-4">
+              <button type="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
+            </div>
+          </div>
+        </form>
+        <p class="text-center"><a href="#">Esqueci minha senha!</a></p><br>
+      </div>
+
+
+
+    </div>
+    <!-- tab-content -->
+
+  </div>
+  <!-- /form -->
+<!-- Novas dependencias JS -->
+
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <!-- Bootstrap 3.3.7 -->
+  <script src="/source/bootstrap/js/bootstrap.min.js"></script>
+  <!-- iCheck -->
+  <script src="/source/plugins/iCheck/icheck.min.js"></script>
+  <script>
+    $(function () {
+      $('input').iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue',
+        increaseArea: '20%' // optional
+      });
+    });
+  </script>
+  
+
+  <script src="/javascripts/login.js"></script>
+
+</body>
+
+</html>
