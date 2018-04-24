@@ -51,20 +51,25 @@
                 <ul class="sidebar-menu">
                     <li class="header">Menu de navegação</li>
                     <li class="treeview">
-                        <a href="#">
+                        <a href="/">
                             <i class="fa fa-dashboard"></i>
                             <span>Home</span>
                             <span class="pull-right-container"></span>
                         </a>
                     </li>
-
-                    <li>
-                        <!-- id="tbl" -->
-                        <a href="/precoMedioTransacional">
-                            <i class="fa fa-usd"></i>
+                    <li class="treeview menu-open">
+                        <a href="#">
+                            <i class="fa fa-pie-chart"></i>
                             <span>Preço Médio Transacional</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
                         </a>
-                    </li>
+                        <ul class="treeview-menu" style="display: block;">
+                            <li><a href="/PMTPrecos"><i class="fa fa-circle-o"></i>Preços</a></li>
+                            <li><a href="/PMTCompras"><i class="fa fa-circle-o"></i>Compras</a></li>                            
+                        </ul>
+                    </li>                    
                     <li>
                         <a href="/tabelaOficial">
                             <i class="fa fa-database"></i>
